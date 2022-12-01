@@ -1,8 +1,8 @@
-package com.sda.carrental.model.operating;
+package com.sda.carrental.model.operating.reservation;
 
 import java.time.LocalDate;
 
-import com.sda.carrental.model.Car;
+import com.sda.carrental.model.car.Car;
 import com.sda.carrental.model.Department;
 import com.sda.carrental.model.User;
 

@@ -1,9 +1,9 @@
-package com.sda.carrental.model.operating;
+package com.sda.carrental.model.operating.rental;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import com.sda.carrental.model.User;
+import com.sda.carrental.model.operating.reservation.Reservation;
 
 
 public class Rental

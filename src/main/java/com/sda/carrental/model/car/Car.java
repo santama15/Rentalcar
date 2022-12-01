@@ -1,4 +1,4 @@
-package com.sda.carrental.model;
+package com.sda.carrental.model.car;
 
 public class Car {
     String brand;
@@ -10,4 +10,8 @@ public class Car {
     Status status;
     int price;
 
+    public enum Status
+    {
+        BORROWED, AVAILABLE, UNAVAILABLE
+    }
 }

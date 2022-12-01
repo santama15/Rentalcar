@@ -1,11 +1,12 @@
-package com.sda.carrental.model.operating;
+package com.sda.carrental.model.operating.returnCar;
 
 import java.time.LocalDate;
 
 import com.sda.carrental.model.User;
+import com.sda.carrental.model.operating.reservation.Reservation;
 
 
-public class Return
+public class ReturnCar
 {
     User employee;
     LocalDate dateTo;
