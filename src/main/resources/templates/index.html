@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" )>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Wypożyczalnia samochodów</title>
+
+
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+
+</head>
+<body>
+
+<div id="container">
+    <div id="header">
+        <div id="logo">
+            <h1><a href="#">Wypożyczalnia samochodów</a></h1>
+        </div>
+
+        <div id="login">
+            <button type="button" class="btn btn-outline-light">Zaloguj się</button>
+        </div>
+
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="#">Strona główna</a></li>
+            <li><a href="#">O nas</a></li>
+            <li><a href="#">Kontakt</a></li>
+        </ul>
+    </div>
+
+    <div id="box_txt">
+        <form th:object="${rezerwacje??}" th:action="@{/mvc/....}" method="post">
+
+            <img src="images/img1.jpg"/>
+            <!--        <div id="box_car"><a href="#"><div class="title_box_car">Auto 1</div></a></div>-->
+            <div id="box_car" class="margin_left1">
+                <div class="box_car">Sprawdź dostępność
+
+                    <ul>
+                        <label>Wybierz lokalizację</label><br>
+                        <select name="lokalizacje">
+                            <option>lokalizacja1</option>
+                            <option>lokalizacja2</option>
+                        </select><br>
+
+                        <input type="checkbox" name="vehicle1" value="Bike">
+
+                        <label>Zwrot w innej lokalizacji</label><br>
+                        <select name="lokalizacje">
+                            <option>lokalizacja1</option>
+                            <option>lokalizacja2</option>
+                        </select>
+
+
+                        <li> Wypożycz od <input type="date">  Wypożycz do <input type="date"></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div>
+                <button type="submit" class="btn btn-primary">Znajdź samochód..</button>
+            </div>
+
+        </form>
+    </div>
+
+
+    <div id="content">
+        <div id="div_left">
+            <h2>Katalog</h2>
+            <ul>
+                <li><a href="#">Marka</a></li>
+            </ul>
+        </div>
+        <div id="div_right">
+            <h2>Witaj na naszej stronie</h2>
+            <p>Wypożyczamy samochody tra la la
+                Wypożyczamy samochody tra la la
+                Wypożyczamy samochody tra la la
+                Wypożyczamy samochody tra la la
+            </p>
+        </div>
+        <div id="footer">
+            <p>&copy Wszelkie prawa zastrzeżone. <br/> Projekt: <a href="https://sdacademy.pl/">SDA ;-)</a></p>
+        </div>
+    </div>
+
+</div>
+</body>
+
+
+</html>
