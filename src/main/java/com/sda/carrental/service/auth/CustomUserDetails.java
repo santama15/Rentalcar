@@ -6,9 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.sda.carrental.model.User;
+import com.sda.carrental.model.users.User;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 

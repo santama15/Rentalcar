@@ -1,13 +1,33 @@
 package com.sda.carrental.model;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Company
-{
-    String companyName;
-    String domain;
-    String email;
+@Entity(name = "company")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Company {
+
+    @Id
+    @Column(name = "name", nullable = false)
+    String name;
+
+    @Column(name = "website", nullable = false)
+    String website;
+
+    @Column(name = "contact", nullable = false)
+    String contact;
+
+    @Column(name = "owner", nullable = false)
     String owner;
-    List<String> departmentsList;
+
+    @Column(name = "logotype", nullable = false)
+    String logotype;
 }
+
