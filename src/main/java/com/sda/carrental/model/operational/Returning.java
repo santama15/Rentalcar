@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity(name = "return")
+@Entity(name = "returning")
 @Getter
 @NoArgsConstructor
-public class Return {
+public class Returning {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "return_id", nullable = false)

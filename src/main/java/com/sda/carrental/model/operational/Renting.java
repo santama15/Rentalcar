@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Entity(name = "rent")
 @Getter
 @NoArgsConstructor
-public class Rental {
-    public Rental(User employee_id, Reservation reservation, LocalDate actualDateFrom, String remarks) {
+public class Renting {
+    public Renting(User employee_id, Reservation reservation, LocalDate actualDateFrom, String remarks) {
         this.employee_id = employee_id;
         this.reservation = reservation;
         this.actualDateFrom = actualDateFrom;

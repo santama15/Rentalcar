@@ -12,13 +12,14 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "employee_id"))
 
 public class Employee extends User {
-    public Employee(String email, String password, String name, String surname, Department department, Ranks rank) {
+    public Employee(String email, String password, String name, String surname, Department department, Titles title) {
         super(email, password, Roles.ROLE_EMPLOYEE);
         this.name = name;
         this.surname = surname;
         this.department = department;
-        this.rank = rank;
+        this.title = title;
     }
+
 
     @Column(name = "name")
     private String name;
@@ -31,13 +32,13 @@ public class Employee extends User {
     private Department department;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "rank")
-    private Ranks rank;
+    @Column(name = "title")
+    private Titles title;
 
-    public enum Ranks {
+    public enum Titles {
         RANK_CLERK(1), RANK_MANAGER(2);
 
-        Ranks(int value) {
+        Titles(int value) {
         }
     }
 }

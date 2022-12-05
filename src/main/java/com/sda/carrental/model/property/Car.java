@@ -26,7 +26,7 @@ public class Car {
     @Column(name = "car_id", nullable = false)
     private Long car_id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     Department department_id;
 
