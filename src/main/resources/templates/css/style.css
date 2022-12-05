@@ -160,8 +160,8 @@ input {
 				background-repeat: no-repeat;
 				background-position: top;
 				margin-top: 10px;
-				width: 421px;
-				height: 180px;
+				width: 821px;
+				height: auto;
 			    float: inherit;
 				border: 1px solid #ccc;
 				-moz-border-radius: 5px;
