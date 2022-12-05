@@ -1,14 +1,11 @@
 package com.sda.carrental.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.sda.carrental.model.users.User;
 import org.springframework.data.repository.CrudRepository;
 
-import com.sda.carrental.model.User;
-
+import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long>
 {
-    Optional<User> findByLogin(String login);
+    Optional<User> findByEmail(String email);
 }
