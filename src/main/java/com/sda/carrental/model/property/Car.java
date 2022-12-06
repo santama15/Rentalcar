@@ -55,7 +55,7 @@ public class Car {
     CarStatus carStatus;
 
     public enum CarType {
-        //TODO pls help
+        TYPE_SEDAN, TYPE_SUV, TYPE_COMPACT, TYPE_WAGON, TYPE_COUPE, TYPE_VAN, TYPE_HATCHBACK, TYPE_PICKUP, TYPE_SPORT
     }
 
     public enum CarStatus {

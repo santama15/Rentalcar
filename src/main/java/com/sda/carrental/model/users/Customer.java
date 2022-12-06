@@ -5,13 +5,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity(name = "client")
+@Entity(name = "customer")
 @Getter
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "client_id"))
-public class Client extends User {
-    public Client(String email, String password, String name, String surname, String address) {
-        super(email, password, Roles.ROLE_CLIENT);
+@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "customer_id"))
+public class Customer extends User {
+    public Customer(String email, String password, String name, String surname, String address) {
+        super(email, password, Roles.ROLE_CUSTOMER);
         this.name = name;
         this.surname = surname;
         this.address = address;
