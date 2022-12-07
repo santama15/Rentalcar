@@ -1,9 +1,11 @@
 package com.sda.carrental.service.auth;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.sda.carrental.model.users.User;
@@ -12,48 +14,41 @@ import lombok.RequiredArgsConstructor;
 
 
 @RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails
-{
+public class CustomUserDetails implements UserDetails {
     private final User user;
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override
-    public String getPassword()
-    {
-        return null;
+    public String getPassword() {
+        return user.getPassword();
     }
 
     @Override
-    public String getUsername()
-    {
-        return null;
+    public String getUsername() {
+        return user.getEmail();
     }
 
     @Override
-    public boolean isAccountNonExpired()
-    {
-        return false;
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
     @Override
-    public boolean isAccountNonLocked()
-    {
-        return false;
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired()
-    {
-        return false;
+    public boolean isCredentialsNonExpired() {
+        return true; //false dla ważności loginu i hasła
     }
 
     @Override
-    public boolean isEnabled()
-    {
-        return false;
+    public boolean isEnabled() {
+        return true;
     }
 }
