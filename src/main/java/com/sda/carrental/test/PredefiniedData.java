@@ -28,17 +28,17 @@ public class PredefiniedData implements CommandLineRunner {
     }
 
     private void createUsers() {
-//        uRepository.save(new Customer("user1@gmail.com", "silnehaslo123", User.Roles.ROLE_CLIENT ,"Imie", "Nazwisko", "ul. Ulica 123"));
-//        uRepository.save(new Customer("user2@gmail.com", "silnehaslo12",User.Roles.ROLE_CLIENT,  "Jakub", "Kowalski", "ul. Ulica 12"));
-//        uRepository.save(new Customer("user3@gmail.com", "silnehaslo", User.Roles.ROLE_CLIENT,"Maciek", "Masło", "ul. Ulica 1"));
-//        uRepository.save(new Customer("user4@gmail.com", "silnehaslo1234", User.Roles.ROLE_CLIENT,"Jan", "Orzech", "ul. Ulica 124"));
-//        uRepository.save(new Customer("user5@gmail.com", "slabehaslo321", User.Roles.ROLE_CLIENT,"Katarzyna", "Kasztan", "ul. Ulica 133"));
-//
-//
-//
-//        uRepository.save(new Employee("manager@gmail.com", "manager", "Maria", "Fajna", dRepository.findById(1L).orElse(null), Employee.Titles.RANK_MANAGER));
-//        uRepository.save(new Employee("pracownik1@gmail.com", "pracownik1", "Anna", "Mniejfajna", dRepository.findById(2L).orElse(null), Employee.Titles.RANK_CLERK));
-//        uRepository.save(new Employee("pracownik2@gmail.com", "pracownik2", "Karolina", "Nijaka", dRepository.findById(3L).orElse(null), Employee.Titles.RANK_CLERK));
+        uRepository.save(new Customer("user1@gmail.com", "silnehaslo123", User.Roles.ROLE_CUSTOMER ,"Imie", "Nazwisko", "ul. Ulica 123"));
+        uRepository.save(new Customer("user2@gmail.com", "silnehaslo12",User.Roles.ROLE_CUSTOMER,  "Jakub", "Kowalski", "ul. Ulica 12"));
+        uRepository.save(new Customer("user3@gmail.com", "silnehaslo", User.Roles.ROLE_CUSTOMER,"Maciek", "Masło", "ul. Ulica 1"));
+        uRepository.save(new Customer("user4@gmail.com", "silnehaslo1234", User.Roles.ROLE_CUSTOMER,"Jan", "Orzech", "ul. Ulica 124"));
+        uRepository.save(new Customer("user5@gmail.com", "slabehaslo321", User.Roles.ROLE_CUSTOMER,"Katarzyna", "Kasztan", "ul. Ulica 133"));
+
+
+
+        uRepository.save(new Employee("manager@gmail.com", "manager", "Maria", "Fajna", dRepository.findById(1L).orElse(null), Employee.Titles.RANK_MANAGER));
+        uRepository.save(new Employee("pracownik1@gmail.com", "pracownik1", "Anna", "Mniejfajna", dRepository.findById(2L).orElse(null), Employee.Titles.RANK_CLERK));
+        uRepository.save(new Employee("pracownik2@gmail.com", "pracownik2", "Karolina", "Nijaka", dRepository.findById(3L).orElse(null), Employee.Titles.RANK_CLERK));
     }
 
     private void createCompany() {

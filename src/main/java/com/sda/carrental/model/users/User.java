@@ -12,10 +12,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-    public User(String email, String password, Roles role) {
+    public User(String name, String surname, String email, String password, Roles role)
+    {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.name = name;
+        this.surname = surname;
     }
 
     @Id
@@ -23,8 +26,13 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "surname")
+    private String surname;
     @Setter
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Setter

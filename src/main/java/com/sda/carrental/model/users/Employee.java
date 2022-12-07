@@ -12,20 +12,12 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "employee_id"))
 
 public class Employee extends User {
-    public Employee(String email, String password, String name, String surname, Department department, Titles title) {
-        super(email, password, Roles.ROLE_EMPLOYEE);
-        this.name = name;
-        this.surname = surname;
+    public Employee(String name, String surname, String email, String password, Roles role, Department department, Titles title)
+    {
+        super(name, surname, email, password, role);
         this.department = department;
         this.title = title;
     }
-
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "surname")
-    private String surname;
 
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
