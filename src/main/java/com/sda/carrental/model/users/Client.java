@@ -10,18 +10,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "client_id"))
 public class Client extends User {
-    public Client(String email, String password, String name, String surname, String address) {
-        super(email, password, Roles.ROLE_CLIENT);
-        this.name = name;
-        this.surname = surname;
+
+    public Client(final String address)
+    {
         this.address = address;
     }
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "surname")
-    private String surname;
+    public Client(final String email, final String password, final Roles role, final String address)
+    {
+        super(email, password, role);
+        this.address = address;
+    }
 
     @Column(name = "address")
     private String address;
