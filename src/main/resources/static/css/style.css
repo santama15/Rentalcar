@@ -156,7 +156,7 @@ input {
 
 
 #box_car {
-				/*background:  #FFF url('../images/img02.jpg');*/
+				background:  #FFF url('../images/img02.jpg');
 				background-repeat: no-repeat;
 				background-position: top;
 				margin-top: 10px;

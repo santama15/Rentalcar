@@ -10,8 +10,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "customer_id"))
 public class Customer extends User {
-    public Customer(String email, String password, Roles role, String name, String surname, String address) {
-        super(email, password, role);
+    public Customer(String email, String password, String name, String surname, String address) {
+        super(email, password, Roles.ROLE_CUSTOMER);
         this.name = name;
         this.surname = surname;
         this.address = address;
