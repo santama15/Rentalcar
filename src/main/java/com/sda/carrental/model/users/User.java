@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-    public User(String name, String surname, String email, String password, Roles role)
+    public User(String email, String password, Roles role, String name, String surname)
     {
         this.email = email;
         this.password = password;
