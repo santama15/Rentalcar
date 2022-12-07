@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.sda.carrental.model.property.Car;
 import com.sda.carrental.model.property.Department;
 import com.sda.carrental.model.property.Invoice;
-import com.sda.carrental.model.users.Client;
+import com.sda.carrental.model.users.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,8 +15,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class Reservation {
-    public Reservation(Client client_id, Car car_id, Department departmentTake, Department departmentBack, LocalDate dateFrom, LocalDate dateTo, LocalDate dateCreated, Invoice invoice_id) {
-        this.client_id = client_id;
+    public Reservation(Customer customer_id, Car car_id, Department departmentTake, Department departmentBack, LocalDate dateFrom, LocalDate dateTo, LocalDate dateCreated, Invoice invoice_id) {
+        this.customer_id = customer_id;
         this.car_id = car_id;
         this.departmentTake = departmentTake;
         this.departmentBack = departmentBack;
@@ -32,8 +32,8 @@ public class Reservation {
     private Long reservation_id;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client_id;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer_id;
 
     @ManyToOne
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
