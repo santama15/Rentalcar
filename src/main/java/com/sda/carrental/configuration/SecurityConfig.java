@@ -27,16 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.authorizeRequests()
             .antMatchers(HttpMethod.DELETE).hasAnyAuthority(User.Roles.ROLE_EMPLOYEE.name())
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
             .and()
             .formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/")
+/*            .loginPage("/login")*/
+/*            .defaultSuccessUrl("/")*/
             .and()
             .httpBasic()
             .and()
-            .logout()
-            .logoutSuccessUrl("/");
+            .logout();
+/*            .logoutSuccessUrl("/");*/
         //  .and()
 //          .csrf().disable();
     }
