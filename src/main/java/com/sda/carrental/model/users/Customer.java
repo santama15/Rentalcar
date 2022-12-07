@@ -11,7 +11,7 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "customer_id"))
 public class Customer extends User {
 
-    public Customer(String name, String surname, String email, String password, Roles role, String address)
+    public Customer(String email, String password, Roles role, String name, String surname, String address)
     {
         super(email, password, role, name, surname);
         this.address = address;
