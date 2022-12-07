@@ -35,7 +35,7 @@ public class User {
     private Roles role;
 
     public enum Roles {
-        ROLE_ADMIN(0) ,ROLE_CLIENT(1), ROLE_EMPLOYEE(2);
+        ROLE_ADMIN(0), ROLE_CLIENT(1), ROLE_EMPLOYEE(2);
 
         Roles(int value) {
         }

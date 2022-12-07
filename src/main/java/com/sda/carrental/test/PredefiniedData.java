@@ -4,6 +4,7 @@ import com.sda.carrental.model.Company;
 import com.sda.carrental.model.property.Department;
 import com.sda.carrental.model.users.Customer;
 import com.sda.carrental.model.users.Employee;
+import com.sda.carrental.model.users.User;
 import com.sda.carrental.repository.CompanyRepository;
 import com.sda.carrental.repository.DepartmentRepository;
 import com.sda.carrental.repository.UserRepository;
@@ -27,11 +28,11 @@ public class PredefiniedData implements CommandLineRunner {
     }
 
     private void createUsers() {
-        uRepository.save(new Customer("user1@gmail.com", "silnehaslo123", "Imie", "Nazwisko", "ul. Ulica 123"));
-        uRepository.save(new Customer("user2@gmail.com", "silnehaslo12", "Jakub", "Kowalski", "ul. Ulica 12"));
-        uRepository.save(new Customer("user3@gmail.com", "silnehaslo", "Maciek", "Masło", "ul. Ulica 1"));
-        uRepository.save(new Customer("user4@gmail.com", "silnehaslo1234", "Jan", "Orzech", "ul. Ulica 124"));
-        uRepository.save(new Customer("user5@gmail.com", "slabehaslo321", "Katarzyna", "Kasztan", "ul. Ulica 133"));
+        uRepository.save(new Customer("user1@gmail.com", "silnehaslo123", User.Roles.ROLE_CLIENT ,"Imie", "Nazwisko", "ul. Ulica 123"));
+        uRepository.save(new Customer("user2@gmail.com", "silnehaslo12",User.Roles.ROLE_CLIENT,  "Jakub", "Kowalski", "ul. Ulica 12"));
+        uRepository.save(new Customer("user3@gmail.com", "silnehaslo", User.Roles.ROLE_CLIENT,"Maciek", "Masło", "ul. Ulica 1"));
+        uRepository.save(new Customer("user4@gmail.com", "silnehaslo1234", User.Roles.ROLE_CLIENT,"Jan", "Orzech", "ul. Ulica 124"));
+        uRepository.save(new Customer("user5@gmail.com", "slabehaslo321", User.Roles.ROLE_CLIENT,"Katarzyna", "Kasztan", "ul. Ulica 133"));
 
 
 
