@@ -12,16 +12,9 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "employee_id"))
 
 public class Employee extends User {
-
-    public Employee(final Department department, final Titles title)
+    public Employee(String name, String surname, String email, String password, Roles role, Department department, Titles title)
     {
-        this.department = department;
-        this.title = title;
-    }
-
-    public Employee(final String email, final String password, final Roles role, final Department department, final Titles title)
-    {
-        super(email, password, role);
+        super(name, surname, email, password, role);
         this.department = department;
         this.title = title;
     }

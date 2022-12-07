@@ -13,7 +13,7 @@ public class Customer extends User {
 
     public Customer(String name, String surname, String email, String password, Roles role, String address)
     {
-        super(name, surname, email, password, role);
+        super(email, password, role, name, surname);
         this.address = address;
     }
 
