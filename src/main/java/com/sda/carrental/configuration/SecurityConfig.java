@@ -30,13 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             .anyRequest().permitAll()
             .and()
             .formLogin()
-/*            .loginPage("/login")*/
-/*            .defaultSuccessUrl("/")*/
+            .loginPage("/login")
+            .defaultSuccessUrl("/")
             .and()
             .httpBasic()
             .and()
-            .logout();
-/*            .logoutSuccessUrl("/");*/
+            .logout()
+            .logoutSuccessUrl("/");
         //  .and()
 //          .csrf().disable();
     }
