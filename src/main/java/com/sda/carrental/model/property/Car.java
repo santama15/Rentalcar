@@ -10,7 +10,9 @@ import java.awt.*;
 @Getter
 @NoArgsConstructor
 public class Car {
-    public Car(String brand, String model, Integer year, Long mileage, Color color, Integer price_day, CarType carType, CarStatus carStatus) {
+    public Car(Department department, String jpgLink, String brand, String model, Integer year, Long mileage, Color color, Integer price_day, CarType carType, CarStatus carStatus) {
+        this.department_id = department;
+        this.jpgLink = jpgLink;
         this.brand = brand;
         this.model = model;
         this.year = year;
@@ -29,6 +31,9 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     Department department_id;
+
+    @Column(name = "jpg_link")
+    String jpgLink;
 
     @Column(name = "brand")
     String brand;
