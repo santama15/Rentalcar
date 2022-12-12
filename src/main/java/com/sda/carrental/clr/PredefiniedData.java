@@ -1,12 +1,13 @@
 package com.sda.carrental.clr;
 
 import com.sda.carrental.model.Company;
+import com.sda.carrental.model.operational.Renting;
 import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.Car;
 import com.sda.carrental.model.property.Department;
+import com.sda.carrental.model.property.Invoice;
 import com.sda.carrental.model.users.Customer;
 import com.sda.carrental.model.users.Employee;
-import com.sda.carrental.model.users.User;
 import com.sda.carrental.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -14,9 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
-import java.time.LocalDateTime;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @RequiredArgsConstructor
 @Service
@@ -44,14 +44,14 @@ public class PredefiniedData implements CommandLineRunner {
     }
 
     private void createUsers() {
-        userRepository.save(new Customer("user1@gmail.com", encoder.encode("password1"), User.Roles.ROLE_CUSTOMER ,"Anna", "Nazwiskowa", "ul. Ulica 123"));
-        userRepository.save(new Customer("user2@gmail.com", encoder.encode("password1"),User.Roles.ROLE_CUSTOMER,  "Jakub", "Kowalski", "ul. Ulica 12"));
-        userRepository.save(new Customer("user3@gmail.com", encoder.encode("password1"), User.Roles.ROLE_CUSTOMER,"Maciek", "Masło", "ul. Ulica 1"));
-        userRepository.save(new Customer("user4@gmail.com", encoder.encode("password1"), User.Roles.ROLE_CUSTOMER,"Jan", "Orzech", "ul. Ulica 124"));
-        userRepository.save(new Customer("user5@gmail.com", encoder.encode("password1"), User.Roles.ROLE_CUSTOMER,"Katarzyna", "Kasztan", "ul. Ulica 133"));
-        userRepository.save(new Customer("user6@gmail.com", encoder.encode("password1"), User.Roles.ROLE_CUSTOMER,"Igor", "Kasztan", "ul. Ulica 137"));
-        userRepository.save(new Customer("user7@gmail.com", encoder.encode("password1"), User.Roles.ROLE_CUSTOMER,"Anna", "Kowalska", "ul. Ulica 138"));
-        userRepository.save(new Customer("user8@gmail.com", encoder.encode("password1"), User.Roles.ROLE_CUSTOMER,"Andrzej", "Nowak", "ul. Ulica 139"));
+        userRepository.save(new Customer("user1@gmail.com", encoder.encode("password1"),"Anna", "Nazwiskowa", "ul. Ulica 123"));
+        userRepository.save(new Customer("user2@gmail.com", encoder.encode("password1"),  "Jakub", "Kowalski", "ul. Ulica 12"));
+        userRepository.save(new Customer("user3@gmail.com", encoder.encode("password1"),"Maciek", "Masło", "ul. Ulica 1"));
+        userRepository.save(new Customer("user4@gmail.com", encoder.encode("password1"),"Jan", "Orzech", "ul. Ulica 124"));
+        userRepository.save(new Customer("user5@gmail.com", encoder.encode("password1"),"Katarzyna", "Kasztan", "ul. Ulica 133"));
+        userRepository.save(new Customer("user6@gmail.com", encoder.encode("password1"),"Igor", "Kasztan", "ul. Ulica 137"));
+        userRepository.save(new Customer("user7@gmail.com", encoder.encode("password1"),"Anna", "Kowalska", "ul. Ulica 138"));
+        userRepository.save(new Customer("user8@gmail.com", encoder.encode("password1"),"Andrzej", "Nowak", "ul. Ulica 139"));
 
 
         userRepository.save(new Employee("manager@gmail.com", encoder.encode("manager"), "Maria", "Fajna", departmentRepository.findById(1L).orElse(null), Employee.Titles.RANK_MANAGER));
@@ -114,12 +114,25 @@ public class PredefiniedData implements CommandLineRunner {
     }
 
     private void createReservation() {
-      //  reservationRepository.save(new Reservation(userRepository.findById(), carRepository.findById(14L), departmentRepository.findById(), departmentRepository.findById(), LocalDateTime.of(2022, 12, 6, 10, 10)));
-    }
+        //note: there should be created appropriate method for this
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(7L).orElse(null), departmentRepository.findById(2L).orElse(null), departmentRepository.findById(3L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(3), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(2L).orElse(null), carRepository.findById(10L).orElse(null), departmentRepository.findById(3L).orElse(null), departmentRepository.findById(2L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(4), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(3L).orElse(null), carRepository.findById(19L).orElse(null), departmentRepository.findById(5L).orElse(null), departmentRepository.findById(7L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(3), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(4L).orElse(null), carRepository.findById(23L).orElse(null), departmentRepository.findById(6L).orElse(null), departmentRepository.findById(5L).orElse(null), LocalDate.now().minusDays(2), LocalDate.now().plusDays(1), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(5L).orElse(null), carRepository.findById(28L).orElse(null), departmentRepository.findById(7L).orElse(null), departmentRepository.findById(6L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(2), LocalDate.of(2022, 12, 6)));
+  }
     private void createRent() {
-
+        rentingRepository.save(new Renting(userRepository.findById(12L).orElse(null), reservationRepository.findById(1L).orElse(null), reservationRepository.findById(1L).get().getDateFrom(), ""));
+        rentingRepository.save(new Renting(userRepository.findById(13L).orElse(null), reservationRepository.findById(2L).orElse(null), reservationRepository.findById(2L).get().getDateFrom(), ""));
+        rentingRepository.save(new Renting(userRepository.findById(14L).orElse(null), reservationRepository.findById(3L).orElse(null), reservationRepository.findById(3L).get().getDateFrom(), ""));
+        rentingRepository.save(new Renting(userRepository.findById(14L).orElse(null), reservationRepository.findById(4L).orElse(null), reservationRepository.findById(4L).get().getDateFrom(), ""));
+        rentingRepository.save(new Renting(userRepository.findById(13L).orElse(null), reservationRepository.findById(5L).orElse(null), reservationRepository.findById(5L).get().getDateFrom(), ""));
     }
     private void createInvoice() {
-
+        invoiceRepository.save(new Invoice(carRepository.findById(7L).get().getPrice_day()*(reservationRepository.findById(1L).get().getDateFrom().until(reservationRepository.findById(1L).get().getDateTo(), ChronoUnit.DAYS)), reservationRepository.findById(1L).orElse(null), true, false, LocalDate.now().plusMonths(1)));
+        invoiceRepository.save(new Invoice(carRepository.findById(10L).get().getPrice_day()*(reservationRepository.findById(2L).get().getDateFrom().until(reservationRepository.findById(2L).get().getDateTo(), ChronoUnit.DAYS)), reservationRepository.findById(2L).orElse(null), true, false, LocalDate.now().plusMonths(1)));
+        invoiceRepository.save(new Invoice(carRepository.findById(19L).get().getPrice_day()*(reservationRepository.findById(3L).get().getDateFrom().until(reservationRepository.findById(3L).get().getDateTo(), ChronoUnit.DAYS)), reservationRepository.findById(3L).orElse(null), true, false, LocalDate.now().plusMonths(1)));
+        invoiceRepository.save(new Invoice(carRepository.findById(23L).get().getPrice_day()*(reservationRepository.findById(4L).get().getDateFrom().until(reservationRepository.findById(4L).get().getDateTo(), ChronoUnit.DAYS)), reservationRepository.findById(4L).orElse(null), true, false, LocalDate.now().plusMonths(1)));
+        invoiceRepository.save(new Invoice(carRepository.findById(28L).get().getPrice_day()*(reservationRepository.findById(5L).get().getDateFrom().until(reservationRepository.findById(5L).get().getDateTo(), ChronoUnit.DAYS)), reservationRepository.findById(5L).orElse(null), true, false, LocalDate.now().plusMonths(1)));
     }
 }

@@ -18,7 +18,7 @@ public class Department {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "department_id", nullable = false)
     private Long branch_id;
 
