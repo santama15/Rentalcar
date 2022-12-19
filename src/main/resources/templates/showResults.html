@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
@@ -13,20 +13,20 @@
     <script src="../static/js/bootstrap.js"></script>
 
 
-    <style>
-        [class*="col"] {
-            padding: 1rem;
-            background-color: rgb(255, 0, 72);
-            border: 2px solid darkblue;
-            color: rgb(255, 240, 251);
-            text-align: center;
-        }
-    </style>
+    <!--    <style>-->
+    <!--        [class*="col"] {-->
+    <!--            padding: 1rem;-->
+    <!--            background-color: rgb(208, 161, 107);-->
+    <!--            border: 2px solid #e11616;-->
+    <!--            color: rgb(21, 42, 11);-->
+    <!--            text-align: center;-->
+    <!--        }-->
+    <!--    </style>-->
 </head>
 
 
 <body>
-<div id="container" class="container-md">
+<div id="container">
 
     <div id="header">
         <div id="logo">
@@ -50,46 +50,99 @@
     </div>
 
 
-    <div class="container-md">
-        <div class="row">
-            <div class="col-md-12">
-                Tutaj marka i model znalezionego samochodu
+    <div class="row">
+        <div class="col-sm-3 border border-dark">
+
+            <div class="bg-light border">Filtruj</div>
+
+            <div class="bg-light border">
+                Marka
             </div>
-            <!-- <div class="col-lg-4">
-                tutaj pusto?
-              </div> -->
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkMark" checked>
+                <label class="form-check-label" for="checkMark">
+                    Wszystkie
+                    <br/>
+                </label>
+            </div>
+
+
+            <div class="bg-light border">
+                Model
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkModel" checked>
+                <label class="form-check-label" for="checkModel">
+                    Wszystkie
+                </label>
+            </div>
+
+
+            <div class="bg-light border">
+                Rocznik
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkVehicleYear" checked>
+                <label class="form-check-label" for="checkVehicleYear">
+                    Wszystkie
+                </label>
+            </div>
+
+
+            <div class="bg-light border">
+                Kolor
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkColor" checked>
+                <label class="form-check-label" for="checkColor">
+                    Wszystkie
+                </label>
+            </div>
+
+
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                Tutaj będzie obrazek
-            </div>
-            <div class="col-md-6">
 
-                <ul class="list-group">
-                    <li class="list-group-item">zielony</li>
-                    <li class="list-group-item">rocznik</li>
-                    <li class="list-group-item">cecha</li>
-                    <li class="list-group-item">cecha2</li>
-                </ul>
-
-
-            </div>
-            <div class="col-md-2">
-
-
-                <div class="vstack gap-3">
-                    <div class="bg-light border">300 zł</div>
-                    >
+        <div class="col-sm-9 border border-dark">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Tutaj marka i model znalezionego samochodu</h4>
                 </div>
 
+            </div>
 
-                tutaj będzie cena zamówienia </br>
-                <button type="button" class="btn btn-dark">Wybierz</button>
+            <div class="row">
+                <div class="col-md-4">
+                    Tutaj będzie obrazek
+                </div>
+                <div class="col-md-6">
 
+                    <ul class="list-group">
+                        <li class="list-group-item">zielony</li>
+                        <li class="list-group-item">rocznik</li>
+                        <li class="list-group-item">cecha</li>
+                        <li class="list-group-item">cecha2</li>
+                    </ul>
+
+                </div>
+                <div class="col-md-2">
+
+                    <div class="vstack gap-3">
+                        <div class="bg-light border">300 zł</div>
+                        >
+                    </div>
+
+                    tutaj będzie cena zamówienia </br>
+                    <button type="button" class="btn btn-dark">Wybierz</button>
+
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 
