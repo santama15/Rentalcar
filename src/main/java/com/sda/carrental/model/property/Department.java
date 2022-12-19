@@ -11,15 +11,19 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Department {
-    public Department(String city, String address) {
+    public Department(String countryCode, String city, String address) {
+        this.countryCode = countryCode;
         this.city = city;
         this.address = address;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "department_id", nullable = false)
     private Long branch_id;
+
+    @Column(name = "country_code")
+    private String countryCode;
 
     @Column(name = "city")
     private String city;

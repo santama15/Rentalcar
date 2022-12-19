@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Returning {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "return_id", nullable = false)
     private Long return_id;
 
