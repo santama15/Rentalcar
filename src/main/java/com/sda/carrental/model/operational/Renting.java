@@ -20,7 +20,7 @@ public class Renting {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rent_id", nullable = false)
     private Long rent_id;
 
