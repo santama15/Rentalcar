@@ -11,41 +11,11 @@
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="../static/js/bootstrap.js"></script>
-
-    <!--    <style>-->
-    <!--        [class*="col"] {-->
-    <!--            padding: 1rem;-->
-    <!--            background-color: rgb(208, 161, 107);-->
-    <!--            border: 2px solid #e11616;-->
-    <!--            color: rgb(21, 42, 11);-->
-    <!--            text-align: center;-->
-    <!--        }-->
-    <!--    </style>-->
 </head>
 
 <body>
 <div id="container">
-
-    <div id="header">
-        <div id="logo">
-            <h1>Wypożyczalnia samochodów</h1>
-        </div>
-
-        <div id="login">
-            <a class="btn btn-outline-light" href="/login" role="button">Zaloguj się</a>
-        </div>
-
-    </div>
-
-
-    <div id="menu">
-        <ul>
-            <li><a href="#">Strona główna</a></li>
-            <li><a href="#">Cennik</a></li>
-            <li><a href="#">O nas</a></li>
-            <li><a href="#">Kontakt</a></li>
-        </ul>
-    </div>
+<div th:include="fragments/dry::topmenu"></div>
 
     <div class="row">
         <div class="col-sm-3 border border-dark">
@@ -123,8 +93,8 @@
                         </ul>
 
                     </div>
+                    
                     <div class="col-md-2">
-
                         <!--                        //TODO poniżej cena za dzień, powinno być za ilość dni.-->
                         <div class="vstack gap-3">
                             <div class="bg-light border" th:text="${car.price_day} +' '+zł">Cena</div>
