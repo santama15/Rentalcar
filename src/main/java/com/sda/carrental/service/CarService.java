@@ -1,9 +1,7 @@
 package com.sda.carrental.service;
 
 import com.sda.carrental.model.property.Car;
-import com.sda.carrental.model.property.Department;
 import com.sda.carrental.repository.CarRepository;
-import com.sda.carrental.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
