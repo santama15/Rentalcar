@@ -12,7 +12,6 @@
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="../static/js/bootstrap.js"></script>
 
-
     <!--    <style>-->
     <!--        [class*="col"] {-->
     <!--            padding: 1rem;-->
@@ -23,7 +22,6 @@
     <!--        }-->
     <!--    </style>-->
 </head>
-
 
 <body>
 <div id="container">
@@ -49,7 +47,6 @@
         </ul>
     </div>
 
-
     <div class="row">
         <div class="col-sm-3 border border-dark">
 
@@ -59,9 +56,9 @@
                 Marka
             </div>
 
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="checkMark" checked>
-                <label class="form-check-label" for="checkMark">
+            <div class="form-check" th:each="car : ${cars}">
+                <input class="form-check-input" type="checkbox" value="" id="checkBrand" checked>
+                <label class="form-check-label" for="checkBrand" th:text="${car.brand}">
                     Wszystkie
                     <br/>
                 </label>
@@ -72,9 +69,9 @@
                 Model
             </div>
 
-            <div class="form-check">
+            <div class="form-check" th:each="car : ${cars}">
                 <input class="form-check-input" type="checkbox" value="" id="checkModel" checked>
-                <label class="form-check-label" for="checkModel">
+                <label class="form-check-label" for="checkModel" th:text="${car.model}">
                     Wszystkie
                 </label>
             </div>
@@ -84,9 +81,9 @@
                 Rocznik
             </div>
 
-            <div class="form-check">
+            <div class="form-check" th:each="car : ${cars}">
                 <input class="form-check-input" type="checkbox" value="" id="checkVehicleYear" checked>
-                <label class="form-check-label" for="checkVehicleYear">
+                <label class="form-check-label" for="checkVehicleYear" th:text="${car.year}">
                     Wszystkie
                 </label>
             </div>
@@ -96,52 +93,50 @@
                 Kolor
             </div>
 
-            <div class="form-check">
+            <div class="form-check" th:each="car : ${cars}">
                 <input class="form-check-input" type="checkbox" value="" id="checkColor" checked>
-                <label class="form-check-label" for="checkColor">
+                <label class="form-check-label" for="checkColor" th:text="${car.color}">
                     Wszystkie
                 </label>
             </div>
-
-
         </div>
 
         <div class="col-sm-9 border border-dark">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4>Tutaj marka i model znalezionego samochodu</h4>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    Tutaj będzie obrazek
-                </div>
-                <div class="col-md-6">
-
-                    <ul class="list-group">
-                        <li class="list-group-item">zielony</li>
-                        <li class="list-group-item">rocznik</li>
-                        <li class="list-group-item">cecha</li>
-                        <li class="list-group-item">cecha2</li>
-                    </ul>
-
-                </div>
-                <div class="col-md-2">
-
-                    <div class="vstack gap-3">
-                        <div class="bg-light border">300 zł</div>
-                        >
+            <div th:each="car : ${cars}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 th:text="${car.brand}"></h4>
                     </div>
+                </div>
 
-                    tutaj będzie cena zamówienia </br>
-                    <button type="button" class="btn btn-dark">Wybierz</button>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img th:src="${car.jpgLink}" alt="Zdjęcie" width="255" height="150"/>
 
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:text="${car.model}">Model</li>
+                            <li class="list-group-item" th:text="${car.carType}">Nadwozie</li>
+                            <li class="list-group-item" th:text="${car.year}">Rocznik</li>
+                            <li class="list-group-item" th:text="${car.color}">cecha</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-md-2">
+
+                        <!--                        //TODO poniżej cena za dzień, powinno być za ilość dni.-->
+                        <div class="vstack gap-3">
+                            <div class="bg-light border" th:text="${car.price_day} +' '+zł">Cena</div>
+                        </div>
+
+                        </br>
+                        <button type="button" class="btn btn-dark">Wybierz</button>
+
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
