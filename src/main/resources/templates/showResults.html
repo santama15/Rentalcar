@@ -15,59 +15,85 @@
 
 <body>
 <div id="container">
-<div th:include="fragments/dry::topmenu"></div>
+    <div th:include="fragments/dry::topmenu"></div>
 
     <div class="row">
         <div class="col-sm-3 border border-dark">
 
             <div class="bg-light border">Filtruj</div>
 
-            <div class="bg-light border">
-                Marka
-            </div>
+            <div class="accordion" id="accordionFilter">
+                <div class="accordion-item">
+                    <h6 class="accordion-header" id="headingOne">
+                        <button class="accordion-button text-light bg-dark" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Marka
+                        </button>
+                    </h6>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                         data-bs-parent="#accordionFilter">
+                        <div class="accordion-body">
+                            <div class="form-check" th:each="car : ${cars}">
+                                <input class="form-check-input" type="checkbox" value="" id="checkBrand">
+                                <label class="form-check-label" for="checkBrand" th:text="${car.brand}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-check" th:each="car : ${cars}">
-                <input class="form-check-input" type="checkbox" value="" id="checkBrand" checked>
-                <label class="form-check-label" for="checkBrand" th:text="${car.brand}">
-                    Wszystkie
-                    <br/>
-                </label>
-            </div>
+                <div class="accordion-item">
+                    <h6 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed text-light bg-dark" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Model
+                        </button>
+                    </h6>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                         data-bs-parent="#accordionFilter">
+                        <div class="accordion-body">
+                            <div class="form-check" th:each="car : ${cars}">
+                                <input class="form-check-input" type="checkbox" value="" id="checkModel">
+                                <label class="form-check-label" for="checkModel" th:text="${car.model}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="accordion-item">
+                    <h6 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed text-light bg-dark" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Rocznik
+                        </button>
+                    </h6>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                         data-bs-parent="#accordionFilter">
+                        <div class="accordion-body">
+                            <div class="form-check" th:each="car : ${cars}">
+                                <input class="form-check-input" type="checkbox" value="" id="checkVehicleYear">
+                                <label class="form-check-label" for="checkVehicleYear" th:text="${car.year}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="bg-light border">
-                Model
-            </div>
-
-            <div class="form-check" th:each="car : ${cars}">
-                <input class="form-check-input" type="checkbox" value="" id="checkModel" checked>
-                <label class="form-check-label" for="checkModel" th:text="${car.model}">
-                    Wszystkie
-                </label>
-            </div>
-
-
-            <div class="bg-light border">
-                Rocznik
-            </div>
-
-            <div class="form-check" th:each="car : ${cars}">
-                <input class="form-check-input" type="checkbox" value="" id="checkVehicleYear" checked>
-                <label class="form-check-label" for="checkVehicleYear" th:text="${car.year}">
-                    Wszystkie
-                </label>
-            </div>
-
-
-            <div class="bg-light border">
-                Kolor
-            </div>
-
-            <div class="form-check" th:each="car : ${cars}">
-                <input class="form-check-input" type="checkbox" value="" id="checkColor" checked>
-                <label class="form-check-label" for="checkColor" th:text="${car.color}">
-                    Wszystkie
-                </label>
+                <div class="accordion-item">
+                    <h6 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed text-light bg-dark" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Kolor
+                        </button>
+                    </h6>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                         data-bs-parent="#accordionFilter">
+                        <div class="accordion-body">
+                            <div class="form-check" th:each="car : ${cars}">
+                                <input class="form-check-input" type="checkbox" value="" id="checkColor">
+                                <label class="form-check-label" for="checkColor" th:background="${car.color}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -91,9 +117,8 @@
                             <li class="list-group-item" th:text="${car.year}">Rocznik</li>
                             <li class="list-group-item" th:text="${car.color}">cecha</li>
                         </ul>
-
                     </div>
-                    
+
                     <div class="col-md-2">
                         <!--                        //TODO poniżej cena za dzień, powinno być za ilość dni.-->
                         <div class="vstack gap-3">
