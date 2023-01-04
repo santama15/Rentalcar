@@ -13,15 +13,16 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/show")
+@RequestMapping
+
 public class CarController {
 
 
     private final CarService carService;
-    @GetMapping
+    @GetMapping("/show")
     public String showResults(final ModelMap map) {
         List<Car> cars = carService.findAll();
-        map.addAttribute("department", cars);
+        map.addAttribute("cars", carService.findAll());
         return "showResults";
     }
 }

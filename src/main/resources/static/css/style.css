@@ -11,10 +11,10 @@ a {
     color: #6a8db7;
 }
 
-a:hover {
-    text-decoration: none;
-    /*padding: 0px;*/ /*ta opcja sprawiała, że guzik się pomniejszał*/
-}
+/*a:hover {*/                           zmniejsza buttony
+/*    text-decoration: none;*/
+/*    padding: 0px;*/
+/*}*/
 
 p {
     line-height: 25px;
