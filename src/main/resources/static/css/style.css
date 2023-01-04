@@ -13,7 +13,7 @@ a {
 
 a:hover {
     text-decoration: none;
-    padding: 0px;
+    /*padding: 0px;*/ /*ta opcja sprawiała, że guzik się pomniejszał*/
 }
 
 p {
