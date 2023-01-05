@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Wypożyczalnia samochodów</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+
+    <!--   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">-->
+    <!--   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>-->
+</head>
+
+<body>
+<div id="container" class="container-md">
+    <div th:include="fragments/dry::topmenu"></div>
+
+    <div id="main">
+        <img src="../images/img1.jpg"/>
+
+        <div id="content">
+                <h1>Kontakt</h1>
+
+            <div id="address">
+                <div class="col1">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <h1 id="contact">&#9990</h1>
+                            </div>
+                                    <div class="flip-box-back">
+                                        <h2 id="contact">+48 500 500 500</h2>
+                                    </div>
+                                </div>
+                </div>
+                </div>
+
+        <div id="col2">
+                <div class="flip-box">
+                    <div class="flip-box-inner">
+                        <div class="flip-box-front">
+                            <h1 id="contact">&#64</h1>
+                        </div>
+                        <div class="flip-box-back">
+                            <h2 id="contact">carrental@sda.com</h2>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+
+            <h1><br>Lokalizacja</h1>
+
+            <div class="flip-box-wider">
+                <div class="flip-box-inner-wider">
+                    <div class="flip-box-front-wider">
+                        <h2 id="address">KATOWICE</h2>
+                    </div>
+                    <div class="flip-box-back-wider">
+                        <h2 id="address">Fajna 1, 44-222 Katowice</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-box-wider">
+                <div class="flip-box-inner-wider">
+                    <div class="flip-box-front-wider">
+                        <h2 id="address">ŁÓDŹ</h2>
+                    </div>
+                    <div class="flip-box-back-wider">
+                        <h2 id="address">Niefajna 2, 11-123 Łódź</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-box-wider">
+                <div class="flip-box-inner-wider">
+                    <div class="flip-box-front-wider">
+                        <h2 id="address">GDAŃSK</h2>
+                    </div>
+                    <div class="flip-box-back-wider">
+                        <h2 id="address">Średnia 3, 01-222 Gdańsk</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-box-wider">
+                <div class="flip-box-inner-wider">
+                    <div class="flip-box-front-wider">
+                        <h2 id="address">WARSZAWA</h2>
+                    </div>
+                    <div class="flip-box-back-wider">
+                        <h2 id="address">Pusta 4, 22-455 Warszawa</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-box-wider">
+                <div class="flip-box-inner-wider">
+                    <div class="flip-box-front-wider">
+                        <h2 id="address">BIAŁYSTOK</h2>
+                    </div>
+                    <div class="flip-box-back-wider">
+                        <h2 id="address">Pełna 5, 11-777 Białystok</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-box-wider">
+                <div class="flip-box-inner-wider">
+                    <div class="flip-box-front-wider">
+                        <h2 id="address">POZNAŃ</h2>
+                    </div>
+                    <div class="flip-box-back-wider">
+                        <h2 id="address">Półpełna 6, 09-025 Poznań</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-box-wider">
+                <div class="flip-box-inner-wider">
+                    <div class="flip-box-front-wider">
+                        <h2 id="address">WROCŁAW</h2>
+                    </div>
+                    <div class="flip-box-back-wider">
+                        <h2 id="address">Półpusta 7, 52-222 Wrocław</h2>
+                    </div>
+                </div>
+            </div>
+
+
+    <div id="footer">
+        <div class="d-grid gap-3">
+            <div class="p-2 bg-light border">
+                <p>&copy Wszelkie prawa zastrzeżone. <br/> Projekt: <a href="https://sdacademy.pl/">SDA ;-)</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
