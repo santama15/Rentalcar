@@ -18,13 +18,14 @@
 
 <body>
 <div id="container" class="container-md">
-    <div th:include="fragments/dry::topmenu"></div>
+    <div th:include="fragments/top::top-menu"></div>
+    <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
         <img src="../images/img1.jpg"/>
 
         <div id="content">
-                <h1>Kontakt</h1>
+            <h1>Kontakt</h1>
 
             <div id="address">
                 <div class="col1">
@@ -33,26 +34,26 @@
                             <div class="flip-box-front">
                                 <h1 id="contact">&#9990</h1>
                             </div>
-                                    <div class="flip-box-back">
-                                        <h2 id="contact">+48 500 500 500</h2>
-                                    </div>
-                                </div>
-                </div>
-                </div>
-
-        <div id="col2">
-                <div class="flip-box">
-                    <div class="flip-box-inner">
-                        <div class="flip-box-front">
-                            <h1 id="contact">&#64</h1>
-                        </div>
-                        <div class="flip-box-back">
-                            <h2 id="contact">carrental@sda.com</h2>
+                            <div class="flip-box-back">
+                                <h2 id="contact">+48 500 500 500</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
-        </div>
-        </div>
+
+                <div id="col2">
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                <h1 id="contact">&#64</h1>
+                            </div>
+                            <div class="flip-box-back">
+                                <h2 id="contact">carrental@sda.com</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <h1><br>Lokalizacja</h1>
 
@@ -134,14 +135,10 @@
             </div>
 
 
-    <div id="footer">
-        <div class="d-grid gap-3">
-            <div class="p-2 bg-light border">
-                <p>&copy Wszelkie prawa zastrzeżone. <br/> Projekt: <a href="https://sdacademy.pl/">SDA ;-)</a></p>
-            </div>
+            <div th:include="fragments/bottom::bottom-footer"></div>
         </div>
     </div>
-
+</div>
 </body>
 
 </html>
