@@ -14,7 +14,6 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class CarService {
 
-
     private final CarRepository carRepository;
 
     public List<Car> findAll() {
@@ -22,5 +21,10 @@ public class CarService {
                 .collect(toList());
     }
 
+    //TODO
+    public List<Car> findUnreservedCars() {
+        return StreamSupport.stream(carRepository.findAll().spliterator(), false)
+                .collect(toList());
+    }
 
 }
