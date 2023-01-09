@@ -51,7 +51,7 @@ public class PredefiniedData implements CommandLineRunner {
         userRepository.save(new Customer("user5@gmail.com", encoder.encode("password1"),"Katarzyna", "Kasztan", "ul. Ulica 133"));
         userRepository.save(new Customer("user6@gmail.com", encoder.encode("password1"),"Igor", "Kasztan", "ul. Ulica 137"));
         userRepository.save(new Customer("user7@gmail.com", encoder.encode("password1"),"Anna", "Kowalska", "ul. Ulica 138"));
-        userRepository.save(new Customer("user8@gmail.com", encoder.encode("password1"),"Andrzej", "Nowak", "ul. Ulica 139"));
+        userRepository.save(new Customer("a@a", encoder.encode("a"),"Andrzej", "Nowak", "ul. Ulica 139"));
 
 
         userRepository.save(new Employee("manager@gmail.com", encoder.encode("manager"), "Maria", "Fajna", departmentRepository.findById(1L).orElse(null), Employee.Titles.RANK_MANAGER));

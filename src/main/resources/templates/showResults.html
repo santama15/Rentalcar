@@ -30,7 +30,7 @@
                             Marka
                         </button>
                     </h6>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
                             <div class="form-check" th:each="car : ${cars}">
@@ -89,7 +89,9 @@
                         <div class="accordion-body">
                             <div class="form-check" th:each="car : ${cars}">
                                 <input class="form-check-input" type="checkbox" value="" id="checkColor">
-                                <label class="form-check-label" for="checkColor" th:background="${car.color}"></label>
+                                <label class="form-check-label" for="checkColor"><div id="colorCircle" th:background="${car.color}" ></div></label>
+<!--                            <label class="form-check-label" for="checkColor" th:background="${car.color}" ><div id="colorCircle" style="background: #F34A53"></div></label>-->
+<!--                                <div id="colorCircle"></div>-->
                             </div>
                         </div>
                     </div>
