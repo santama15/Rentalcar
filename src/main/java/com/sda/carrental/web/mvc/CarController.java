@@ -32,7 +32,7 @@ public class CarController {
 
     @GetMapping("/show")
     public String showResults(final ModelMap map) {
-        List<Car> carList = reservationService.findUnreservedCars(LocalDate.now(),LocalDate.now().plusDays(2), 2L);
+        List<Car> carList = carService.findUnreservedCars(LocalDate.now(),LocalDate.now().plusDays(2), 2L);
         map.addAttribute("cars", carList);
         return "showResults";
     }

@@ -16,8 +16,4 @@ import java.util.stream.StreamSupport;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
-    public List<Car> findUnreservedCars(LocalDate ddateFrom, LocalDate ddateTo, Long ddepartment){
-        return StreamSupport.stream(reservationRepository.findUnreservedByDateAndDepartment(ddateFrom, ddateTo, ddepartment).spliterator(), false).collect(Collectors.toList());
-    }
 }
