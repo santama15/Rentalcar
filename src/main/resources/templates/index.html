@@ -18,7 +18,8 @@
 
 <body>
 <div id="container" class="container-md">
-    <div th:include="fragments/dry::topmenu"></div>
+    <div th:include="fragments/top::top-menu"></div>
+    <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
         <img src="../images/img1.jpg"/>
@@ -99,13 +100,7 @@
         </div>
     </div>
 
-    <div id="footer">
-        <div class="d-grid gap-3">
-            <div class="p-2 bg-light border">
-                <p>&copy Wszelkie prawa zastrzeżone. <br/> Projekt: <a href="https://sdacademy.pl/">SDA ;-)</a></p>
-            </div>
-        </div>
-    </div>
+    <div th:include="fragments/bottom::bottom-footer"></div>
 
 </div>
 </body>

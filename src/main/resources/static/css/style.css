@@ -242,6 +242,143 @@ h2 {
     font-size: 11px;
 }
 
+/*Bookmarks aboutUs and Contact*/
+
+div#content {
+    width: 942px;
+    margin: auto;
+    padding-top: 40px;
+    text-align: center;
+}
+
+div#address {
+    position: relative;
+}
+
+div#col1 {
+    top: 0px;
+    left: 0px;
+}
+
+div#col2 {
+    position: absolute;
+    top: 0px;
+    left: 471px;
+}
+
+.flip-box {
+    background-color: transparent;
+    width: 471px;
+    height: 200px;
+    border: 1px solid #f1f1f1;
+    perspective: 1000px;
+}
+
+.flip-box-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-box-front, .flip-box-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flip-box-front {
+    background-color: #bbb;
+    color: black;
+}
+
+.flip-box-back {
+    background-color: #bbb;
+    color: black;
+    transform: rotateY(180deg);
+}
+
+.flip-box-wider {
+    background-color: transparent;
+    width: 942px;
+    height: 60px;
+    border: 1px solid #f1f1f1;
+    perspective: 1000px;
+}
+
+.flip-box-inner-wider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-box-wider:hover .flip-box-inner-wider {
+    transform: rotateX(180deg);
+}
+
+.flip-box-front-wider, .flip-box-back-wider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flip-box-front-wider {
+    background-color: #bbb;
+    color: black;
+}
+
+.flip-box-back-wider {
+    background-color: #bbb;
+    color: black;
+    transform: rotateX(180deg);
+}
+
+.container-horizontaly {
+    height: 200px;
+    position: relative;
+    border: 3px solid green;
+}
+
+h1#contact {
+    font-size: 100px;
+    color: #6a8db7;
+    padding-top: 30px;
+}
+
+h2#contact {
+    font-size: 50px;
+    color: #6a8db7;
+    padding-top: 60px;
+}
+
+h2#address {
+    font-size: 45px;
+    color: #6a8db7;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+
 #colorCircle {
     width: 80px;
     height: 25px;
