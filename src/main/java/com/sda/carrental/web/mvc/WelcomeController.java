@@ -14,8 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/")
 public class WelcomeController {
-
-
     private final DepartmentService departmentService;
     @GetMapping
     public String welcomePage(final ModelMap map) {

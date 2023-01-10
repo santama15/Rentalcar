@@ -15,13 +15,13 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserService
-{
+public class UserService {
     private final UserRepository repository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public List<User> findAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     public User findById(Long id) {
@@ -30,7 +30,7 @@ public class UserService
 
     public User save(User user) {
         user.setPassword((bCryptPasswordEncoder.encode(user.getPassword())));
-      user.setPassword((user.getPassword()));
+        user.setPassword((user.getPassword()));
         return repository.save(user);
     }
 
@@ -96,8 +96,7 @@ public class UserService
 //
 //    }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         final String adminek = new BCryptPasswordEncoder().encode("adminek");
         System.out.println(adminek);
     }

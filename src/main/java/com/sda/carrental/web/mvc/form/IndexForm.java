@@ -4,14 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @ToString
-public class CreateIndexForm {
+public class IndexForm {
 
 
     private Long branch_id; //dodane przeze mnie dla /index.html
