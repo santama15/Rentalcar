@@ -15,8 +15,4 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String registerUserPage(final ModelMap map) {
-        return "registerCustomer";
-    }
 }

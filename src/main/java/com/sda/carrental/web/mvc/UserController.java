@@ -21,12 +21,8 @@ public class UserController {
     private static final String MESSAGE_KEY = "message";
     private final UserService userService;
 
-
-
-
-
-
-    @GetMapping
+    //wyświetlanie formularza
+    @GetMapping("/register")
     public String create(ModelMap map) {
         map.addAttribute("customerek", new CreateCustomerForm());  //obiekt POJO
         map.addAttribute("roles", User.Roles.values());
@@ -34,23 +30,18 @@ public class UserController {
         return "registerCustomer";
     }
 
-
-
-
     //zapisywanie danych do bazy
-    @PostMapping
+    @PostMapping("/register")
     public String handleCreate(@ModelAttribute("customerek") @Valid CreateCustomerForm form, Errors errors, RedirectAttributes redirectAttributes) {
-
-
         if (errors.hasErrors()) {
 //            model.addAttribute("roles", User.Roles.values());
             return "registerCustomer";
         }
         userService.save(CustomerMapper.toEntity(form));
+        redirectAttributes.addAttribute(MESSAGE_KEY, "Użytkownik " + form.getName() + " " + form.getSurname() + " o loginie " + form.getEmail() + " został dodany");
 
-        redirectAttributes.addAttribute(MESSAGE_KEY, "Użytkownik " + form.getName() +" "+form.getSurname() + " o loginie "+ form.getEmail() +" został dodany");
-
-        return "redirect:";
+        return "login";
+//        return "redirect:";
     }
 
 

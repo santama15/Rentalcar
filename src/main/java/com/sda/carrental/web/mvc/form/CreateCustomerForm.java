@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @ToString
 public class CreateCustomerForm {
 
-    private Long id;
+   // private Long id;
 
     @NotBlank(message = "Pole nie może być puste")
     private String name;
@@ -33,7 +33,4 @@ public class CreateCustomerForm {
     @NotBlank(message = "Pole nie może być puste")
     @Size(min = 4, message = "Minimalna ilość znaków: 4")
     private String password;
-
-//TODO
-//    private User.Roles = ;
 }
