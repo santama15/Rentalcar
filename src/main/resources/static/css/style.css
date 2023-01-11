@@ -6,15 +6,13 @@
     background: #f6f6f6;
 }
 
+
 a {
     color: #6a8db7;
 }
 
-p {
-    line-height: 25px;
-    color: #555;
-    text-align: justify;
-}
+
+
 
 #container {
     width: 942px;
@@ -28,6 +26,7 @@ p {
     height: 45px;
     margin-top: 40px;
     background: #34393b url('../images/header-left.gif') left no-repeat;
+
 }
 
 #main {
@@ -140,6 +139,8 @@ input {
     background: #c2cfdf;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+
+
 }
 
 .margin_left1 {
@@ -164,6 +165,8 @@ input {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     padding: 15px;
+
+
 }
 
 .title_box_car a {
@@ -180,6 +183,7 @@ input {
     text-align: left;
     padding-top: 140px;
     padding-left: 10px;
+
 }
 
 /*#div_left {*/
@@ -198,6 +202,7 @@ input {
     float: left;
     margin-left: 15px;
     padding: 10px;
+
 }
 
 h2 {
