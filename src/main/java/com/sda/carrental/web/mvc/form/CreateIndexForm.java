@@ -1,32 +1,29 @@
 package com.sda.carrental.web.mvc.form;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@ToString
 public class CreateIndexForm {
 
+    private Long branch_id_from;
 
-    private Long branch_id; //dodane przeze mnie dla /index.html
+    private Long branch_id_to;
 
-    @NotBlank(message = "Pole nie może być puste")
-    private String city;
+    private boolean isFirstBranch;
 
-    @NotBlank(message = "Pole nie może być puste")
-    private String address;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateFrom;
 
-    @NotBlank(message = "Pole nie może być puste")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateTo;
 
-    @NotBlank(message = "Pole nie może być puste")
     private LocalDate dateCreated;
-
-
 }

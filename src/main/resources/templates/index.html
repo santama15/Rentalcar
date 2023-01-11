@@ -25,64 +25,61 @@
         <img src="../images/img1.jpg"/>
 
         <!--        <form th:object="${rezerwacje??}" th:action="@{/....}" method="post">-->
-        <form method="post">
+        <form th:object="${createIndexForm}" th:action="@{/}" th:method="POST">
 
             <div id="box_car" class="border border-dark">
                 <h4>Sprawdź dostępność</h4>
 
                 <br/>
-                <label for="department1" class="text-lg">Miejsce odbioru pojazdu</label>
-                <select name="lokalizacje1" id="department1" class="form-select text-white bg-dark">
-                    <option selected>Wybierz z listy...</option>
+                <label for="dpt1" class="text-lg">Miejsce odbioru pojazdu</label>
+                <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{branch_id_from}">
+                    <option selected
+                    value="">Wybierz z listy...</option>
                     <option th:each="departments: ${department}"
                             th:value="${departments.getBranch_id()}"
                             th:text="${departments.getCity()+ ', '+ departments.getAddress()}"></option>
                 </select><br>
 
                 <div class="form-check form-switch">
-                    <input class="form-check-input bg-dark" type="checkbox" role="switch" name="anotherLocation"
-                           value="another"
+                    <input class="form-check-input bg-dark" type="checkbox" role="switch" name="sc"
                            data-bs-toggle="collapse"
-                           data-bs-target="#checkZwrot"
-                           id="checkSwitch"/>
+                           data-bs-target="#checkReturn"
+                           id="checkSwitch"
+                           th:checked="*{isFirstBranch}"/>
                     <label for="checkSwitch">Zwrot w innej lokalizacji</label><br>
                 </div>
 
-                <div class="collapse" id="checkZwrot">
+                <div class="collapse" id="checkReturn">
                     <div class="card card-body">
 
-                        <label for="department2" class="text-lg">Miejsce zwrotu pojazdu</label>
-                        <select name="lokalizacje1" id="department2" class="form-select text-white bg-dark">
+                        <label for="dpt2" class="text-lg">Miejsce zwrotu pojazdu</label>
+                        <select name="lt" id="dpt2" class="form-select text-white bg-dark" th:field="*{branch_id_to}">
 
-                            <option selected>Wybierz z listy...</option>
+                            <option selected
+                            value="">Wybierz z listy...</option>
                             <option th:each="departments: ${department}"
                                     th:value="${departments.getBranch_id()}"
                                     th:text="${departments.getCity()+ ', '+ departments.getAddress()}"></option>
                         </select><br>
-
                     </div>
                 </div>
-
                 <br/>
 
                 <div>
-                    od <input class="text-white bg-dark" type="date"/>
-                    do <input class="text-white bg-dark" type="date"/>
+                    od <input class="text-white bg-dark" th:type="date" th:field="*{dateFrom}"/>
+                    do <input class="text-white bg-dark" th:type="date" th:field="*{dateTo}"/>
                 </div>
                 <div class="position-relative">
 
-                    <a class="btn btn-dark text-info bg-dark bi bi-search position-absolute bottom-0 end-0" th:href="@{/show}" role="button" target="_parent">
+                    <button class="btn btn-dark text-info bg-dark bi bi-search position-absolute bottom-0 end-0"
+                       type="submit">
 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
                         </svg>
                         Znajdź samochód
-                    </a>
-
-
-<!--                    <button type="submit" class="btn btn-dark text-info bg-dark position-absolute bottom-0 end-0">Znajdź-->
-<!--                        samochód..-->
-<!--                    </button>-->
+                    </button>
                 </div>
 
             </div>
