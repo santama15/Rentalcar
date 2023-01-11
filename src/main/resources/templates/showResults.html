@@ -118,7 +118,7 @@
 
                     </div>
                     <div class="col-md-6">
-                        <ul class="list-group">
+                        <ul class="list-group list-group-flush">
                             <li class="list-group-item" th:text="${car.model}">Model</li>
                             <li class="list-group-item" th:text="${car.carType}">Nadwozie</li>
                             <li class="list-group-item" th:text="${car.year}">Rocznik</li>
@@ -135,7 +135,9 @@
                         </div>
 
                         </br>
-                        <button type="button" class="btn btn-dark">Wybierz</button>
+
+<!--                        <button type="button" class="btn btn-dark">Wybierz</button>-->
+                        <a href="/summary" class="btn bg-dark" role="button">Wybierz</a>
 
                     </div>
                 </div>
