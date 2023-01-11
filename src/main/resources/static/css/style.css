@@ -251,6 +251,13 @@ div#content {
     text-align: center;
 }
 
+div#content_index {
+    width: 942px;
+    margin: auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
 div#address {
     position: relative;
 }

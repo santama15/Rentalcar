@@ -1,5 +1,7 @@
 package com.sda.carrental.model.users;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +12,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "customer_id"))
-public class Customer extends User {
+public class Customer extends User
+{
 
     public Customer(String email, String password, String name, String surname, String address)
     {
