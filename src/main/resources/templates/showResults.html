@@ -16,8 +16,8 @@
 <body>
 <div id="container">
 
-<div th:include="fragments/top::top-menu"></div>
-<div th:include="fragments/top::reg-options"></div>
+    <div th:include="fragments/top::top-menu"></div>
+    <div th:include="fragments/top::reg-options"></div>
 
     <div class="row">
         <div class="col-sm-3 border border-dark">
@@ -35,9 +35,9 @@
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
-                            <div class="form-check" th:each="car : ${cars}">
+                            <div class="form-check" th:each="brand : ${brand}">
                                 <input class="form-check-input" type="checkbox" value="" id="checkBrand">
-                                <label class="form-check-label" for="checkBrand" th:text="${car.brand}"></label>
+                                <label class="form-check-label" for="checkBrand" th:text="${brand}"></label>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,8 @@
 
                 <div class="accordion-item">
                     <h6 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button" data-bs-toggle="collapse"
+                        <button class="accordion-button collapsed text-light bg-dark" type="button"
+                                data-bs-toggle="collapse"
                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             Model
                         </button>
@@ -53,9 +54,9 @@
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
-                            <div class="form-check" th:each="car : ${cars}">
+                            <div class="form-check" th:each="model : ${model}">
                                 <input class="form-check-input" type="checkbox" value="" id="checkModel">
-                                <label class="form-check-label" for="checkModel" th:text="${car.model}"></label>
+                                <label class="form-check-label" for="checkModel" th:text="${model}"></label>
                             </div>
                         </div>
                     </div>
@@ -63,7 +64,8 @@
 
                 <div class="accordion-item">
                     <h6 class="accordion-header" id="headingThree">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button" data-bs-toggle="collapse"
+                        <button class="accordion-button collapsed text-light bg-dark" type="button"
+                                data-bs-toggle="collapse"
                                 data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                             Rocznik
                         </button>
@@ -71,9 +73,9 @@
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
-                            <div class="form-check" th:each="car : ${cars}">
+                            <div class="form-check" th:each="year : ${year}">
                                 <input class="form-check-input" type="checkbox" value="" id="checkVehicleYear">
-                                <label class="form-check-label" for="checkVehicleYear" th:text="${car.year}"></label>
+                                <label class="form-check-label" for="checkVehicleYear" th:text="${year}"></label>
                             </div>
                         </div>
                     </div>
@@ -81,7 +83,8 @@
 
                 <div class="accordion-item">
                     <h6 class="accordion-header" id="headingFour">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button" data-bs-toggle="collapse"
+                        <button class="accordion-button collapsed text-light bg-dark" type="button"
+                                data-bs-toggle="collapse"
                                 data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                             Kolor
                         </button>
@@ -89,11 +92,11 @@
                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
-                            <div class="form-check" th:each="car : ${cars}">
+                            <div class="form-check" th:each="size : ${size}">
                                 <input class="form-check-input" type="checkbox" value="" id="checkColor">
-                                <label class="form-check-label" for="checkColor"><div id="colorCircle" th:background="${car.color}" ></div></label>
-<!--                            <label class="form-check-label" for="checkColor" th:background="${car.color}" ><div id="colorCircle" style="background: #F34A53"></div></label>-->
-<!--                                <div id="colorCircle"></div>-->
+                                <label class="form-check-label" for="checkColor" th:text="${size}"></label>
+                                <!--                            <label class="form-check-label" for="checkColor" th:background="${car.color}" ><div id="colorCircle" style="background: #F34A53"></div></label>-->
+                                <!--                                <div id="colorCircle"></div>-->
                             </div>
                         </div>
                     </div>
@@ -126,7 +129,9 @@
                     <div class="col-md-2">
                         <!--                        //TODO poniżej cena za dzień, powinno być za ilość dni.-->
                         <div class="vstack gap-3">
-                            <div class="bg-light border" th:text="${car.price_day} +' '+zł">Cena</div>
+                            <div class="bg-light border" th:text="${days*car.price_day} + ' ' + PLN + ' (' + ${car.price_day} + ')'">
+                                Cena
+                            </div>
                         </div>
 
                         </br>

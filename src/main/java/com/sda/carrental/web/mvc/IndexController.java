@@ -32,13 +32,18 @@ public class IndexController {
 
     @PostMapping
     public String handleRequest(@ModelAttribute("createIndexForm") @Valid CreateIndexForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
-        if(errors.hasErrors()) {
+        if(errors.hasErrors() || form.getDateFrom().isAfter(form.getDateTo())) {
+            if(form.getDateFrom().isAfter(form.getDateTo())) map.addAttribute("message", "Nieprawidłowa data!");
+            if(form.isFirstBranchChecked()) form.setFirstBranchChecked(false);
+
+            map.addAttribute("createIndexForm", form);
             map.addAttribute("department", departmentService.findAll());
-            map.addAttribute("createIndexForm", new CreateIndexForm());
             return "index";
         }
 
+        if(!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
         form.setDateCreated(LocalDate.now());
+        /*System.out.println(form.isFirstBranchChecked() + " " + form.getBranch_id_from() + " do " + form.getBranch_id_to());*/
 
         redirectAttributes.addFlashAttribute("indexData", form);
         return "redirect:/show";

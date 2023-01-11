@@ -24,7 +24,6 @@
     <div id="main">
         <img src="../images/img1.jpg"/>
 
-        <!--        <form th:object="${rezerwacje??}" th:action="@{/....}" method="post">-->
         <form th:object="${createIndexForm}" th:action="@{/}" th:method="POST">
 
             <div id="box_car" class="border border-dark">
@@ -32,20 +31,23 @@
 
                 <br/>
                 <label for="dpt1" class="text-lg">Miejsce odbioru pojazdu</label>
-                <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{branch_id_from}">
-                    <option selected
-                    value="">Wybierz z listy...</option>
+                <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{branch_id_from}"
+                        required>
+                    <option selected disabled
+                            value="">Wybierz z listy...
+                    </option>
                     <option th:each="departments: ${department}"
                             th:value="${departments.getBranch_id()}"
                             th:text="${departments.getCity()+ ', '+ departments.getAddress()}"></option>
                 </select><br>
 
                 <div class="form-check form-switch">
-                    <input class="form-check-input bg-dark" type="checkbox" role="switch" name="sc"
+                    <input class="form-check-input bg-dark" type="checkbox" role="switch" name="firstBranchChecked"
                            data-bs-toggle="collapse"
                            data-bs-target="#checkReturn"
                            id="checkSwitch"
-                           th:checked="*{isFirstBranch}"/>
+                           th:checked="*{firstBranchChecked}"
+                    />
                     <label for="checkSwitch">Zwrot w innej lokalizacji</label><br>
                 </div>
 
@@ -55,8 +57,9 @@
                         <label for="dpt2" class="text-lg">Miejsce zwrotu pojazdu</label>
                         <select name="lt" id="dpt2" class="form-select text-white bg-dark" th:field="*{branch_id_to}">
 
-                            <option selected
-                            value="">Wybierz z listy...</option>
+                            <option selected disabled
+                                    value="">Wybierz z listy...
+                            </option>
                             <option th:each="departments: ${department}"
                                     th:value="${departments.getBranch_id()}"
                                     th:text="${departments.getCity()+ ', '+ departments.getAddress()}"></option>
@@ -66,13 +69,14 @@
                 <br/>
 
                 <div>
-                    od <input class="text-white bg-dark" th:type="date" th:field="*{dateFrom}"/>
-                    do <input class="text-white bg-dark" th:type="date" th:field="*{dateTo}"/>
+                    od <input class="text-white bg-dark" th:type="date" th:field="*{dateFrom}" required/>
+                    do <input class="text-white bg-dark" th:type="date" th:field="*{dateTo}" required/>
                 </div>
+
                 <div class="position-relative">
 
                     <button class="btn btn-dark text-info bg-dark bi bi-search position-absolute bottom-0 end-0"
-                       type="submit">
+                            type="submit">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-search" viewBox="0 0 16 16">
@@ -84,6 +88,16 @@
 
             </div>
         </form>
+    </div>
+
+    <div th:if="${!(message == null)}">
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                <use xlink:href="#exclamation-triangle-fill"/>
+            </svg>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div th:text="${message}"></div>
+        </div>
     </div>
 
     <div id="article">
