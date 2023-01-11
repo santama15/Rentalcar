@@ -59,11 +59,22 @@ public class Car {
     @Column(name = "status")
     CarStatus carStatus;
 
+
+
     public enum CarType {
-        TYPE_SEDAN, TYPE_SUV, TYPE_COMPACT, TYPE_WAGON, TYPE_COUPE, TYPE_VAN, TYPE_HATCHBACK, TYPE_PICKUP, TYPE_SPORT
+        TYPE_SEDAN, TYPE_SUV, TYPE_COMPACT, TYPE_WAGON, TYPE_COUPE, TYPE_VAN, TYPE_HATCHBACK, TYPE_PICKUP, TYPE_SPORT;
     }
 
+
     public enum CarStatus {
-        STATUS_OPEN, STATUS_RENTED, STATUS_UNAVAILABLE
+        STATUS_OPEN, STATUS_RENTED, STATUS_UNAVAILABLE;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "color=" + color +
+                '}';
     }
 }

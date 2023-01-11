@@ -11,7 +11,7 @@ a {
     color: #6a8db7;
 }
 
-/*a:hover {*/                           zmniejsza buttony
+/*a:hover {                           zmniejsza butony
 /*    text-decoration: none;*/
 /*    padding: 0px;*/
 /*}*/
@@ -378,3 +378,11 @@ h2#address {
     transform: translate(-50%, -50%);
 }
 
+
+#colorCircle {
+    width: 80px;
+    height: 25px;
+    /*background-color: #F34A53;*/
+    /*border-radius: 100%;*/
+    margin: 40px auto 0;
+}

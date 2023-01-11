@@ -2,6 +2,7 @@ package com.sda.carrental.model.users;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ public class Customer extends User {
         super(email, password, Roles.ROLE_CUSTOMER, name, surname);
         this.address = address;
     }
-
+    @Setter
     @Column(name = "address")
     private String address;
 }

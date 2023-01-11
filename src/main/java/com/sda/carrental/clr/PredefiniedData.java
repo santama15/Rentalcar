@@ -51,7 +51,7 @@ public class PredefiniedData implements CommandLineRunner {
         userRepository.save(new Customer("user5@gmail.com", encoder.encode("password1"),"Katarzyna", "Kasztan", "ul. Ulica 133"));
         userRepository.save(new Customer("user6@gmail.com", encoder.encode("password1"),"Igor", "Kasztan", "ul. Ulica 137"));
         userRepository.save(new Customer("user7@gmail.com", encoder.encode("password1"),"Anna", "Kowalska", "ul. Ulica 138"));
-        userRepository.save(new Customer("user8@gmail.com", encoder.encode("password1"),"Andrzej", "Nowak", "ul. Ulica 139"));
+        userRepository.save(new Customer("a@a", encoder.encode("a"),"Andrzej", "Nowak", "ul. Ulica 139"));
 
 
         userRepository.save(new Employee("manager@gmail.com", encoder.encode("manager"), "Maria", "Fajna", departmentRepository.findById(1L).orElse(null), Employee.Titles.RANK_MANAGER));
@@ -116,10 +116,10 @@ public class PredefiniedData implements CommandLineRunner {
     private void createReservation() {
         //note: there should be created appropriate method for this
        reservationRepository.save(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(7L).orElse(null), departmentRepository.findById(2L).orElse(null), departmentRepository.findById(3L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(3), LocalDate.of(2022, 12, 6)));
-       reservationRepository.save(new Reservation((Customer) userRepository.findById(2L).orElse(null), carRepository.findById(10L).orElse(null), departmentRepository.findById(3L).orElse(null), departmentRepository.findById(2L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(4), LocalDate.of(2022, 12, 6)));
-       reservationRepository.save(new Reservation((Customer) userRepository.findById(3L).orElse(null), carRepository.findById(19L).orElse(null), departmentRepository.findById(5L).orElse(null), departmentRepository.findById(7L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(3), LocalDate.of(2022, 12, 6)));
-       reservationRepository.save(new Reservation((Customer) userRepository.findById(4L).orElse(null), carRepository.findById(23L).orElse(null), departmentRepository.findById(6L).orElse(null), departmentRepository.findById(5L).orElse(null), LocalDate.now().minusDays(2), LocalDate.now().plusDays(1), LocalDate.of(2022, 12, 6)));
-       reservationRepository.save(new Reservation((Customer) userRepository.findById(5L).orElse(null), carRepository.findById(28L).orElse(null), departmentRepository.findById(7L).orElse(null), departmentRepository.findById(6L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(2), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(2L).orElse(null), carRepository.findById(10L).orElse(null), departmentRepository.findById(3L).orElse(null), departmentRepository.findById(2L).orElse(null), LocalDate.now().minusDays(3), LocalDate.now().plusDays(1), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(3L).orElse(null), carRepository.findById(19L).orElse(null), departmentRepository.findById(5L).orElse(null), departmentRepository.findById(7L).orElse(null), LocalDate.now().minusDays(5), LocalDate.now().plusDays(5), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(4L).orElse(null), carRepository.findById(23L).orElse(null), departmentRepository.findById(6L).orElse(null), departmentRepository.findById(5L).orElse(null), LocalDate.now().plusDays(0), LocalDate.now().plusDays(4), LocalDate.of(2022, 12, 6)));
+       reservationRepository.save(new Reservation((Customer) userRepository.findById(5L).orElse(null), carRepository.findById(28L).orElse(null), departmentRepository.findById(7L).orElse(null), departmentRepository.findById(6L).orElse(null), LocalDate.now().minusDays(2), LocalDate.now().plusDays(8), LocalDate.of(2022, 12, 6)));
   }
     private void createRent() {
         rentingRepository.save(new Renting(userRepository.findById(12L).orElse(null), reservationRepository.findById(1L).orElse(null), reservationRepository.findById(1L).get().getDateFrom(), ""));

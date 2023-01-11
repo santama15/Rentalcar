@@ -23,6 +23,7 @@ public class ShowController {
         if(indexData == null) {
             return "redirect:/";
         }
+        List<Car> carList = carService.findUnreservedCars(LocalDate.now(),LocalDate.now().plusDays(2), 2L);
         List<Car> cars = carService.findAll();
         map.addAttribute("cars", carService.findAll());
         map.addAttribute("indexData", indexData);

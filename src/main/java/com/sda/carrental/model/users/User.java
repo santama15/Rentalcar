@@ -3,7 +3,6 @@ package com.sda.carrental.model.users;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
@@ -26,9 +25,11 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Setter
     @Column(name = "name")
     private String name;
 
+    @Setter
     @Column(name = "surname")
     private String surname;
     @Setter
