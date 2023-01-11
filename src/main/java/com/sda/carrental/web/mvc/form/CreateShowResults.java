@@ -10,9 +10,5 @@ import lombok.ToString;
 @ToString
 
 public class CreateShowResults {
-
-    //pola do komunikacji z formularzem showResults
-
-    
-
+    private Long car_id;
 }
