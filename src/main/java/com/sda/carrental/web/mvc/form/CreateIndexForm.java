@@ -27,6 +27,4 @@ public class CreateIndexForm {
 
     private LocalDate dateCreated;
 
-    //trzeba sprawdzić jakoś czy dateFrom jest przed dateTo
-    //i wstawić wizualnie errory w html'u
 }

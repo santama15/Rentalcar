@@ -104,44 +104,54 @@
             </div>
         </div>
 
+
         <div class="col-sm-9 border border-dark">
-            <div th:each="car : ${cars}">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4 th:text="${car.brand}"></h4>
-                    </div>
-                </div>
+            <form th:action="@{/show}" th:object="${createShowForm}" th:method="POST">
+                <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
+                <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">
+                <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
+                <input type="hidden" th:field="*{indexData.dateFrom}" th:value="*{indexData.getDateFrom()}">
+                <input type="hidden" th:field="*{indexData.dateTo}" th:value="*{indexData.getDateTo()}">
+                <input type="hidden" th:field="*{indexData.dateCreated}" th:value="*{indexData.getDateCreated()}">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <img th:src="${car.jpgLink}" alt="Zdjęcie" width="255" height="150"/>
 
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="list-group">
-                            <li class="list-group-item" th:text="${car.model}">Model</li>
-                            <li class="list-group-item" th:text="${car.carType}">Nadwozie</li>
-                            <li class="list-group-item" th:text="${car.year}">Rocznik</li>
-                            <li class="list-group-item" th:text="${car.color}">cecha</li>
-                        </ul>
+                <div th:each="car : ${cars}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 th:text="${car.brand}"></h4>
+                        </div>
                     </div>
 
-                    <div class="col-md-2">
-                        <!--                        //TODO poniżej cena za dzień, powinno być za ilość dni.-->
-                        <div class="vstack gap-3">
-                            <div class="bg-light border" th:text="${days*car.price_day} + ' ' + PLN + ' (' + ${car.price_day} + ')'">
-                                Cena
-                            </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img th:src="${car.jpgLink}" alt="Zdjęcie" width="255" height="150"/>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                <li class="list-group-item" th:text="${car.model}">Model</li>
+                                <li class="list-group-item" th:text="${car.carType}">Nadwozie</li>
+                                <li class="list-group-item" th:text="${car.year}">Rocznik</li>
+                                <li class="list-group-item" th:text="${car.color}">cecha</li>
+                            </ul>
                         </div>
 
-                        </br>
-                        <button type="button" class="btn btn-dark">Wybierz</button>
-
+                        <div class="col-md-2">
+                            <div class="vstack gap-3">
+                                <div class="bg-light border"
+                                     th:text="${days*car.price_day} + ' ' + PLN + ' (' + ${car.price_day} + ')'">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-dark" th:text="Wybierz" name="car_button"
+                                    th:value="${car.getCar_id()}"></button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 
