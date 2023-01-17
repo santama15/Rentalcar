@@ -20,7 +20,7 @@ import java.time.temporal.ChronoUnit;
 
 @RequiredArgsConstructor
 @Service
-public class PredefiniedData implements CommandLineRunner {
+public class predefinedData implements CommandLineRunner {
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
