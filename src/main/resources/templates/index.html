@@ -86,7 +86,6 @@
                 </div>
             </div>
         </form>
-    </div>
 
     <div th:if="${#fields.hasErrors('createIndexForm.*')}">
         <div class="alert alert-danger d-flex align-items-center" role="alert" th:each="err: ${#fields.errors('createIndexForm.*')}">
@@ -114,6 +113,7 @@
 
     <div th:include="fragments/bottom::bottom-footer"></div>
 
+</div>
 </div>
 </body>
 

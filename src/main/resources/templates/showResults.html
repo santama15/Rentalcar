@@ -101,7 +101,6 @@
             </div>
         </div>
 
-
         <div class="col-sm-9 border border-dark">
             <form th:action="@{/show}" th:object="${createShowForm}" th:method="POST">
                 <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
@@ -125,7 +124,7 @@
 
                         </div>
                         <div class="col-md-6">
-                            <ul class="list-group">
+                            <ul class="list-group list-group-flush">
                                 <li class="list-group-item" th:text="'Model: ' + ${car.model}">Model</li>
                                 <li class="list-group-item" th:text="'Nadwozie: ' + ${car.carType.getName()}">Nadwozie</li>
                                 <li class="list-group-item" th:text="'Rocznik: ' + ${car.year}">Rocznik</li>

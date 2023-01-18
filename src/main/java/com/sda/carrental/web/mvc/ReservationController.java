@@ -5,13 +5,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-@RequestMapping("/regulations")
-public class RegulationsController{
+@RequestMapping("/summary")
+
+public class ReservationController {
     @GetMapping
-    public String welcomePage(final ModelMap map)
-    {
-        return "regulations";
+    public String summaryPage(final ModelMap map) {
+        return "summary";
     }
 }
