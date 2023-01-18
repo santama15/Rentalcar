@@ -35,10 +35,10 @@ public class ShowController {
                 indexData.getBranch_id_from());
 
         map.addAttribute("cars", carList);
-        map.addAttribute("brand", carList.stream().map(Car::getBrand).distinct().collect(Collectors.toList()));
-        map.addAttribute("model", carList.stream().map(Car::getModel).distinct().collect(Collectors.toList()));//może lepiej typ
-        map.addAttribute("year", carList.stream().map(Car::getYear).distinct().collect(Collectors.toList()));//też można potencjalnie zmienić np zakres kosztu
-        map.addAttribute("size", carList.stream().map(Car::getColor).distinct().collect(Collectors.toList()));//TODO zmienić z koloru na ilość miejsc
+        map.addAttribute("brand", carList.stream().map(Car::getBrand).distinct().sorted().collect(Collectors.toList()));
+        map.addAttribute("type", carList.stream().map(Car::getCarType).distinct().sorted().collect(Collectors.toList()));
+        map.addAttribute("year", carList.stream().map(Car::getYear).distinct().sorted().collect(Collectors.toList())); //TODO Year -> Price range(?)
+        map.addAttribute("seats", carList.stream().map(Car::getSeats).distinct().sorted().collect(Collectors.toList()));
         //można też potencjalnie poprawić query, żeby odrzucał status unavailable (?)
 
         map.addAttribute("days", (indexData.getDateFrom().until(indexData.getDateTo(), ChronoUnit.DAYS) + 1));

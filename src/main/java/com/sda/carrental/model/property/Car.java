@@ -10,14 +10,14 @@ import java.awt.*;
 @Getter
 @NoArgsConstructor
 public class Car {
-    public Car(Department department, String jpgLink, String brand, String model, Integer year, Long mileage, Color color, Integer price_day, CarType carType, CarStatus carStatus) {
+    public Car(Department department, String jpgLink, String brand, String model, Integer year, Long mileage, Integer seats, Integer price_day, CarType carType, CarStatus carStatus) {
         this.department_id = department;
         this.jpgLink = jpgLink;
         this.brand = brand;
         this.model = model;
         this.year = year;
         this.mileage = mileage;
-        this.color = color;
+        this.seats = seats;
         this.price_day = price_day;
         this.carType = carType;
         this.carStatus = carStatus;
@@ -47,8 +47,8 @@ public class Car {
     @Column(name = "mileage")
     Long mileage;
 
-    @Column(name = "color")
-    Color color;
+    @Column(name = "seats")
+    Integer seats;
 
     @Column(name = "price_day")
     Integer price_day;
@@ -60,21 +60,26 @@ public class Car {
     CarStatus carStatus;
 
 
-
+@Getter
     public enum CarType {
-        TYPE_SEDAN, TYPE_SUV, TYPE_COMPACT, TYPE_WAGON, TYPE_COUPE, TYPE_VAN, TYPE_HATCHBACK, TYPE_PICKUP, TYPE_SPORT;
+        TYPE_SEDAN("Sedan"), TYPE_SUV("SUV"), TYPE_COMPACT("Compact"), TYPE_WAGON("Kombi"), TYPE_COUPE("Coupe"), TYPE_VAN("Van"), TYPE_HATCHBACK("Hatchback"), TYPE_PICKUP("Pickup"), TYPE_SPORT("Sport");
+
+        final String name;
+        CarType(String name) {
+            this.name = name;
+        }
     }
 
 
     public enum CarStatus {
-        STATUS_OPEN, STATUS_RENTED, STATUS_UNAVAILABLE;
+        STATUS_OPEN, STATUS_RENTED, STATUS_UNAVAILABLE
     }
 
 
     @Override
     public String toString() {
         return "Car{" +
-                "color=" + color +
+                "seats=" + seats +
                 '}';
     }
 }
