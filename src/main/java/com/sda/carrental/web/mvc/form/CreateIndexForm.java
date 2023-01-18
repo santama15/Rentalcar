@@ -1,5 +1,6 @@
 package com.sda.carrental.web.mvc.form;
 
+import com.sda.carrental.web.mvc.form.validation.constraint.CorrectChronology;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@CorrectChronology(message = "Nieprawidłowa kolejność dat!")
 public class CreateIndexForm {
 
     private Long branch_id_from;
@@ -17,11 +19,11 @@ public class CreateIndexForm {
 
     private boolean firstBranchChecked;
 
-    @FutureOrPresent
+    @FutureOrPresent(message = "Data wypożyczenia samochodu jest przestarzała!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateFrom;
 
-    @FutureOrPresent
+    @FutureOrPresent(message = "Data oddania samochodu jest przestarzała!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateTo;
 

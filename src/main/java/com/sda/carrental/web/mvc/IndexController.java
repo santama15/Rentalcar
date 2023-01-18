@@ -32,8 +32,8 @@ public class IndexController {
 
     @PostMapping
     public String handleRequest(@ModelAttribute("createIndexForm") @Valid CreateIndexForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
-        if(errors.hasErrors() || form.getDateFrom().isAfter(form.getDateTo())) {
-            if(form.getDateFrom().isAfter(form.getDateTo()) || errors.hasFieldErrors("dateFrom")) map.addAttribute("message", "Nieprawidłowa data!");
+        if(errors.hasErrors()) {
+        //    if(form.getDateFrom().isAfter(form.getDateTo()) || errors.hasFieldErrors("dateFrom")) map.addAttribute("message", "Nieprawidłowa data!");
             if(form.isFirstBranchChecked()) form.setFirstBranchChecked(false);
 
             map.addAttribute("createIndexForm", form);
