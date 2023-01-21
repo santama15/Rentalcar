@@ -21,19 +21,17 @@
 </div>
 
 <div th:fragment="reg-options">
-
-<!--        <div th:if="${}" id="menu">-->
-<!--        <security:authorize access="hasAnyRole("-->
-    <div sec:authorize="hasRole('ROLE_CUSTOMER')" id="menu">
+    <div id="menu">
+        <div sec:authorize="hasRole('ROLE_CUSTOMER')">
             <ul>
                 <li><a href="/">Strona główna</a></li>
                 <li><a href="/aboutUs">O nas</a></li>
                 <li><a href="/regulations">Regulamin</a></li>
                 <li><a href="/contact">Kontakt</a></li>
-                <li><a href='#'>Stefa klienta</a></li>
+                <li><a href='#'>Strefa klienta</a></li>
             </ul>
         </div>
-    <div sec:authorize="hasRole('ROLE_EMPLOYEE')" id="menu">
+        <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
             <ul>
                 <li><a href="/">Strona główna</a></li>
                 <li><a href="/aboutUs">O nas</a></li>
@@ -42,15 +40,15 @@
                 <li><a href="#">Strefa pracownika</a></li>
             </ul>
         </div>
-    <div sec:authorize="!hasAnyRole('ROLE_EMPLOYEE', 'ROLE_CUSTOMER')" id="menu">
-        <ul>
-            <li><a href="/">Strona główna</a></li>
-            <li><a href="/aboutUs">O nas</a></li>
-            <li><a href="/regulations">Regulamin</a></li>
-            <li><a href="/contact">Kontakt</a></li>
-        </ul>
+        <div sec:authorize="!hasAnyRole('ROLE_EMPLOYEE', 'ROLE_CUSTOMER')">
+            <ul>
+                <li><a href="/">Strona główna</a></li>
+                <li><a href="/aboutUs">O nas</a></li>
+                <li><a href="/regulations">Regulamin</a></li>
+                <li><a href="/contact">Kontakt</a></li>
+            </ul>
+        </div>
     </div>
-
 </div>
 </body>
 </html>

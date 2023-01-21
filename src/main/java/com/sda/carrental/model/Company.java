@@ -21,9 +21,6 @@ public class Company {
     @Column(name = "website", nullable = false)
     String website;
 
-    @Column(name = "contact", nullable = false)
-    String contact;
-
     @Column(name = "owner", nullable = false)
     String owner;
 
