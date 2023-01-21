@@ -12,7 +12,10 @@ a {
 }
 
 
-
+p {
+    line-height: 25px;
+    color: #555;
+}
 
 #container {
     width: 942px;
@@ -35,6 +38,7 @@ a {
     float: left;
     margin-top: 20px;
 }
+
 #article {
     width: 942px;
     margin: 0 auto;
@@ -58,7 +62,7 @@ a {
 
 #logo p {
     color: #FFFFFF;
-    margin: 0px;
+    margin: 0;
     text-transform: uppercase;
     padding-left: 10px;
 }
@@ -74,7 +78,7 @@ a {
 
 #logo h1 {
     color: #fff;
-    margin: 0px;
+    margin: 0;
     font-weight: bold;
 }
 
@@ -112,7 +116,7 @@ input {
 
 #menu ul {
     margin: 0;
-    padding: 5px 0px 0px 0px;
+    padding: 5px 0 0 0;
     list-style: none;
 }
 
@@ -212,7 +216,7 @@ h2 {
 
 #sell {
     border: 1px solid #ad2948;
-    padding: 0px;
+    padding: 0;
     font-weight: bold;
     background: #FFF;
 }
@@ -250,25 +254,25 @@ div#content_index {
     text-align: center;
 }
 
-div#address {
+div#contact {
     position: relative;
 }
 
 div#col1 {
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 
 div#col2 {
     position: absolute;
-    top: 0px;
+    top: 0;
     left: 471px;
 }
 
 .flip-box {
     background-color: transparent;
     width: 471px;
-    height: 200px;
+    height: 140px;
     border: 1px solid #f1f1f1;
     perspective: 1000px;
 }
@@ -277,7 +281,6 @@ div#col2 {
     position: relative;
     width: 100%;
     height: 100%;
-    text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
 }
@@ -290,17 +293,23 @@ div#col2 {
     position: absolute;
     width: 100%;
     height: 100%;
+    vertical-align: middle;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
 }
 
 .flip-box-front {
-    background-color: #bbb;
+    background-color: #212529;
     color: black;
 }
 
 .flip-box-back {
-    background-color: #bbb;
+    background-color: #212529;
     color: black;
     transform: rotateY(180deg);
 }
@@ -308,7 +317,7 @@ div#col2 {
 .flip-box-wider {
     background-color: transparent;
     width: 942px;
-    height: 60px;
+    height: 90px;
     border: 1px solid #f1f1f1;
     perspective: 1000px;
 }
@@ -317,7 +326,6 @@ div#col2 {
     position: relative;
     width: 100%;
     height: 100%;
-    text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
 }
@@ -332,15 +340,20 @@ div#col2 {
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
 }
 
 .flip-box-front-wider {
-    background-color: #bbb;
+    background-color: #212529;
     color: black;
 }
 
 .flip-box-back-wider {
-    background-color: #bbb;
+    background-color: #212529;
     color: black;
     transform: rotateX(180deg);
 }
@@ -351,21 +364,19 @@ div#col2 {
     border: 3px solid green;
 }
 
-h1#contact {
+h1.contact {
     font-size: 100px;
-    color: #6a8db7;
-    padding-top: 30px;
+    color: #fff;
 }
 
-h2#contact {
-    font-size: 50px;
-    color: #6a8db7;
-    padding-top: 60px;
+h2.contact {
+    font-size: 30px;
+    color: #fff;
 }
 
-h2#address {
-    font-size: 45px;
-    color: #6a8db7;
+h2.address {
+    font-size: 30px;
+    color: #fff;
 }
 
 .center {

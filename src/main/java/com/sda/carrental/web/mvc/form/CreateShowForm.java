@@ -7,9 +7,9 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+public class CreateShowForm {
 
-public class CreateShowResults {
     private Long car_id;
-    private Long customerId;
+
+    private CreateIndexForm indexData;
 }

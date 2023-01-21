@@ -31,8 +31,7 @@
 
                 <br/>
                 <label for="dpt1" class="text-lg">Miejsce odbioru pojazdu</label>
-                <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{branch_id_from}"
-                        required>
+                <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{branch_id_from}" required>
                     <option selected disabled
                             value="">Wybierz z listy...
                     </option>
@@ -85,17 +84,16 @@
                         Znajdź samochód
                     </button>
                 </div>
-
             </div>
         </form>
 
-    <div th:if="${!(message == null)}">
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
+    <div th:if="${#fields.hasErrors('createIndexForm.*')}">
+        <div class="alert alert-danger d-flex align-items-center" role="alert" th:each="err: ${#fields.errors('createIndexForm.*')}">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
                 <use xlink:href="#exclamation-triangle-fill"/>
             </svg>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <div th:text="${message}"></div>
+            <div th:text="${err}"></div>
         </div>
     </div>
 

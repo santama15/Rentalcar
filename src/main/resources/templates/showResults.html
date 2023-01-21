@@ -26,13 +26,13 @@
 
             <div class="accordion" id="accordionFilter">
                 <div class="accordion-item">
-                    <h6 class="accordion-header" id="headingOne">
-                        <button class="accordion-button text-light bg-dark" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <h6 class="accordion-header" >
+                        <button class="accordion-button text-light bg-dark" type="button" id="filterHeadOne"
+                                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                             Marka
                         </button>
                     </h6>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="filterHeadOne"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
                             <div class="form-check" th:each="brand : ${brand}">
@@ -44,33 +44,33 @@
                 </div>
 
                 <div class="accordion-item">
-                    <h6 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button"
+                    <h6 class="accordion-header">
+                        <button class="accordion-button collapsed text-light bg-dark" type="button" id="filterHeadTwo"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Model
+                            Typ nadwozia
                         </button>
                     </h6>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="filterHeadTwo"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
-                            <div class="form-check" th:each="model : ${model}">
-                                <input class="form-check-input" type="checkbox" value="" id="checkModel">
-                                <label class="form-check-label" for="checkModel" th:text="${model}"></label>
+                            <div class="form-check" th:each="type : ${type}">
+                                <input class="form-check-input" type="checkbox" value="" id="checkType">
+                                <label class="form-check-label" for="checkType" th:text="${type.getName()}"></label>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="accordion-item">
-                    <h6 class="accordion-header" id="headingThree">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button"
+                    <h6 class="accordion-header">
+                        <button class="accordion-button collapsed text-light bg-dark" type="button" id="filterHeadThree"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                             Rocznik
                         </button>
                     </h6>
-                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="filterHeadThree"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
                             <div class="form-check" th:each="year : ${year}">
@@ -82,21 +82,18 @@
                 </div>
 
                 <div class="accordion-item">
-                    <h6 class="accordion-header" id="headingFour">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button"
+                    <h6 class="accordion-header">
+                        <button class="accordion-button collapsed text-light bg-dark" role="switch" id="filterHeadFour"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            Kolor
+                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" th:text="Miejsca">
                         </button>
                     </h6>
-                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="filterHeadFour"
                          data-bs-parent="#accordionFilter">
                         <div class="accordion-body">
-                            <div class="form-check" th:each="size : ${size}">
-                                <input class="form-check-input" type="checkbox" value="" id="checkColor">
-                                <label class="form-check-label" for="checkColor" th:text="${size}"></label>
-                                <!--                            <label class="form-check-label" for="checkColor" th:background="${car.color}" ><div id="colorCircle" style="background: #F34A53"></div></label>-->
-                                <!--                                <div id="colorCircle"></div>-->
+                            <div class="form-check" th:each="seats : ${seats}">
+                                <input class="form-check-input" type="checkbox" value="" id="checkSeats">
+                                <label class="form-check-label" for="checkSeats" th:text="${seats}"></label>
                             </div>
                         </div>
                     </div>
@@ -105,45 +102,54 @@
         </div>
 
         <div class="col-sm-9 border border-dark">
-            <div th:each="car : ${cars}">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4 th:text="${car.brand}"></h4>
-                    </div>
-                </div>
+            <form th:action="@{/show}" th:object="${createShowForm}" th:method="POST">
+                <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
+                <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">
+                <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
+                <input type="hidden" th:field="*{indexData.dateFrom}" th:value="*{indexData.getDateFrom()}">
+                <input type="hidden" th:field="*{indexData.dateTo}" th:value="*{indexData.getDateTo()}">
+                <input type="hidden" th:field="*{indexData.dateCreated}" th:value="*{indexData.getDateCreated()}">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <img th:src="${car.jpgLink}" alt="Zdjęcie" width="255" height="150"/>
 
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" th:text="${car.model}">Model</li>
-                            <li class="list-group-item" th:text="${car.carType}">Nadwozie</li>
-                            <li class="list-group-item" th:text="${car.year}">Rocznik</li>
-                            <li class="list-group-item" th:text="${car.color}">cecha</li>
-                        </ul>
+                <div th:each="car : ${cars}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 th:text="${car.brand}"></h4>
+                        </div>
                     </div>
 
-                    <div class="col-md-2">
-                        <!--                        //TODO poniżej cena za dzień, powinno być za ilość dni.-->
-                        <div class="vstack gap-3">
-                            <div class="bg-light border" th:text="${days*car.price_day} + ' ' + PLN + ' (' + ${car.price_day} + ')'">
-                                Cena
-                            </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img th:src="${car.jpgLink}" alt="Zdjęcie" width="255" height="150"/>
+
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" th:text="'Model: ' + ${car.model}">Model</li>
+                                <li class="list-group-item" th:text="'Nadwozie: ' + ${car.carType.getName()}">Nadwozie</li>
+                                <li class="list-group-item" th:text="'Rocznik: ' + ${car.year}">Rocznik</li>
+                                <li class="list-group-item" th:text="'Miejsca: ' + ${car.seats}"></li>
+                                <li class="list-group-item" th:text="'Cena za dzień: ' + ${car.price_day} + ' PLN'"></li>
+                            </ul>
+                            <br>
                         </div>
 
-                        </br>
-
-<!--                        <button type="button" class="btn btn-dark">Wybierz</button>-->
-                        <a href="/summary" class="btn bg-dark" role="button">Wybierz</a>
-
+                        <div class="col-md-2">
+                            <div class="vstack gap-3">
+                                <div class="bg-light border"
+                                     th:text="${days*car.price_day} + ' PLN'">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-dark" th:text="Wybierz" name="car_button"
+                                    th:value="${car.getCar_id()}"></button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 

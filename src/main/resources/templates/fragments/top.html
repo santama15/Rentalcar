@@ -21,10 +21,8 @@
 </div>
 
 <div th:fragment="reg-options">
-
-<!--        <div th:if="${}" id="menu">-->
-<!--        <security:authorize access="hasAnyRole("-->
-    <div sec:authorize="hasRole('ROLE_CUSTOMER')" id="menu">
+    <div id="menu">
+        <div sec:authorize="hasRole('ROLE_CUSTOMER')">
             <ul>
                 <li><a href="/">Strona główna</a></li>
                 <li><a href="/aboutUs">O nas</a></li>
