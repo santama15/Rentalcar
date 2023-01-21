@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/customerZone")
-public class CustomerZone
+@RequestMapping("/employeeZone")
+public class EmployeeZoneController
 {
     @GetMapping
     public String welcomePage(final ModelMap map)
     {
-        return "customerZone";
+        return "employeeZone";
     }
 }

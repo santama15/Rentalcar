@@ -385,3 +385,17 @@ h2#address {
     /*border-radius: 100%;*/
     margin: 40px auto 0;
 }
+
+button#cancel {
+    background-color: #f44336; /* Red */
+    width: 900px;
+    border: none;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}

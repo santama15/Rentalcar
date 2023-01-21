@@ -11,4 +11,5 @@ import lombok.ToString;
 
 public class CreateShowResults {
     private Long car_id;
+    private Long customerId;
 }
