@@ -1,13 +1,15 @@
 package com.sda.carrental.model.users;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
-
+import lombok.ToString;
+@ToString
 @Entity(name = "customer")
 @Getter
 @NoArgsConstructor

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("registerClient")
-public class registerClientController
+public class RegisterClientController
 {
     @GetMapping
     public String welcomePage(final ModelMap map)

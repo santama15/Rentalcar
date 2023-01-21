@@ -22,4 +22,5 @@ public interface CarRepository extends CrudRepository<Car, Long> {
         //TODO Car/Repository
     List<Car> findUnreservedByDateAndDepartment(@Param("ddateFrom") LocalDate ddateFrom, @Param("ddateTo") LocalDate ddateTo, @Param("ddepartment") Long ddepartment);
 
+//    List<Car> findReservedByCustomerId(@Param("dCustomerId") Long dCustomerId);
 }

@@ -32,4 +32,8 @@ public class CarService {
     public List<Car> findUnreservedCars(LocalDate ddateFrom, LocalDate ddateTo, Long ddepartment){
         return StreamSupport.stream(carRepository.findUnreservedByDateAndDepartment(ddateFrom, ddateTo, ddepartment).spliterator(), false).collect(Collectors.toList());
     }
+
+//    public List<Car> findReservedCarsByCustomerId(Long customerId){
+//        return StreamSupport.stream(carRepository.findReservedByCustomerId(customerId).spliterator(), false).collect(Collectors.toList());
+//    }
 }
