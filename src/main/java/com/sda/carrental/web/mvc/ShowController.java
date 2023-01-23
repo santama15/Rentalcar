@@ -1,7 +1,11 @@
 package com.sda.carrental.web.mvc;
 
+import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.Car;
+import com.sda.carrental.model.property.Department;
 import com.sda.carrental.service.CarService;
+import com.sda.carrental.service.DepartmentService;
+import com.sda.carrental.service.ReservationService;
 import com.sda.carrental.web.mvc.form.CreateIndexForm;
 import com.sda.carrental.web.mvc.form.CreateShowForm;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,8 @@ import java.util.stream.Collectors;
 public class ShowController {
 
     private final CarService carService;
+    private final ReservationService reservationService;
+    private final DepartmentService departmentService;
 
     @GetMapping
     public String showPage(final ModelMap map, @ModelAttribute("indexData") CreateIndexForm indexData) {
@@ -49,14 +55,30 @@ public class ShowController {
         return "showResults";
     }
 
-    @PostMapping
-    public String showHandler(final ModelMap map, @ModelAttribute("createShowForm") CreateShowForm showData, @RequestParam(value="car_button") Long carId, RedirectAttributes redirectAttributes) {
+    @PostMapping()
+//    public String showHandler(final ModelMap map, @ModelAttribute("createShowForm") CreateShowForm showData, @RequestParam(value="car_button") Long carId, RedirectAttributes redirectAttributes) {
+//        if(showData == null) return "redirect:/";
+//        showData.setCar_id(carId);
+//        if (showData.getIndexData() == null) return "redirect:/";
+
+        public String showHandler(final ModelMap map, @ModelAttribute("createShowForm") CreateShowForm showData,  @RequestParam(value="car_button") Car carId, RedirectAttributes redirectAttributes) {
         if(showData == null) return "redirect:/";
         showData.setCar_id(carId);
         if (showData.getIndexData() == null) return "redirect:/";
 
+        Department departmentFrom = departmentService.findDepartmentByDepartmentId(showData.getIndexData().getBranch_id_from());
 
         redirectAttributes.addFlashAttribute("showData", showData);
-        return "redirect:/summary";
+        Reservation reservation = new Reservation();
+        reservation.setDepartmentTake(departmentFrom);
+        reservation.setDepartmentBack(showData.getIndexData().getBranch_id_to());
+        reservation.setDateFrom(showData.getIndexData().getDateFrom());
+        reservation.setDateTo(showData.getIndexData().getDateTo());
+        reservation.setCar_id(showData.getCar_id());
+
+        reservationService.save(reservation);
+
+
+        return "redirect:/customerZone";
     }
 }

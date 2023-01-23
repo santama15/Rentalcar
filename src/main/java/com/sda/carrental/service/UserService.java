@@ -96,6 +96,10 @@ public class UserService {
 //
 //    }
 
+
+    List<User> findAllByLastName(String lastName){
+        return repository.findAllByLastName(lastName);
+    }
     public static void main(String[] args) {
         final String adminek = new BCryptPasswordEncoder().encode("adminek");
         System.out.println(adminek);

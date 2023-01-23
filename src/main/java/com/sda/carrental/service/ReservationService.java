@@ -3,7 +3,9 @@ package com.sda.carrental.service;
 
 import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.Car;
+import com.sda.carrental.model.users.Customer;
 import com.sda.carrental.model.users.User;
+import com.sda.carrental.repository.CustomerRepository;
 import com.sda.carrental.repository.ReservationRepository;
 import com.sda.carrental.repository.UserRepository;
 import com.sda.carrental.service.auth.CustomUserDetails;
@@ -29,6 +31,7 @@ public class ReservationService
 
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
 
 
 
@@ -50,5 +53,12 @@ public class ReservationService
 //    public void deleteReservationById(Long id) {reservationRepository.deleteById(id);}
     public void deleteReservationByReservationId(Long id) {reservationRepository.deleteReservationByReservation_id(id);}
 
+    public void save(Reservation reservation){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final String emailLoggedUser = auth.getName();
+        Long userId = userRepository.findByEmail(emailLoggedUser).get().getId();
+        reservation.setCustomer_id(customerRepository.findByCustomerId(userId));
+        reservationRepository.save(reservation);
+    };
 }
 

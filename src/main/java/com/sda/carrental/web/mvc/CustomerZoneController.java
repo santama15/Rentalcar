@@ -1,35 +1,16 @@
 package com.sda.carrental.web.mvc;
 
-import java.nio.channels.ScatteringByteChannel;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.service.ReservationService;
-import com.sda.carrental.service.auth.CustomUserDetails;
-import com.sda.carrental.web.mvc.form.CreateCustomerForm;
-import com.sda.carrental.web.mvc.form.CreateIndexForm;
-import com.sda.carrental.web.mvc.form.CreateShowResults;
-import com.sda.carrental.web.mvc.mappers.CustomerMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

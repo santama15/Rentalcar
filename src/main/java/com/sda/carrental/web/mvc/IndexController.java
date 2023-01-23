@@ -41,7 +41,7 @@ public class IndexController {
             return "index";
         }
 
-        if(!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
+      //  if(!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
         form.setDateCreated(LocalDate.now());
         /*System.out.println(form.isFirstBranchChecked() + " " + form.getBranch_id_from() + " do " + form.getBranch_id_to());*/
 

@@ -102,7 +102,15 @@
         </div>
 
         <div class="col-sm-9 border border-dark">
-            <form th:action="@{/show}" th:object="${createShowForm}" th:method="POST">
+<!--            <form th:action="@{/show}" th:object="${createShowForm}" th:method="POST">-->
+<!--                <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">-->
+<!--                <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">-->
+<!--                <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">-->
+<!--                <input type="hidden" th:field="*{indexData.dateFrom}" th:value="*{indexData.getDateFrom()}">-->
+<!--                <input type="hidden" th:field="*{indexData.dateTo}" th:value="*{indexData.getDateTo()}">-->
+<!--                <input type="hidden" th:field="*{indexData.dateCreated}" th:value="*{indexData.getDateCreated()}">   -->
+
+                <form th:action="@{/show}" th:object="${createShowForm}" th:method="POST">
                 <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
                 <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">
                 <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
@@ -143,6 +151,7 @@
                             <button type="submit" class="btn btn-dark" th:text="Wybierz" name="car_button"
                                     th:value="${car.getCar_id()}"></button>
                         </div>
+<!--                        <a class="btn btn-success" th:href="@{/show/save}" role="button" target="_parent">Potwierdź rezerwację</a>-->
                     </div>
                 </div>
             </form>

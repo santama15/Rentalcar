@@ -40,24 +40,25 @@
 
                         <div class="col-md-12">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" th:text="'Model: ' + ${reservation.getCar_id().getBrand()}">cecha</li>
-                                <li class="list-group-item" th:text="${reservation.getCar_id().getModel()}">Model</li>
-                                <li class="list-group-item" th:text="${reservation.getCar_id().getYear()}">Model</li>
-                                <li class="list-group-item" th:text="${reservation.getReservation_id()}">Nadwozie</li>
-                                <li class="list-group-item" th:text="${reservation.getDateTo()}">Rocznik</li>
-                                <li class="list-group-item" th:text="${dataTo}">cecha</li>
+                                <li class="list-group-item" th:text="'Marka: ' + ${reservation.getCar_id().getBrand()}">cecha</li>
+                                <li class="list-group-item" th:text="'Model: ' + ${reservation.getCar_id().getModel()}">Model</li>
+                                <li class="list-group-item" th:text="'Data produkcji: ' + ${reservation.getCar_id().getYear()}">Model</li>
+                                <li class="list-group-item" th:text="'Rezerwacja od: ' + ${reservation.getDateFrom()}">Nadwozie</li>
+                                <li class="list-group-item" th:text="'Rezerwacja do: ' + ${reservation.getDateTo()}">Rocznik</li>
+                                <li class="list-group-item" th:text="'Miejsce odbioru: ' + ${reservation.getDepartmentTake().getCity()} + ', ' + ${reservation.getDepartmentTake().getAddress()}">cecha</li>
+                                <li class="list-group-item" th:text="'Miejsce zwrotu: ' + ${reservation.getDepartmentBack().getCity()} + ', ' + ${reservation.getDepartmentBack().getAddress()}">cecha</li>
                                 <div class="col-md-12">
-                                    <a class="btn btn-danger" th:href="@{/customerZone/deleteReservation/__${reservation.getReservation_id()}__}" role="button" target="_parent">Anuluj rezerwację</a>
-<!--                                    <button id="cancel" onclick="document.location.href=/customerZone">Anuluj rezerwację</button>-->
+                                    <a class="btn btn-danger" th:href="@{/customerZone/deleteReservation/__${reservation.getReservation_id()}__}"
+                                       role="button" target="_parent">Anuluj rezerwację</a>
+                                    <!--                                    <button id="cancel" onclick="document.location.href=/customerZone">Anuluj rezerwację</button>-->
                                 </div>
                             </ul>
                         </div>
                     </div>
-                    </div>
-                <p><br></p>
                 </div>
+                <p><br></p>
             </div>
-
+        </div>
 
 
     </div>

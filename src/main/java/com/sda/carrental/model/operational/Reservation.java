@@ -7,11 +7,13 @@ import com.sda.carrental.model.property.Department;
 import com.sda.carrental.model.users.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity(name = "reservation")
 @Getter
+@Setter
 @NoArgsConstructor
 public class Reservation {
     public Reservation(Customer customer_id, Car car_id, Department departmentTake, Department departmentBack, LocalDate dateFrom, LocalDate dateTo, LocalDate dateCreated) {
