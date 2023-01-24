@@ -31,4 +31,8 @@ public class DepartmentService {
         return departmentRepository.findDepartmentsByCountryCodeAndHq(countryCode, true).orElse(new Department(Department.CountryCode.COUNTRY_EMPTY, "CityPlaceholder", "AddressPlaceholder", "PostcodePlaceholder", "email@email.com", "123456789", true));
     }
 
+    public Department findDepartmentByDepartmentId(Long id){
+        return departmentRepository.findDepartmentByDepartmentId(id);
+    };
+
 }

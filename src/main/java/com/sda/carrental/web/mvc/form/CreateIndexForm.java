@@ -1,5 +1,6 @@
 package com.sda.carrental.web.mvc.form;
 
+import com.sda.carrental.model.property.Department;
 import com.sda.carrental.web.mvc.form.validation.constraint.CorrectChronology;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ public class CreateIndexForm {
 
     private Long branch_id_from;
 
-    private Long branch_id_to;
+    private Department branch_id_to;
 
     private boolean firstBranchChecked;
 
