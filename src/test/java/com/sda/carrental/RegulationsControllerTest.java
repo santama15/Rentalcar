@@ -13,7 +13,7 @@ import com.sda.carrental.web.mvc.IndexController;
 import com.sda.carrental.web.mvc.RegulationsController;
 
 
-@SpringBootTest
+
 public class RegulationsControllerTest extends BaseTest
 {
     @Test

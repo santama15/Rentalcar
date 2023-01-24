@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.sda.carrental.service.DepartmentService;
 import com.sda.carrental.web.mvc.IndexController;
 
-@SpringBootTest
+
 public class HomeControllerTest extends BaseTest
 {
     @Test
