@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
@@ -148,8 +148,10 @@
                                      th:text="${days*car.price_day} + ' PLN'">
                                 </div>
                             </div>
+                            <div sec:authorize="hasRole('ROLE_CUSTOMER')">
                             <button type="submit" class="btn btn-dark" th:text="Wybierz" name="car_button"
                                     th:value="${car.getCar_id()}"></button>
+                        </div>
                         </div>
 <!--                        <a class="btn btn-success" th:href="@{/show/save}" role="button" target="_parent">Potwierdź rezerwację</a>-->
                     </div>

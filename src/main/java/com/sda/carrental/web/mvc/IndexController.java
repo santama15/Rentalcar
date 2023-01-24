@@ -3,6 +3,8 @@ package com.sda.carrental.web.mvc;
 
 import com.sda.carrental.service.DepartmentService;
 import com.sda.carrental.web.mvc.form.CreateIndexForm;
+
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

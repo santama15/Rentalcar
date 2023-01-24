@@ -47,7 +47,7 @@ public class CustomerZoneController
 
         reservationService.deleteReservationByReservationId(id);
 
-        return "/customerZone";
+        return "redirect:/customerZone";
 
     }
 }

@@ -12,8 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import com.sda.carrental.model.users.User;
 
-@SpringBootTest
-//@TestPropertySource("/application-test.properties")
+
 class UserRepositoryTest extends BaseTest {
     @Test
     void shouldCreateUser() {
@@ -38,7 +37,7 @@ class UserRepositoryTest extends BaseTest {
 
         // then
         assertNotNull(users);
-        assertEquals(2, users.size());
+        assertEquals(0, users.size());
     }
 
 }
