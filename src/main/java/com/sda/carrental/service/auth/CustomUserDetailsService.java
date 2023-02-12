@@ -1,6 +1,5 @@
 package com.sda.carrental.service.auth;
 
-import com.sda.carrental.service.auth.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

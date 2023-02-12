@@ -19,14 +19,12 @@
 </head>
 <body class="bg-white font-family-karla h-screen">
 
-    <div class="w-full flex flex-wrap">
+    <div class="w-full flex justify-center flex-wrap">
 
         <!-- Register Section -->
         <div class="w-full md:w-2/3 flex flex-col">
 
-            <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-12">
-                <a href="#" class="bg-black text-white font-bold text-xl p-4">Logo</a>
-            </div>
+            <div th:include="fragments/top::click-logo"></div>
 
             <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
                 <p class="text-center text-3xl">Panel dodawania pracownika</p>
@@ -96,7 +94,6 @@
 
                     <input type="submit" value="Zarejestruj pracownika" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">
                 </form>
-                </br>
 <!--                <div class="text-center pt-12 pb-12">-->
 <!--                    <p>Posiadasz już konto? <a href="login.html" class="underline font-semibold">Zaloguj się.</a></p>-->
 <!--                </div>-->

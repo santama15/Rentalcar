@@ -14,7 +14,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -31,7 +30,7 @@ public class PredefiniedData implements CommandLineRunner {
     private final InvoiceRepository invoiceRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         createDepartments();
         createCompany();
 

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @CorrectChronology(message = "Nieprawidłowa kolejność dat!")
-public class CreateIndexForm {
+public class IndexForm {
 
     private Long branch_id_from;
 

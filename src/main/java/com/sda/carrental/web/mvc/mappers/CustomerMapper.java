@@ -1,7 +1,6 @@
 package com.sda.carrental.web.mvc.mappers;
 
 
-import com.sda.carrental.model.users.User;
 import com.sda.carrental.model.users.Customer;
 import com.sda.carrental.web.mvc.form.CreateCustomerForm;
 
