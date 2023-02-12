@@ -2,15 +2,12 @@ package com.sda.carrental.web.mvc;
 
 
 import com.sda.carrental.service.DepartmentService;
-import com.sda.carrental.web.mvc.form.CreateIndexForm;
+import com.sda.carrental.web.mvc.form.IndexForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -23,29 +20,32 @@ public class IndexController {
 
 
     private final DepartmentService departmentService;
-    @GetMapping
+
+    @RequestMapping(method = RequestMethod.GET)
     public String indexPage(final ModelMap map) {
         map.addAttribute("department", departmentService.findAll());
-        map.addAttribute("createIndexForm", new CreateIndexForm());
+        map.addAttribute("indexForm", new IndexForm());
         return "index";
     }
 
-    @PostMapping
-    public String handleRequest(@ModelAttribute("createIndexForm") @Valid CreateIndexForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
-        if(errors.hasErrors()) {
-        //    if(form.getDateFrom().isAfter(form.getDateTo()) || errors.hasFieldErrors("dateFrom")) map.addAttribute("message", "Nieprawidłowa data!");
-            if(form.isFirstBranchChecked()) form.setFirstBranchChecked(false);
 
-            map.addAttribute("createIndexForm", form);
+    @RequestMapping(method = RequestMethod.POST)
+    public String handleRequest(@ModelAttribute("indexForm") @Valid IndexForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
+        if (errors.hasErrors()) {
+            if (form.isFirstBranchChecked()) form.setFirstBranchChecked(false);
+
+            map.addAttribute("indexForm", form);
             map.addAttribute("department", departmentService.findAll());
             return "index";
         }
 
-        if(!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
+        if (!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
+        if (form.isFirstBranchChecked()) {
+            if (form.getBranch_id_from().equals(form.getBranch_id_to())) form.setFirstBranchChecked(false);
+        }
         form.setDateCreated(LocalDate.now());
-        /*System.out.println(form.isFirstBranchChecked() + " " + form.getBranch_id_from() + " do " + form.getBranch_id_to());*/
 
         redirectAttributes.addFlashAttribute("indexData", form);
-        return "redirect:/show";
+        return "redirect:/cars";
     }
 }

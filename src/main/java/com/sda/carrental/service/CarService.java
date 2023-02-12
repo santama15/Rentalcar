@@ -19,17 +19,15 @@ public class CarService {
     private final CarRepository carRepository;
 
     public List<Car> findAll() {
-        return StreamSupport.stream(carRepository.findAll().spliterator(), false)      //nowa klasa StreamSupport
-                .collect(toList());
-    }
-
-    //TODO
-    public List<Car> findUnreservedCars() {
         return StreamSupport.stream(carRepository.findAll().spliterator(), false)
                 .collect(toList());
     }
 
-    public List<Car> findUnreservedCars(LocalDate ddateFrom, LocalDate ddateTo, Long ddepartment){
-        return StreamSupport.stream(carRepository.findUnreservedByDateAndDepartment(ddateFrom, ddateTo, ddepartment).spliterator(), false).collect(Collectors.toList());
+    public Car findCarById(long id) {
+        return carRepository.findById(id).orElse(null);
+    }
+
+    public List<Car> findAvailableCarsInDepartment(LocalDate dateFrom, LocalDate dateTo, Long department){
+        return StreamSupport.stream(carRepository.findAvailableCarsInDepartment(dateFrom, dateTo, department).spliterator(), false).collect(Collectors.toList());
     }
 }

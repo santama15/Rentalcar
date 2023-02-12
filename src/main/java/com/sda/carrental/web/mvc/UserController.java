@@ -8,31 +8,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/register")
 public class UserController {
     private static final String MESSAGE_KEY = "message";
     private final UserService userService;
 
     //wyświetlanie formularza
-    @GetMapping("/register")
+    @RequestMapping(method = RequestMethod.GET)
     public String create(ModelMap map) {
-        map.addAttribute("customerek", new CreateCustomerForm());  //obiekt POJO
+        map.addAttribute("customer", new CreateCustomerForm());  //obiekt POJO
         map.addAttribute("roles", User.Roles.values());
 
         return "registerCustomer";
     }
 
     //zapisywanie danych do bazy
-    @PostMapping("/register")
-    public String handleCreate(@ModelAttribute("customerek") @Valid CreateCustomerForm form, Errors errors, RedirectAttributes redirectAttributes) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String handleCreate(@ModelAttribute("customer") @Valid CreateCustomerForm form, Errors errors, RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
 //            model.addAttribute("roles", User.Roles.values());
             return "registerCustomer";

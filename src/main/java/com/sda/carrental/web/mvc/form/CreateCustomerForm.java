@@ -1,7 +1,5 @@
 package com.sda.carrental.web.mvc.form;
 
-import com.sda.carrental.model.users.Customer;
-import com.sda.carrental.model.users.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

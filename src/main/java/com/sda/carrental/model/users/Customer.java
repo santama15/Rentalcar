@@ -1,7 +1,5 @@
 package com.sda.carrental.model.users;
 
-import java.io.Serializable;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="pl" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div th:fragment="top-menu">
     <div sec:authorize="isAuthenticated()">
@@ -49,6 +49,14 @@
             </ul>
         </div>
     </div>
+</div>
+
+<div th:fragment="click-logo">
+<div class="flex justify-center md:justify-start pt-12 md:pl-5 md:-mb-12">
+    <div class="bg-black text-white font-bold text-xl p-4" onclick="location.href='/'" style="cursor: pointer">
+        Rent-a-Car
+    </div>
+</div>
 </div>
 </body>
 </html>

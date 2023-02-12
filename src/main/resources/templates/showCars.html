@@ -7,7 +7,7 @@
 
     <title>Wypożyczalnia samochodów</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="../static/js/bootstrap.js"></script>
@@ -20,7 +20,7 @@
     <div th:include="fragments/top::reg-options"></div>
 
     <div class="row">
-        <div class="col-sm-3 border border-dark">
+        <div class="col-sm-3">
 
             <div class="bg-light border">Filtruj</div>
 
@@ -101,8 +101,8 @@
             </div>
         </div>
 
-        <div class="col-sm-9 border border-dark">
-            <form th:action="@{/show}" th:object="${createShowForm}" th:method="POST">
+        <div class="col-sm-9">
+            <form th:action="@{/cars}" th:object="${showCarsForm}" th:method="POST">
                 <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
                 <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">
                 <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
@@ -148,8 +148,7 @@
             </form>
         </div>
     </div>
-</div>
-</div>
+    <div th:include="fragments/bottom::bottom-footer"></div>
 </div>
 
 
