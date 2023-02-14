@@ -44,7 +44,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; //false dla ważności loginu i hasła
+        return true;
     }
 
     @Override
