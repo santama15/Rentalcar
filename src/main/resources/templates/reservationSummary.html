@@ -24,6 +24,13 @@
         <br>
 
         <form th:object="${reservationData}" th:action="@{/summary}" th:method="POST">
+            <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
+            <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">
+            <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
+            <input type="hidden" th:field="*{indexData.dateFrom}" th:value="*{indexData.getDateFrom()}">
+            <input type="hidden" th:field="*{indexData.dateTo}" th:value="*{indexData.getDateTo()}">
+            <input type="hidden" th:field="*{indexData.dateCreated}" th:value="*{indexData.getDateCreated()}">
+            <input type="hidden" th:field="*{car_id}" th:value="*{getCar_id()}">
 
             <div class="container text-center">
                 <div class="row">

@@ -28,6 +28,10 @@ public class UserService {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("User with id: " + id + " not found"));
     }
 
+    public User findByUsername(String username) {
+        return repository.findByEmail(username).orElseThrow(() -> new RuntimeException("User with username: " + username + " not found"));
+    }
+
     public User save(User user) {
         user.setPassword((bCryptPasswordEncoder.encode(user.getPassword())));
         user.setPassword((user.getPassword()));
@@ -36,68 +40,5 @@ public class UserService {
 
     public void delete(Long id) {
         repository.deleteById(id);
-    }
-
-//    @Override
-//    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
-//    {
-//        final User user = repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
-//        return new UserDetails()
-//        {
-//            @Override
-//            public Collection<? extends GrantedAuthority> getAuthorities()
-//            {
-//                return List.of(new GrantedAuthority()
-//                {
-//                    @Override
-//                    public String getAuthority()
-//                    {
-//                        return User.Roles.ROLE_EMPLOYEE.toString();
-//                    }
-//                });
-//            }
-
-//            @Override
-//            public String getPassword()
-//            {
-//                return user.getPassword();
-//            }
-//
-//            @Override
-//            public String getUsername()
-//            {
-//                return user.getEmail();
-//            }
-//
-//            @Override
-//            public boolean isAccountNonExpired()
-//            {
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean isAccountNonLocked()
-//            {
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean isCredentialsNonExpired()
-//            {
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean isEnabled()
-//            {
-//                return true;
-//            }
-//        };
-//
-//    }
-
-    public static void main(String[] args) {
-        final String adminek = new BCryptPasswordEncoder().encode("adminek");
-        System.out.println(adminek);
     }
 }
