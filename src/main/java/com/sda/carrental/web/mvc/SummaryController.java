@@ -30,7 +30,7 @@ public class SummaryController {
     private final ReservationService resService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String sumReservationPage(final ModelMap map, @ModelAttribute("showData") ShowCarsForm reservationData) {
+    public String sumReservationPage(final ModelMap map, @ModelAttribute("showData") ShowCarsForm reservationData, RedirectAttributes redAtt) {
         if (reservationData == null) return "redirect:/";
         if (reservationData.getIndexData() == null) return "redirect:/";
 
@@ -49,6 +49,7 @@ public class SummaryController {
             return "reservationSummary";
         } catch (ResourceNotFoundException err) {
             err.printStackTrace();
+            redAtt.addAttribute("response", "Błąd serwera! \nProsimy spróbować później lub skontaktować się telefonicznie.");
             return "redirect:/";
         }
     }
@@ -61,7 +62,7 @@ public class SummaryController {
 
         if (status == HttpStatus.CREATED) {
             model.addAttribute("response", "Rezerwacja została pomyślnie przesłana!");
-            return "reservationUser"; //TODO
+            return "reservationsUser"; //TODO
         } else if (status == HttpStatus.CONFLICT) {
             redAtt.addAttribute("response", "Rezerwacja napotkała błąd przy tworzeniu. \nRezerwowany samochód mógł zostać zajęty lub podane dane są nieprawidłowe. \nW razie dalszych kłopotów prosimy skontaktować się telefonicznie.");
             return "redirect:/";
@@ -70,4 +71,6 @@ public class SummaryController {
             return "redirect:/";
         }
     }
+
+    //TODO create "response" handling in index HTML + check others
 }
