@@ -1,5 +1,6 @@
 package com.sda.carrental.service;
 
+import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.property.Car;
 import com.sda.carrental.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class CarService {
     }
 
     public Car findCarById(long id) {
-        return carRepository.findById(id).orElse(null);
+        return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
     }
 
     public List<Car> findAvailableCarsInDepartment(LocalDate dateFrom, LocalDate dateTo, Long department){

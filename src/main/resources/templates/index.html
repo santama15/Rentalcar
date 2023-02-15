@@ -89,7 +89,7 @@
 
         <div th:if="${#fields.hasErrors('indexForm.*')}">
             <div class="alert alert-danger d-flex align-items-center" role="alert"
-                 th:each="err: ${#fields.errors('createIndexForm.*')}">
+                 th:each="err: ${#fields.errors('indexForm.*')}">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
                     <use xlink:href="#exclamation-triangle-fill"/>
                 </svg>

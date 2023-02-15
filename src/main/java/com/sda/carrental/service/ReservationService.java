@@ -1,6 +1,7 @@
 package com.sda.carrental.service;
 
 
+import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.Car;
 import com.sda.carrental.model.property.Department;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,28 +29,28 @@ public class ReservationService {
     private final CarRepository carRepository;
     private final DepartmentRepository depRepository;
 
-    public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody Long carId, @RequestBody IndexForm form) {
-        Optional<User> user = userRepository.findByEmail(cud.getUsername());
-        List<Car> avCars = carRepository.findAvailableCarsInDepartment(form.getDateFrom(), form.getDateTo(), form.getBranch_id_from());
-        Optional<Car> reqCar = carRepository.findById(carId);
-        Optional<Department> depRepFrom = depRepository.findById(form.getBranch_id_from());
-        Optional<Department> depRepTo = depRepository.findById(form.getBranch_id_to());
+    public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody Long carId, @RequestBody IndexForm indexForm) {
+        try {
+            User user = userRepository.findByEmail(cud.getUsername()).orElseThrow(ResourceNotFoundException::new);
+            List<Car> avCars = carRepository.findAvailableCarsInDepartment(indexForm.getDateFrom(), indexForm.getDateTo(), indexForm.getBranch_id_from());
+            Car reqCar = carRepository.findById(carId).orElseThrow(ResourceNotFoundException::new);
+            Department depRepFrom = depRepository.findById(indexForm.getBranch_id_from()).orElseThrow(ResourceNotFoundException::new);
+            Department depRepTo = depRepository.findById(indexForm.getBranch_id_to()).orElseThrow(ResourceNotFoundException::new);
 
-        if (reqCar.isPresent() && user.isPresent() && depRepTo.isPresent() && depRepFrom.isPresent()) {
-            if (avCars.contains(reqCar.get()) && !form.getDateFrom().isAfter(form.getDateTo()) && !LocalDate.now().isAfter(form.getDateFrom())) {
+            if (avCars.contains(reqCar) && !indexForm.getDateFrom().isAfter(indexForm.getDateTo()) && !LocalDate.now().isAfter(indexForm.getDateFrom())) {
                 reservationRepository.save(
                         new Reservation(
-                                (Customer) user.get(), reqCar.get(),
-                                depRepFrom.get(), depRepTo.get(),
-                                form.getDateFrom(), form.getDateTo(),
-                                form.getDateCreated()));
+                                (Customer) user, reqCar,
+                                depRepFrom, depRepTo,
+                                indexForm.getDateFrom(), indexForm.getDateTo(),
+                                indexForm.getDateCreated()));
                 return HttpStatus.CREATED;
             } else {
                 return HttpStatus.CONFLICT;
             }
-        } else {
+        } catch (ResourceNotFoundException err) {
+            err.printStackTrace();
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
-
 }
