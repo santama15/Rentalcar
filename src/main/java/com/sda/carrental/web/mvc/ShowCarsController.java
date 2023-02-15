@@ -54,7 +54,6 @@ public class ShowCarsController {
         showCarsData.setCar_id(carId);
         if (showCarsData.getIndexData() == null) return "redirect:/";
 
-
         redirectAttributes.addFlashAttribute("showData", showCarsData);
         return "redirect:/summary";
     }

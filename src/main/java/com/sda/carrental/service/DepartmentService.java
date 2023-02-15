@@ -1,6 +1,7 @@
 package com.sda.carrental.service;
 
 
+import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.property.Department;
 import com.sda.carrental.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class DepartmentService {
     }
 
     public List<Department> findAllWhereCountry(Department.CountryCode countryCode) {
-        return StreamSupport.stream(departmentRepository.findDepartmentsByCountryCode(countryCode).spliterator(), false)      //nowa klasa StreamSupport
+        return StreamSupport.stream(departmentRepository.findDepartmentsByCountryCode(countryCode).spliterator(), false)
                 .collect(toList());
     }
 
@@ -32,7 +33,7 @@ public class DepartmentService {
     }
 
     public Department findBranchWhereId(long id) {
-        return departmentRepository.findById(id).orElse(null);
+        return departmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Department", "id", id));
     }
 
 }
