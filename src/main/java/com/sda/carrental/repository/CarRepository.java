@@ -10,8 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface CarRepository extends CrudRepository<Car, Long> {
-    List<Car> findAll();
-
     @Query(value = "from car where car_id in (" +
             "select c.car_id from car c left join reservation r on c.car_id = r.car_id.car_id " +
             "where (r.reservation_id is null or r.dateTo < :dateFrom or r.dateFrom> :dateTo) " +
