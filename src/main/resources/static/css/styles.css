@@ -6,11 +6,9 @@
     background: #f6f6f6;
 }
 
-
 a {
     color: #6a8db7;
 }
-
 
 p {
     line-height: 25px;
@@ -29,7 +27,6 @@ p {
     height: 45px;
     margin-top: 40px;
     background: #34393b url('../images/header-left.gif') left no-repeat;
-
 }
 
 #main {
@@ -50,7 +47,6 @@ p {
     height: 30px;
     width: 470px;
 }
-
 
 #logo {
     height: auto;
@@ -143,22 +139,9 @@ input {
     background: #c2cfdf;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-
-
 }
-
-.margin_left1 {
-    /*margin-left: 16px;*/
-}
-
-/*#box_txt {*/
-/*				width: 942px;*/
-/*				float: left;*/
-/*}*/
-
 
 #box_car {
-    /*background:  #FFF url('../images/img02.jpg');*/
     background-repeat: no-repeat;
     background-position: top;
     margin-top: 10px;
@@ -169,8 +152,6 @@ input {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     padding: 15px;
-
-
 }
 
 .title_box_car a {
@@ -187,26 +168,13 @@ input {
     text-align: left;
     padding-top: 140px;
     padding-left: 10px;
-
 }
-
-/*#div_left {*/
-/*				width: 200px;*/
-/*				float: left;*/
-/*			    border: 1px solid #ccc;*/
-/*			    background: #FFF;*/
-/*				-moz-border-radius: 5px;*/
-/*				-webkit-border-radius: 5px;*/
-/*				padding: 10px;*/
-
-/*}*/
 
 #div_right {
     width: 680px;
     float: left;
     margin-left: 15px;
     padding: 10px;
-
 }
 
 h2 {
@@ -387,7 +355,6 @@ h2.address {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
-
 
 #colorCircle {
     width: 80px;
