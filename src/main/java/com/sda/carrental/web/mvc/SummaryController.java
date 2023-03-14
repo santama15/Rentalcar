@@ -46,7 +46,7 @@ public class SummaryController {
             map.addAttribute("branchTo", depTo);
             map.addAttribute("reservationData", reservationData);
             map.addAttribute("car", car);
-            return "reservationSummary";
+            return "core/reservationSummary";
         } catch (ResourceNotFoundException err) {
             err.printStackTrace();
             redAtt.addAttribute("response", "Błąd serwera! \nProsimy spróbować później lub skontaktować się telefonicznie.");
@@ -57,14 +57,16 @@ public class SummaryController {
     @RequestMapping(method = RequestMethod.POST)
     public String reservationConfirmation(final ModelMap model, @ModelAttribute("reservationData") ShowCarsForm reservationData, RedirectAttributes redAtt) {
         CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         HttpStatus status = resService.createReservation(cud, reservationData.getCar_id(), reservationData.getIndexData());
 
         if (status == HttpStatus.CREATED) {
             model.addAttribute("response", "Rezerwacja została pomyślnie przesłana!");
-            return "reservationsUser"; //TODO
+            return "user/reservationsUser"; //TODO
         } else if (status == HttpStatus.CONFLICT) {
             redAtt.addAttribute("response", "Rezerwacja napotkała błąd przy tworzeniu. \nRezerwowany samochód mógł zostać zajęty lub podane dane są nieprawidłowe. \nW razie dalszych kłopotów prosimy skontaktować się telefonicznie.");
+            return "redirect:/";
+        } else if (status == HttpStatus.NOT_FOUND) {
+            redAtt.addAttribute("response", "Błąd danych! \nProsimy sprawdzić poprawność wprowadzanych danych lub skontaktować się telefonicznie.");
             return "redirect:/";
         } else {
             redAtt.addAttribute("response", "Błąd serwera! \nProsimy spróbować później lub skontaktować się telefonicznie.");

@@ -54,7 +54,7 @@ public class ShowCarsController {
 
         map.addAttribute("showCarsForm", showCarsForm);
         map.addAttribute("carFilterForm", carFilterForm);
-        return "showCars";
+        return "core/showCars";
     }
 
     @RequestMapping(value="/proceed", method = RequestMethod.POST)

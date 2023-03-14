@@ -31,7 +31,6 @@ public class ReservationService {
 
     public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody Long carId, @RequestBody IndexForm indexForm) {
         try {
-            //TODO create proper mapper layer
             User user = userRepository.findByEmail(cud.getUsername()).orElseThrow(ResourceNotFoundException::new);
             List<Car> avCars = carRepository.findAvailableCarsInDepartment(indexForm.getDateFrom(), indexForm.getDateTo(), indexForm.getBranch_id_from());
             Car reqCar = carRepository.findById(carId).orElseThrow(ResourceNotFoundException::new);
@@ -50,6 +49,9 @@ public class ReservationService {
                 return HttpStatus.CONFLICT;
             }
         } catch (ResourceNotFoundException err) {
+            err.printStackTrace();
+            return HttpStatus.NOT_FOUND;
+        } catch (Error err) {
             err.printStackTrace();
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }

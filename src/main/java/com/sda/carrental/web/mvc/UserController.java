@@ -3,7 +3,7 @@ package com.sda.carrental.web.mvc;
 import com.sda.carrental.model.users.User;
 import com.sda.carrental.service.UserService;
 import com.sda.carrental.web.mvc.form.CreateCustomerForm;
-import com.sda.carrental.web.mvc.mappers.CustomerMapper;
+import com.sda.carrental.service.mappers.CustomerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,27 +20,24 @@ public class UserController {
     private static final String MESSAGE_KEY = "message";
     private final UserService userService;
 
-    //wyświetlanie formularza
     @RequestMapping(method = RequestMethod.GET)
     public String create(ModelMap map) {
-        map.addAttribute("customer", new CreateCustomerForm());  //obiekt POJO
+        map.addAttribute("customer", new CreateCustomerForm());
         map.addAttribute("roles", User.Roles.values());
 
-        return "registerCustomer";
+        return "user/registerCustomer";
     }
 
-    //zapisywanie danych do bazy
     @RequestMapping(method = RequestMethod.POST)
     public String handleCreate(@ModelAttribute("customer") @Valid CreateCustomerForm form, Errors errors, RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
-//            model.addAttribute("roles", User.Roles.values());
-            return "registerCustomer";
+            //TODO handle validation and create message here
+            return "user/registerCustomer";
         }
         userService.save(CustomerMapper.toEntity(form));
         redirectAttributes.addAttribute(MESSAGE_KEY, "Użytkownik " + form.getName() + " " + form.getSurname() + " o loginie " + form.getEmail() + " został dodany");
 
         return "login";
-//        return "redirect:";
     }
 
 

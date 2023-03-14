@@ -20,6 +20,6 @@ public class ContactController {
     public String welcomePage(final ModelMap map) {
         map.addAttribute("dealer", departmentService.findAllWhereCountry(Department.CountryCode.COUNTRY_PL));
         map.addAttribute("hq", departmentService.findAllWhereCountryCodeAndHq(Department.CountryCode.COUNTRY_PL));
-        return "contact";
+        return "core/contact";
     }
 }

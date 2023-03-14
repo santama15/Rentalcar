@@ -25,7 +25,7 @@ public class IndexController {
     public String indexPage(final ModelMap map) {
         map.addAttribute("department", departmentService.findAll());
         map.addAttribute("indexForm", new IndexForm());
-        return "index";
+        return "core/index";
     }
 
 
@@ -36,7 +36,7 @@ public class IndexController {
 
             map.addAttribute("indexForm", form);
             map.addAttribute("department", departmentService.findAll());
-            return "index";
+            return "core/index";
         }
 
         if (!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
