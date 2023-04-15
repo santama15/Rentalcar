@@ -12,6 +12,6 @@ public class AboutUsController
     @RequestMapping(method = RequestMethod.GET)
     public String welcomePage()
     {
-        return "aboutUs";
+        return "core/aboutUs";
     }
 }

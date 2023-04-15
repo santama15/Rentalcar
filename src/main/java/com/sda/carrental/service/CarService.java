@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toList;
@@ -33,11 +32,15 @@ public class CarService {
         return carRepository.findAvailableCarsInDepartment(dateFrom, dateTo, department);
     }
 
+    public Car findAvailableCar(LocalDate dateFrom, LocalDate dateTo, Long department, long carId) {
+        return carRepository.findCarByCarIdAndAvailability(dateFrom, dateTo, department, carId).orElseThrow(ResourceNotFoundException::new);
+    }
+
     public List<Car> filterCars(CarFilterForm filterForm) {
         ArrayList<Car> filteredCars = (ArrayList<Car>) carRepository.findAvailableCarsInDepartment(
                 filterForm.getIndexData().getDateFrom(),
                 filterForm.getIndexData().getDateTo(),
-                filterForm.getIndexData().getBranch_id_from());
+                filterForm.getIndexData().getDepartmentIdFrom());
 
         if (filterForm.getPriceMin() != null) {
             filteredCars.removeIf(car -> car.getPrice_day() < filterForm.getPriceMin());
@@ -60,5 +63,30 @@ public class CarService {
         }
 
         return filteredCars;
+    }
+
+    public Map<String, Object> getFilterProperties(List<Car> carList) {
+        Set<String> brands = new HashSet<>();
+        Set<Car.CarType> types = new HashSet<>();
+        Set<Integer> seats = new HashSet<>();
+
+        for (Car car : carList) {
+            brands.add(car.getBrand());
+            types.add(car.getCarType());
+            seats.add(car.getSeats());
+        }
+
+        List<String> sortedBrands = new ArrayList<>(brands);
+        sortedBrands.sort(null);
+        List<Car.CarType> sortedTypes = new ArrayList<>(types);
+        sortedTypes.sort(null);
+        List<Integer> sortedSeats = new ArrayList<>(seats);
+        sortedSeats.sort(null);
+
+        Map<String, Object> carProperties = new HashMap<>();
+        carProperties.put("brand", sortedBrands);
+        carProperties.put("type", sortedTypes);
+        carProperties.put("seats", sortedSeats);
+        return carProperties;
     }
 }

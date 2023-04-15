@@ -9,13 +9,6 @@
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-
-    <!-- jQuery (required for Bootstrap JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- Popper.js (required for Bootstrap JavaScript plugins) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="js/bootstrap.js"></script>
 </head>
 
 <body>
@@ -28,8 +21,8 @@
         <div class="col-sm-3">
             <form th:object="${carFilterForm}" th:action="@{/cars/filter}" th:method="POST">
 
-                <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
-                <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">
+                <input type="hidden" th:field="*{indexData.departmentIdFrom}" th:value="*{indexData.getDepartmentIdFrom()}">
+                <input type="hidden" th:field="*{indexData.departmentIdTo}" th:value="*{indexData.getDepartmentIdTo()}">
                 <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
                 <input type="hidden" th:field="*{indexData.dateFrom}" th:value="*{indexData.getDateFrom()}">
                 <input type="hidden" th:field="*{indexData.dateTo}" th:value="*{indexData.getDateTo()}">
@@ -130,8 +123,8 @@
 
         <div class="col-sm-9">
             <form th:action="@{/cars/proceed}" th:object="${showCarsForm}" th:method="POST">
-                <input type="hidden" th:field="*{indexData.branch_id_from}" th:value="*{indexData.getBranch_id_from()}">
-                <input type="hidden" th:field="*{indexData.branch_id_to}" th:value="*{indexData.getBranch_id_to()}">
+                <input type="hidden" th:field="*{indexData.departmentIdFrom}" th:value="*{indexData.getDepartmentIdFrom()}">
+                <input type="hidden" th:field="*{indexData.departmentIdTo}" th:value="*{indexData.getDepartmentIdTo()}">
                 <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
                 <input type="hidden" th:field="*{indexData.dateFrom}" th:value="*{indexData.getDateFrom()}">
                 <input type="hidden" th:field="*{indexData.dateTo}" th:value="*{indexData.getDateTo()}">
@@ -156,7 +149,7 @@
                                 <li class="list-group-item" th:text="'Rocznik: ' + ${car.year}">Rocznik</li>
                                 <li class="list-group-item" th:text="'Miejsca: ' + ${car.seats}"></li>
                                 <li class="list-group-item"
-                                    th:text="'Cena za dzień: ' + ${car.price_day} + ' PLN'"></li>
+                                    th:text="'Cena za dzień: ' + ${#numbers.formatDecimal((car.price_day), 1, 2, 'POINT')} + ' PLN'"></li>
                             </ul>
                             <br>
                         </div>
@@ -164,11 +157,11 @@
                         <div class="col-md-2">
                             <div class="vstack gap-3">
                                 <div class="bg-light border"
-                                     th:text="${days*car.price_day} + ' PLN'">
+                                     th:text="${#numbers.formatDecimal((days*car.price_day), 1, 2, 'POINT')} + ' PLN'">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-dark" th:text="Wybierz" name="car_button"
-                                    th:value="${car.getCar_id()}"></button>
+                                    th:value="${car.getCarId()}"></button>
                         </div>
                     </div>
                 </div>
@@ -177,5 +170,6 @@
     </div>
     <div th:include="fragments/bottom::bottom-footer"></div>
 </div>
+<div th:include="fragments/bottom::common-scripts"></div>
 </body>
 </html>

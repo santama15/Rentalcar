@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ShowCarsForm {
 
-    private Long car_id;
+    private Long carId;
 
     private IndexForm indexData;
 }

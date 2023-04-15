@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,17 +32,18 @@ public class ShowCarsController {
         List<Car> carList = carService.findAvailableCarsInDepartment(
                 indexData.getDateFrom(),
                 indexData.getDateTo(),
-                indexData.getBranch_id_from());
+                indexData.getDepartmentIdFrom());
 
         if (!map.containsKey("filteredCars")) {
             map.addAttribute("cars", carList);
         } else {
             map.addAttribute("cars", map.getAttribute("filteredCars"));
         }
+        Map<String,Object> carProperties = carService.getFilterProperties(carList);
 
-        map.addAttribute("brand", carList.stream().map(Car::getBrand).distinct().sorted().collect(Collectors.toList())); //todo clean this part in code
-        map.addAttribute("type", carList.stream().map(Car::getCarType).distinct().sorted().collect(Collectors.toList()));
-        map.addAttribute("seats", carList.stream().map(Car::getSeats).distinct().sorted().collect(Collectors.toList()));
+        map.addAttribute("brand", carProperties.get("brand"));
+        map.addAttribute("type", carProperties.get("type"));
+        map.addAttribute("seats", carProperties.get("seats"));
 
         map.addAttribute("days", (indexData.getDateFrom().until(indexData.getDateTo(), ChronoUnit.DAYS) + 1));
 
@@ -54,13 +55,13 @@ public class ShowCarsController {
 
         map.addAttribute("showCarsForm", showCarsForm);
         map.addAttribute("carFilterForm", carFilterForm);
-        return "showCars";
+        return "core/showCars";
     }
 
     @RequestMapping(value="/proceed", method = RequestMethod.POST)
     public String showHandler(@ModelAttribute("showCarsForm") ShowCarsForm showCarsData, @RequestParam(value = "car_button") Long carId, RedirectAttributes redirectAttributes) {
         if (showCarsData == null) return "redirect:/";
-        showCarsData.setCar_id(carId);
+        showCarsData.setCarId(carId);
         if (showCarsData.getIndexData() == null) return "redirect:/";
 
         redirectAttributes.addFlashAttribute("showData", showCarsData);

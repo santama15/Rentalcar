@@ -9,8 +9,6 @@
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
-    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
-    <script src="../static/js/bootstrap.js"></script>
 </head>
 
 <body>
@@ -28,13 +26,13 @@
 
                 <br/>
                 <label for="dpt1" class="text-lg">Miejsce odbioru pojazdu</label>
-                <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{branch_id_from}"
+                <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{departmentIdFrom}"
                         required>
                     <option selected disabled
                             value="">Wybierz z listy...
                     </option>
                     <option th:each="departments: ${department}"
-                            th:value="${departments.getBranch_id()}"
+                            th:value="${departments.getDepartmentId()}"
                             th:text="${departments.getCity()+ ', '+ departments.getAddress()}"></option>
                 </select><br>
 
@@ -52,13 +50,13 @@
                     <div class="card card-body">
 
                         <label for="dpt2" class="text-lg">Miejsce zwrotu pojazdu</label>
-                        <select name="lt" id="dpt2" class="form-select text-white bg-dark" th:field="*{branch_id_to}">
+                        <select name="lt" id="dpt2" class="form-select text-white bg-dark" th:field="*{departmentIdTo}">
 
                             <option selected disabled
                                     value="">Wybierz z listy...
                             </option>
                             <option th:each="departments: ${department}"
-                                    th:value="${departments.getBranch_id()}"
+                                    th:value="${departments.getDepartmentId()}"
                                     th:text="${departments.getCity()+ ', '+ departments.getAddress()}"></option>
                         </select><br>
                     </div>
@@ -111,13 +109,9 @@
                 ultricies nec.
             </p>
         </div>
-
-
         <div th:include="fragments/bottom::bottom-footer"></div>
-
     </div>
 </div>
+<div th:include="fragments/bottom::common-scripts"></div>
 </body>
-
-
 </html>
