@@ -30,9 +30,8 @@
                 <li sec:authorize="hasRole('ROLE_CUSTOMER')" class="dropdown">
                     <a class="dropdown-toggle" href="#" id="customerZone" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Strefa klienta</a>
                     <div class="dropdown-menu" aria-labelledby="customerZone">
-                        <a class="dropdown-item" href="#">Profil</a>
-                        <a class="dropdown-item" href="/test">Rezerwacje</a>
-                        <a class="dropdown-item" href="#">Item 3</a>
+                        <a class="dropdown-item" href="/profile">Profil</a>
+                        <a class="dropdown-item" href="/reservations">Rezerwacje</a>
                     </div>
                 </li>
                 <li sec:authorize="hasRole('ROLE_EMPLOYEE')" class="dropdown">

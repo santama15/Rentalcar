@@ -13,9 +13,9 @@ import java.time.LocalDate;
 @CorrectChronology(message = "Nieprawidłowa kolejność dat!")
 public class IndexForm {
 
-    private Long branch_id_from;
+    private Long departmentIdFrom;
 
-    private Long branch_id_to;
+    private Long departmentIdTo;
 
     private boolean firstBranchChecked;
 

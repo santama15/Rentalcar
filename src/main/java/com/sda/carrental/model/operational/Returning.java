@@ -2,7 +2,7 @@ package com.sda.carrental.model.operational;
 
 import java.time.LocalDate;
 
-import com.sda.carrental.model.property.Invoice;
+import com.sda.carrental.model.property.ReservationPayment;
 import com.sda.carrental.model.users.Employee;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class Returning {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "return_id", nullable = false)
-    private Long return_id;
+    private Long returnId;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
@@ -30,8 +30,8 @@ public class Returning {
     private Reservation reservation;
 
     @OneToOne
-    @JoinColumn(name = "surcharge_invoice_id", referencedColumnName = "invoice_id")
-    private Invoice surcharge;
+    @JoinColumn(name = "surcharge_invoice_id", referencedColumnName = "payment_id")
+    private ReservationPayment surcharge;
 
     @Column(name = "notes")
     private String notes;

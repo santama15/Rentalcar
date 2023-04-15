@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.DELETE).hasAnyAuthority(User.Roles.ROLE_EMPLOYEE.name())
                 .antMatchers(HttpMethod.POST, "/summary").authenticated()
+                .antMatchers( "/profile/**", "/reservations/**").hasAnyAuthority(User.Roles.ROLE_CUSTOMER.name())
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

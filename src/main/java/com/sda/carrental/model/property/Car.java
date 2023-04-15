@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class Car {
-    public Car(Department department, String jpgLink, String brand, String model, Integer year, Long mileage, Integer seats, Integer price_day, CarType carType, CarStatus carStatus) {
-        this.department_id = department;
+    public Car(Department department, String jpgLink, String brand, String model, Integer year, Long mileage, Integer seats, Double price_day, CarType carType, CarStatus carStatus) {
+        this.department = department;
         this.jpgLink = jpgLink;
         this.brand = brand;
         this.model = model;
@@ -25,11 +25,11 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id", nullable = false)
-    private Long car_id;
+    private Long carId;
 
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
-    Department department_id;
+    Department department;
 
     @Column(name = "jpg_link")
     String jpgLink;
@@ -50,7 +50,7 @@ public class Car {
     Integer seats;
 
     @Column(name = "price_day")
-    Integer price_day;
+    Double price_day;
 
     @Column(name = "type")
     CarType carType;

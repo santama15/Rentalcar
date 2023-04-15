@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Wypożyczalnia samochodów</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
+</head>
+
+<body>
+<div id="container" class="container-md">
+    <div th:include="fragments/top::top-menu"></div>
+    <div th:include="fragments/top::reg-options"></div>
+
+    <div id="main">
+        <table class="table table-borderless">
+            <thead class="table-light">
+            <tr>
+                <th scope="row">Created</th>
+                <th scope="row">From</th>
+                <th scope="row">To</th>
+                <th scope="row">Period</th>
+                <th scope="row">Status</th>
+                <th scope="row"> </th>
+            </tr>
+            </thead>
+            <form th:action="@{/reservations}" th:method="POST">
+            <tbody>
+            <th:block th:if="${#lists.isEmpty(reservations)}">
+                <td th:text="'—'"></td>
+                <td th:text="'—'"></td>
+                <td th:text="'—'"></td>
+                <td th:text="'—'"></td>
+                <td th:text="'—'"></td>
+            </th:block>
+                <tr th:each="reservation: ${reservations}">
+                    <td th:text="${reservation.getDateCreated()}"></td>
+                    <td th:text="${reservation.getDepartmentTake().getCity()} + ', ' + ${reservation.getDepartmentTake().getAddress()}"></td>
+                    <td th:text="${reservation.getDepartmentBack().getCity()} + ', ' + ${reservation.getDepartmentTake().getAddress()}"></td>
+                    <td th:text="${reservation.getDateFrom()} + ' ⟶ ' + ${reservation.getDateTo()}"></td>
+                    <td th:text="${reservation.status.getText()}"></td>
+                    <td><button type="submit" class="btn btn-dark" th:text="Więcej" th:name="details_button"
+                                th:value="${reservation.reservationId}"></button></td>
+                </tr>
+            </tbody>
+            </form>
+        </table>
+        <div th:include="fragments/bottom::bottom-footer"></div>
+    </div>
+</div>
+<div th:include="fragments/bottom::common-scripts"></div>
+</body>
+</html>

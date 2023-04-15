@@ -33,15 +33,13 @@ public class IndexController {
     public String handleRequest(@ModelAttribute("indexForm") @Valid IndexForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
         if (errors.hasErrors()) {
             if (form.isFirstBranchChecked()) form.setFirstBranchChecked(false);
-
-            map.addAttribute("indexForm", form);
             map.addAttribute("department", departmentService.findAll());
             return "core/index";
         }
 
-        if (!form.isFirstBranchChecked()) form.setBranch_id_to(form.getBranch_id_from());
+        if (!form.isFirstBranchChecked()) form.setDepartmentIdTo(form.getDepartmentIdFrom());
         if (form.isFirstBranchChecked()) {
-            if (form.getBranch_id_from().equals(form.getBranch_id_to())) form.setFirstBranchChecked(false);
+            if (form.getDepartmentIdFrom().equals(form.getDepartmentIdTo())) form.setFirstBranchChecked(false);
         }
         form.setDateCreated(LocalDate.now());
 
