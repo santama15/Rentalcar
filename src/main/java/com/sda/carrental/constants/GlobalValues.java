@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @NoArgsConstructor
 public class GlobalValues {
-    private double deptReturnPriceDiff = 60;
-    private long refundSubtractDaysDuration = 3;
+    private double deptReturnPriceDiff = 120;
+    private long refundSubtractDaysDuration = 4;
     private double depositPercentage = 0.2;
 }

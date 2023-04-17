@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface VerificationRepository extends CrudRepository<Verification, Long> {
     Optional<Verification> findByCustomer(Customer customer);
+    void delete(Verification verification);
 }

@@ -1,11 +1,13 @@
 package com.sda.carrental.web.mvc.form;
 
+import com.sda.carrental.constants.enums.Country;
 import com.sda.carrental.web.mvc.form.validation.constraint.MatchingPassword;
 import com.sda.carrental.web.mvc.form.validation.constraint.UniqueEmail;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -23,7 +25,14 @@ public class RegisterCustomerForm {
     private String surname;
 
     @NotBlank(message = "Pole nie może być puste")
-    private String country;
+    @Size(min=7, max=15, message="Nieprawidłowa długość numeru kontaktowego")
+    @Digits(integer = 15, fraction = 0)
+    private String contactNumber;
+
+    private Country country;
+
+    @NotBlank(message = "Pole nie może być puste")
+    private String city;
 
     @NotBlank(message = "Pole nie może być puste")
     private String address;

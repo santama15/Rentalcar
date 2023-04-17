@@ -1,5 +1,6 @@
 package com.sda.carrental.web.mvc;
 
+import com.sda.carrental.constants.enums.Country;
 import com.sda.carrental.model.users.User;
 import com.sda.carrental.service.UserService;
 import com.sda.carrental.web.mvc.form.RegisterCustomerForm;
@@ -23,6 +24,7 @@ public class RegisterController {
     public String create(ModelMap map) {
         map.addAttribute("customer", new RegisterCustomerForm());
         map.addAttribute("roles", User.Roles.values());
+        map.addAttribute("countries", Country.values());
 
         return "user/registerCustomer";
     }

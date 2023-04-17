@@ -7,13 +7,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name = "reservation_payment")
+@Entity(name = "payment_details")
 @Getter
 @NoArgsConstructor
-public class ReservationPayment {
-    public ReservationPayment(Double mainValue, Double depositValue, Reservation reservation) {
+public class PaymentDetails {
+    public PaymentDetails(Double mainValue, Double deposit, Reservation reservation) {
         this.mainValue = mainValue;
-        this.deposit = depositValue;
+        this.deposit = deposit;
+        this.securedValue = 0.0;
         this.reservation = reservation;
     }
 
@@ -30,6 +31,11 @@ public class ReservationPayment {
     @Column(name = "main_value", nullable = false)
     private double mainValue;
 
+    @Setter
     @Column(name = "deposit", nullable = false)
     private double deposit;
+
+    @Setter
+    @Column(name = "secured_value", nullable = false)
+    private double securedValue;
 }

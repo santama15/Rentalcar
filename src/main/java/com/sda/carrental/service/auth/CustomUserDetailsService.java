@@ -12,15 +12,13 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService
-{
+public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
-    {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         return repository.findByEmail(username)
-            .map(CustomUserDetails::new)
-            .orElseThrow(() -> new RuntimeException("User with login:" + username + " not found in database!"));
+                .map(CustomUserDetails::new)
+                .orElseThrow(() -> new RuntimeException("User with login:" + username + " not found in database!"));
     }
 }

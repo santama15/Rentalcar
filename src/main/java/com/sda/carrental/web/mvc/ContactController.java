@@ -1,6 +1,6 @@
 package com.sda.carrental.web.mvc;
 
-import com.sda.carrental.model.property.Department;
+import com.sda.carrental.constants.enums.Country;
 import com.sda.carrental.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,8 +18,8 @@ public class ContactController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String welcomePage(final ModelMap map) {
-        map.addAttribute("dealer", departmentService.findAllWhereCountry(Department.CountryCode.COUNTRY_PL));
-        map.addAttribute("hq", departmentService.findAllWhereCountryCodeAndHq(Department.CountryCode.COUNTRY_PL));
+        map.addAttribute("dealer", departmentService.findAllWhereCountry(Country.COUNTRY_PL));
+        map.addAttribute("hq", departmentService.findAllWhereCountryAndHq(Country.COUNTRY_PL));
         return "core/contact";
     }
 }

@@ -1,6 +1,7 @@
 package com.sda.carrental.service;
 
 
+import com.sda.carrental.constants.enums.Country;
 import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.property.Department;
 import com.sda.carrental.repository.DepartmentRepository;
@@ -23,13 +24,13 @@ public class DepartmentService {
                 .collect(toList());
     }
 
-    public List<Department> findAllWhereCountry(Department.CountryCode countryCode) {
-        return StreamSupport.stream(departmentRepository.findDepartmentsByCountryCode(countryCode).spliterator(), false)
+    public List<Department> findAllWhereCountry(Country country) {
+        return StreamSupport.stream(departmentRepository.findDepartmentsByCountry(country).spliterator(), false)
                 .collect(toList());
     }
 
-    public Department findAllWhereCountryCodeAndHq(Department.CountryCode countryCode) {
-        return departmentRepository.findDepartmentsByCountryCodeAndHq(countryCode, true).orElse(new Department(Department.CountryCode.COUNTRY_EMPTY, "CityPlaceholder", "AddressPlaceholder", "PostcodePlaceholder", "email@email.com", "123456789", true));
+    public Department findAllWhereCountryAndHq(Country country) {
+        return departmentRepository.findDepartmentByCountryAndHq(country, true).orElse(new Department(Country.COUNTRY_PL, "—", "—", "—", "—", "—", true));
     }
 
     public Department findBranchWhereId(long id) {

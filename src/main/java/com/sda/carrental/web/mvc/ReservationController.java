@@ -19,13 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.DecimalFormat;
 import java.time.temporal.ChronoUnit;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/summary")
-public class SummaryController {
+@RequestMapping("/reservation")
+public class ReservationController {
 
     private final CarService carService;
     private final DepartmentService depService;
@@ -58,7 +57,7 @@ public class SummaryController {
             map.addAttribute("car", car);
             map.addAttribute("raw_price", days * car.getPrice_day());
 
-            return "core/reservationSummary";
+            return "core/reservation";
         } catch (ResourceNotFoundException err) {
             err.printStackTrace();
             redAtt.addAttribute("message", "Błąd serwera! \nProsimy spróbować później lub skontaktować się telefonicznie.");

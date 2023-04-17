@@ -31,7 +31,7 @@
                             </div>
                             <div class="flip-box-back">
                                 <h2 class="contact"
-                                    th:text="${hq.getCountryCode().getContactCode() + ' ' + hq.getContact()}"></h2>
+                                    th:text="${hq.getCountry().getContactCode() + ' ' + hq.getContact()}"></h2>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="flip-box-back-wider">
                             <h2 class="address"
-                                th:text="${dealer.getCountryCode().getContactCode() + ' ' + dealer.getContact()}"></h2>
+                                th:text="${dealer.getCountry().getContactCode() + ' ' + dealer.getContact()}"></h2>
                             <h2 class="address" th:text="${dealer.getEmail()}"></h2>
                         </div>
                     </div>

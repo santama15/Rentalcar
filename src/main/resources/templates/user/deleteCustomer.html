@@ -17,32 +17,30 @@
     <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
-        <form th:method="POST" th:object="${password_form}" th:action="@{/profile/password}">
+        <form th:method="POST" th:object="${delete_form}" th:action="@{/profile/delete}">
             <table class="table table-borderless">
                 <thead class="table-light">
                 <tr>
-                    <th scope="row">Zmiana hasła</th>
+                    <th scope="row">Kasacja konta</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input id="oldPassword" class="text-black bg-white" th:placeholder="'Podaj obecne hasło'"
+                    <td>
+                        <p th:text="'Czy na pewno chcesz skasować konto: ' + ${user} + '?'"></p>
+                        <p th:text="'Wszystkie dane zostaną nieodwracalnie skasowane.'"></p>
+                        <p th:utext="'Po dodatkowe informacje na temat kasacji zapraszamy do naszego <a href=&quot;/regulations&quot;>regulaminu</a>.'"></p>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><input id="confirmPassword" class="text-black bg-white" th:placeholder="'Potwierdź wpisując hasło'"
                                th:type="password" th:field="*{currentPassword}"
                                required/></td>
                 </tr>
                 <tr>
-                    <td><input id="newPassword" class="text-black bg-white" th:placeholder="'Podaj nowe hasło'"
-                               th:type="password" th:field="*{newPassword}"
-                               required/></td>
-                </tr>
-                <tr>
-                    <td><input id="newPasswordRepeat" class="text-black bg-white" th:placeholder="'Powtórz nowe hasło'"
-                               th:type="password"
-                               th:field="*{newPasswordRepeat}" required/></td>
-                </tr>
-                <tr>
                     <td>
-                        <button type="submit" class="btn btn-dark" th:text="Zmień"></button>
+                        <button type="submit" class="btn btn-dark" th:text="Potwierdź"></button>
                         <a href="/profile" type="button" class="btn btn-dark" th:text="Cofnij"></a>
                     </td>
                 </tr>

@@ -65,7 +65,7 @@ public class ShowCarsController {
         if (showCarsData.getIndexData() == null) return "redirect:/";
 
         redirectAttributes.addFlashAttribute("showData", showCarsData);
-        return "redirect:/summary";
+        return "redirect:/reservation";
     }
 
     @RequestMapping(value="/filter", method = RequestMethod.POST)

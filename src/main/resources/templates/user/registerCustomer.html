@@ -47,10 +47,28 @@
                 </div>
 
                 <div class="flex flex-col pt-4">
-                    <label for="address" class="text-lg">Narodowość</label>
-                    <input type="text" id="country" placeholder="Twoja narodowość"
+                    <label for="lastName" class="text-lg">Numer kontaktowy</label>
+                    <input type="text" id="contactNumber" placeholder="Twój numer telefonu"
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                           th:field="*{country}">
+                           th:field="*{contactNumber}">
+                </div>
+
+                <div class="flex flex-col pt-4">
+                    <label for="address" class="text-lg">Narodowość</label>
+                    <select type="text" id="country"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                            th:field="*{country}">
+                        <div th:each="country:${countries}">
+                            <option th:text="${country.getCountryName()}" th:value="${country}"></option>
+                        </div>
+                    </select>
+                </div>
+
+                <div class="flex flex-col pt-4">
+                    <label for="address" class="text-lg">Miasto</label>
+                    <input type="text" id="city" placeholder="Twoje miasto"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                           th:field="*{city}">
                 </div>
 
                 <div class="flex flex-col pt-4">

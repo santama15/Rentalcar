@@ -17,28 +17,41 @@
     <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
-        <form th:method="POST" th:object="${password_form}" th:action="@{/profile/password}">
+        <form th:method="POST" th:object="${address_form}" th:action="@{/profile/address}">
             <table class="table table-borderless">
                 <thead class="table-light">
                 <tr>
-                    <th scope="row">Zmiana hasła</th>
+                    <th scope="row">Zmiana adresu korespondencyjnego</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input id="oldPassword" class="text-black bg-white" th:placeholder="'Podaj obecne hasło'"
-                               th:type="password" th:field="*{currentPassword}"
-                               required/></td>
+                    <td>
+                        <select id="country"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                                th:type="text" th:field="*{country}"
+                                required>
+                            <div th:each="country:${countries}">
+                                <option th:text="${country.getCountryName()}" th:value="${country}"></option>
+                            </div>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td><input id="newPassword" class="text-black bg-white" th:placeholder="'Podaj nowe hasło'"
-                               th:type="password" th:field="*{newPassword}"
-                               required/></td>
+                    <td>
+                        <input id="city"
+                               class="text-black bg-white" placeholder="Podaj miasto"
+                               th:type="text" th:field="*{city}"
+                               required>
+                    </td>
                 </tr>
                 <tr>
-                    <td><input id="newPasswordRepeat" class="text-black bg-white" th:placeholder="'Powtórz nowe hasło'"
-                               th:type="password"
-                               th:field="*{newPasswordRepeat}" required/></td>
+                    <td>
+                        <input id="address"
+                               class="text-black bg-white" placeholder="Podaj adres"
+                               th:type="text" th:field="*{address}"
+                               required>
+                    </td>
                 </tr>
                 <tr>
                     <td>

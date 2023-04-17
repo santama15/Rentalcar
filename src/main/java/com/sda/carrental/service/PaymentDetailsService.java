@@ -3,8 +3,8 @@ package com.sda.carrental.service;
 import com.sda.carrental.constants.GlobalValues;
 import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.operational.Reservation;
-import com.sda.carrental.model.property.ReservationPayment;
-import com.sda.carrental.repository.ReservationPaymentRepository;
+import com.sda.carrental.model.property.PaymentDetails;
+import com.sda.carrental.repository.PaymentDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ReservationPaymentService {
-    private final ReservationPaymentRepository reservationPaymentRepository;
+public class PaymentDetailsService {
+    private final PaymentDetailsRepository paymentDetailsRepository;
     private final GlobalValues gv;
 
-    public List<ReservationPayment> findAll() {
-        return reservationPaymentRepository.findAll();
+    public List<PaymentDetails> findAll() {
+        return paymentDetailsRepository.findAll();
     }
 
-    public ReservationPayment findByReservation (Reservation reservation) {
-        return reservationPaymentRepository
+    public PaymentDetails findByReservation(Reservation reservation) {
+        return paymentDetailsRepository
                 .findByReservation(reservation)
                 .orElseThrow(ResourceNotFoundException::new);
     }
@@ -37,18 +37,21 @@ public class ReservationPaymentService {
             value += gv.getDeptReturnPriceDiff();
         }
 
-        reservationPaymentRepository.save(
-                new ReservationPayment(value*(1-gv.getDepositPercentage()), value*gv.getDepositPercentage(), reservation)
+        paymentDetailsRepository.save(
+                new PaymentDetails(value, reservation.getCar().getDepositValue(), reservation)
         );
     }
 
     public void retractReservationPayment(Reservation reservation) {
+        PaymentDetails paymentDetails = findByReservation(reservation);
         if (LocalDate.now().isAfter(reservation.getDateFrom().minusDays(gv.getRefundSubtractDaysDuration()))) {
-            ReservationPayment rp = findByReservation(reservation);
-            rp.setMainValue(0);
-            reservationPaymentRepository.save(rp);
-        } else {
-            reservationPaymentRepository.deleteByReservation(reservation);
+            paymentDetails.setSecuredValue(paymentDetails.getMainValue() * gv.getDepositPercentage());
         }
+
+        //some method here that would return money to the customer
+
+        paymentDetails.setMainValue(0);
+        paymentDetails.setDeposit(0);
+        paymentDetailsRepository.save(paymentDetails);
     }
 }

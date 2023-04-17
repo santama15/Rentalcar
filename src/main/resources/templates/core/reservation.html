@@ -20,7 +20,7 @@
         <h3><strong>Podsumowanie:</strong></h3>
         <br>
 
-        <form th:object="${reservationData}" th:action="@{/summary}" th:method="POST">
+        <form th:object="${reservationData}" th:action="@{/reservation}" th:method="POST">
             <input type="hidden" th:field="*{indexData.departmentIdFrom}" th:value="*{indexData.getDepartmentIdFrom()}">
             <input type="hidden" th:field="*{indexData.departmentIdTo}" th:value="*{indexData.getDepartmentIdTo()}">
             <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
@@ -76,7 +76,9 @@
                             <li th:text="'Wypożyczenie: ' + ${#numbers.formatDecimal(raw_price, 1, 2, 'POINT')} + ' PLN'"></li>
                             <li th:text="'Zwrot w innej lokalizacji: ' + ${#numbers.formatDecimal(diff_return_price, 1, 2, 'POINT')} + ' PLN'"></li>
                             <li th:text="'————'"></li>
-                            <li th:text="'Suma całkowita: ' + ${#numbers.formatDecimal(total_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                            <li th:utext="'<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-exclamation-circle&quot; viewBox=&quot;0 0 16 16&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Polityka anulowania: Bezpłatne anulowanie do ' + ${refund_fee_days} + ' dni przed datą wynajmu. Późne anulacje mogą podlegać ' + ${deposit_percentage} + '% opłacie anulacyjnej. Szczegóły w regulaminie.&quot;><path d=&quot;M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;/><path d=&quot;M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z&quot;/></svg> '
+                                    + 'Suma całkowita: ' + ${#numbers.formatDecimal(total_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                            <li th:text="'+ Depozyt: ' + ${#numbers.formatDecimal(car.depositValue, 1, 2, 'POINT')} + ' PLN'"></li>
                         </ul>
                         <br>
                     </div>
