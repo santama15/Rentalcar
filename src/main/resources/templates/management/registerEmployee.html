@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,19 +27,19 @@
             <div th:include="fragments/top::click-logo"></div>
 
             <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
-                <p class="text-center text-3xl">Panel dodawania pracownika</p>
+                <p class="text-center text-3xl">Register employee</p>
                 <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
                     <div class="flex flex-col pt-4">
 
 
-                        <label for="firstName" class="text-lg">Imię</label>
+                        <label for="firstName" class="text-lg">Name</label>
                         <input type="text" id="firstName" placeholder="Imię" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                                th:field="*{firstName}">
                     </div>
 
 
                      <div class="flex flex-col pt-4">
-                        <label for="lastName" class="text-lg">Nazwisko</label>
+                        <label for="lastName" class="text-lg">Surname</label>
                         <input type="text" id="lastName" placeholder="Nazwisko" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                                th:field="*{lastName}">
                     </div>
@@ -47,12 +47,11 @@
 
                     <div class="flex flex-col pt-4">
 
-                        <label for="employee" class="text-lg">Stanowisko</label>
-                        <select name="employee" id="employee" placeholder="wybierz z listy..."  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                        <label for="employee" class="text-lg">Rank</label>
+                        <select name="employee" id="employee" placeholder="Select..."  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                                 th:field="*{position}" >>
-                            <option value="admin">Administrator</option>
-                            <option value="manager">Manager</option>
-                            <option value="opel">Pracownik</option>
+                            <option value=""></option>
+                            <!--for each-->
                         </select>
 
 
@@ -60,39 +59,37 @@
 
                     <div class="flex flex-col pt-4">
 
-                        <label for="branch" class="text-lg">Oddział (miejsce pracy)</label>
-                        <select name="branch" id="branch" placeholder="wybierz z listy..."  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                        <label for="department" class="text-lg">Department</label>
+                        <select name="department" id="department" placeholder="Select..."  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                                 th:field="*{branch}" >>
-                            <option value="pierwszy">pierwszy</option>
-                            <option value="drugi">drugi</option>
-                            <option value="trzeci">trzeci</option>
-                            <option value="czwarty">czwarty</option>
+                            <option value=""></option>
+                    <!--for each-->
                         </select>
 
                     </div>
 
 
                     <div class="flex flex-col pt-4">
-                        <label for="email" class="text-lg">Email</label>
-                        <input type="email" id="email" placeholder="pracownik@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                        <label for="email" class="text-lg">E-mail</label>
+                        <input type="email" id="email" placeholder="employee@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                                th:field="*{email}">
                     </div>
 
 
                     <div class="flex flex-col pt-4">
-                        <label for="password" class="text-lg">Hasło</label>
-                        <input type="password" id="password" placeholder="hasło" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                        <label for="password" class="text-lg">Password</label>
+                        <input type="password" id="password" placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                                th:field="*{password}">
                     </div>
 
 
                     <div class="flex flex-col pt-4">
-                        <label for="confirm-password" class="text-lg">Powtórz hasło</label>
-                        <input type="password" id="confirm-password" placeholder="hasło" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                        <label for="confirm-password" class="text-lg">Repeat password</label>
+                        <input type="password" id="confirm-password" placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
 
-                    <input type="submit" value="Zarejestruj pracownika" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">
+                    <input type="submit" value="Register" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">
                 </form>
 <!--                <div class="text-center pt-12 pb-12">-->
 <!--                    <p>Posiadasz już konto? <a href="login.html" class="underline font-semibold">Zaloguj się.</a></p>-->

@@ -97,7 +97,7 @@ p {
 
 input {
     border: 1px solid #ccc;
-    background: #34393b;
+/*    background: #34393b;*/
     margin: 5px;
     padding: 5px;
     color: #CCC;
@@ -362,4 +362,13 @@ h2.address {
     /*background-color: #F34A53;*/
     /*border-radius: 100%;*/
     margin: 40px auto 0;
+}
+
+.fixedMessage {
+    position:fixed;
+    bottom: 0px;
+    z-index:9999;
+    border-radius:0px;
+    text-align: center;
+    width: 50%;
 }

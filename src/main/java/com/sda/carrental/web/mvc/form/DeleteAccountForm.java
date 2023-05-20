@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 public class DeleteAccountForm {
 
-    @NotEmpty(message = "Pole nie może być puste!")
-    @CurrentPassword(message = "Podane hasło nie jest zgodne z obecnym")
+    @NotEmpty(message = "Field cannot be empty")
+    @CurrentPassword(message = "Provided current password is incorrect")
     private String currentPassword;
 }

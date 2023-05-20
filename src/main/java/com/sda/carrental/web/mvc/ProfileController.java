@@ -82,14 +82,15 @@ public class ProfileController {
 
         HttpStatus response = customerService.changeContact(form.getContactNumber());
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "Numer kontaktowy został pomyślnie zmieniony.");
+            redAtt.addFlashAttribute("message", "Contact number has been changed successfully.");
             return "redirect:/profile";
         } else if (response.equals(HttpStatus.NOT_FOUND)) {
-            redAtt.addAttribute("message", "Użytkownik nie został rozpoznany. Prosimy zalogować się ponownie.");
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
         }
-        return "redirect:/profile";
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/address")
@@ -100,33 +101,32 @@ public class ProfileController {
 
         HttpStatus response = customerService.changeAddress(form);
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "Adres korespondencyjny został pomyślnie zmieniony.");
+            redAtt.addFlashAttribute("message", "The mailing address has been successfully changed.");
             return "redirect:/profile";
         } else if (response.equals(HttpStatus.NOT_FOUND)) {
-            redAtt.addAttribute("message", "Użytkownik nie został rozpoznany. Prosimy zalogować się ponownie.");
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
         }
-        return "redirect:/profile";
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/email")
-    public String changeEmailAction(RedirectAttributes redAtt, @ModelAttribute("email_form") @Valid ChangeEmailForm form, Errors errors, HttpServletRequest request) {
+    public String changeEmailAction(RedirectAttributes redAtt, @ModelAttribute("email_form") @Valid ChangeEmailForm form, Errors errors) {
         if (errors.hasErrors()) {
             return "user/emailCustomer";
         }
 
         HttpStatus response = userService.changeEmail(form.getNewEmail());
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "E-mail został pomyślnie zmieniony. Prosimy zalogować się ponownie.");
-            request.getSession().invalidate();
-            return "redirect:/";
+            redAtt.addFlashAttribute("message", "The email has been successfully changed. Please login again.");
         } else if (response.equals(HttpStatus.NOT_FOUND)) {
-            redAtt.addAttribute("message", "Użytkownik nie został rozpoznany. Prosimy zalogować się ponownie.");
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
         }
-        request.getSession().invalidate();
+        SecurityContextHolder.getContext().setAuthentication(null);
         return "redirect:/";
     }
 
@@ -138,33 +138,32 @@ public class ProfileController {
 
         HttpStatus response = userService.changePassword(form.getNewPassword());
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "Hasło zostało pomyślnie zmienione.");
+            redAtt.addFlashAttribute("message", "Password has been changed successfully.");
             return "redirect:/profile";
         } else if (response.equals(HttpStatus.NOT_FOUND)) {
-            redAtt.addAttribute("message", "Użytkownik nie został rozpoznany.");
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
         }
+        SecurityContextHolder.getContext().setAuthentication(null);
         return "redirect:/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete")
-    public String deleteAccountAction(RedirectAttributes redAtt, @ModelAttribute("delete_form") @Valid DeleteAccountForm form, Errors errors, HttpServletRequest request) {
+    public String deleteAccountAction(RedirectAttributes redAtt, @ModelAttribute("delete_form") @Valid DeleteAccountForm form, Errors errors) {
         if (errors.hasErrors()) {
             return "user/deleteCustomer";
         }
 
-        HttpStatus response = customerService.scrambleCustomer();
+        HttpStatus response = customerService.deleteCustomer();
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "Konto zostało pomyślnie skasowane.");
-            request.getSession().invalidate();
-            return "redirect:/";
+            redAtt.addFlashAttribute("message", "Account has been successfully deleted.");
         } else if (response.equals(HttpStatus.NOT_FOUND)) {
-            redAtt.addAttribute("message", "Użytkownik nie został rozpoznany. Prosimy zalogować się ponownie.");
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
         }
-        request.getSession().invalidate();
+        SecurityContextHolder.getContext().setAuthentication(null);
         return "redirect:/";
     }
 }

@@ -11,9 +11,9 @@ import javax.validation.constraints.NotBlank;
 public class ChangeAddressForm {
     private Country country;
 
-    @NotBlank(message = "Pole nie może być puste")
+    @NotBlank(message = "Field cannot be empty")
     private String city;
 
-    @NotBlank(message = "Pole nie może być puste")
+    @NotBlank(message = "Field cannot be empty")
     private String address;
 }

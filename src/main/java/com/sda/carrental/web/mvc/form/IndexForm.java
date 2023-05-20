@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@CorrectChronology(message = "Nieprawidłowa kolejność dat!")
+@CorrectChronology(message = "Incorrect date order")
 public class IndexForm {
 
     private Long departmentIdFrom;
@@ -19,11 +19,11 @@ public class IndexForm {
 
     private boolean firstBranchChecked;
 
-    @FutureOrPresent(message = "Data wypożyczenia samochodu jest przestarzała!")
+    @FutureOrPresent(message = "Rental date is out of date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateFrom;
 
-    @FutureOrPresent(message = "Data oddania samochodu jest przestarzała!")
+    @FutureOrPresent(message = "Return date is out of date!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateTo;
 

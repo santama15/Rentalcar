@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class ChangeContactForm {
-    @NotBlank(message = "Pole nie może być puste")
-    @Size(min=7, max=15, message="Nieprawidłowa długość numeru kontaktowego")
-    @Digits(integer = 15, fraction = 0)
+    @NotBlank(message = "Field cannot be empty")
+    @Size(min=7, max=15, message="Incorrect contact number size")
+    @Digits(integer = 15, fraction = 0, message="Incorrect contact number format")
     private String contactNumber;
 }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
@@ -21,7 +21,7 @@
             <table class="table table-borderless">
                 <thead class="table-light">
                 <tr>
-                    <th scope="row">Zmiana adresu korespondencyjnego</th>
+                    <th scope="row">Change address</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
                 <tr>
                     <td>
                         <input id="city"
-                               class="text-black bg-white" placeholder="Podaj miasto"
+                               class="text-black bg-white" placeholder="City"
                                th:type="text" th:field="*{city}"
                                required>
                     </td>
@@ -48,19 +48,20 @@
                 <tr>
                     <td>
                         <input id="address"
-                               class="text-black bg-white" placeholder="Podaj adres"
+                               class="text-black bg-white" placeholder="Address"
                                th:type="text" th:field="*{address}"
                                required>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-dark" th:text="Zmień"></button>
-                        <a href="/profile" type="button" class="btn btn-dark" th:text="Cofnij"></a>
+                        <button type="submit" class="btn btn-dark" th:text="Change"></button>
+                        <a href="/profile" type="button" class="btn btn-dark" th:text="Back"></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+            <div th:insert="fragments/bottom::form-error-handler"></div>
         </form>
         <div th:include="fragments/bottom::bottom-footer"></div>
     </div>

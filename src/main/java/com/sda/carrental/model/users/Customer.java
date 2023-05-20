@@ -24,13 +24,13 @@ public class Customer extends User
         this.contactNumber = contactNumber;
     }
 
-    @Column(name = "country") //TODO everything below should be encrypted
+    @Column(name = "country")
     private Country country;
 
     @Column(name = "city")
     private String city;
 
-    @Column(name = "address")
+    @Column(name = "address") //TODO everything below should be encrypted
     private String address;
 
     @Column(name = "contact_number")

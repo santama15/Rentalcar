@@ -21,7 +21,7 @@ public class RegisterController {
     private final UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String create(ModelMap map) {
+    public String createCustomerPage(final ModelMap map) {
         map.addAttribute("customer", new RegisterCustomerForm());
         map.addAttribute("roles", User.Roles.values());
         map.addAttribute("countries", Country.values());
@@ -30,12 +30,14 @@ public class RegisterController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String handleCreate(@ModelAttribute("customer") @Valid RegisterCustomerForm form, Errors errors, RedirectAttributes redirectAttributes) {
+    public String createCustomer(@ModelAttribute("customer") @Valid RegisterCustomerForm form, Errors errors, final ModelMap map) {
         if (errors.hasErrors()) {
+            map.addAttribute("roles", User.Roles.values());
+            map.addAttribute("countries", Country.values());
             return "user/registerCustomer";
         }
         userService.save(CustomerMapper.toEntity(form));
-        redirectAttributes.addAttribute("message", "Użytkownik " + form.getName() + " " + form.getSurname() + " o loginie " + form.getEmail() + " został dodany");
+        map.addAttribute("message", "User " + form.getName() + " " + form.getSurname() + " with login " + form.getEmail() + " has been added.");
 
         return "core/login";
     }

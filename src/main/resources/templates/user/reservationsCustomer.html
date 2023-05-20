@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
@@ -43,13 +43,14 @@
                     <td th:text="${reservation.getDepartmentBack().getCity()} + ', ' + ${reservation.getDepartmentTake().getAddress()}"></td>
                     <td th:text="${reservation.getDateFrom()} + ' ⟶ ' + ${reservation.getDateTo()}"></td>
                     <td th:text="${reservation.status.getText()}"></td>
-                    <td><button type="submit" class="btn btn-dark" th:text="Więcej" th:name="details_button"
+                    <td><button type="submit" class="btn btn-dark" th:text="Details" th:name="details_button"
                                 th:value="${reservation.reservationId}"></button></td>
                 </tr>
             </tbody>
             </form>
         </table>
         <div th:include="fragments/bottom::bottom-footer"></div>
+        <div th:insert="fragments/bottom::message-handler" style="width: inherit;"></div>
     </div>
 </div>
 <div th:include="fragments/bottom::common-scripts"></div>

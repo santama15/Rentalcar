@@ -75,10 +75,10 @@ public class CustomerReservationsController {
             response = HttpStatus.BAD_REQUEST;
         }
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "Zwrot zakończony pomyślnie!");
+            redAtt.addFlashAttribute("message", "Return completed successfully!");
             return "redirect:/reservations";
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
             return "redirect:/";
         }
     }

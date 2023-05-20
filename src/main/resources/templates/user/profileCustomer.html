@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
@@ -20,10 +20,10 @@
         <table class="table table-borderless">
             <thead class="table-light">
             <tr>
-                <th scope="row">Konto
+                <th scope="row">Account
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-info-circle" viewBox="0 0 16 16" data-toggle="tooltip" data-placement="top"
-                         title="Dane osobiste będą weryfikowane w placówce wypożyczeniowej przed wydaniem pojazdu. Prosimy upewnić się zgodności danych!">
+                         title="Personal details will be verified at the rental outlet before the vehicle is handed over. Please make sure that your data is correct!">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                     </svg>
@@ -32,35 +32,36 @@
             </thead>
             <tbody>
             <tr>
-                <th scope="row">Imię</th>
+                <th scope="row">Name</th>
                 <td th:text="${customer.getName()} + ' ' + ${customer.getSurname()}"></td>
             </tr>
             <tr>
-                <th scope="row">Numer telefonu</th>
+                <th scope="row">Contact number</th>
                 <td th:text="${customer.getCountry().getContactCode()} + ' ' + ${customer.getContactNumber()}"></td>
-                <td><a href="/profile/contact" type="button" class="btn btn-dark" th:text="'Zmiana numeru kontaktowego'"></a></td>
+                <td><a href="/profile/contact" type="button" class="btn btn-dark" th:text="'Change contact number'"></a></td>
             </tr>
             <tr>
                 <th scope="row">E-mail</th>
                 <td th:text="${customer.getEmail()}"></td>
-                <td><a href="/profile/email" type="button" class="btn btn-dark" th:text="'Zmiana e-mail'"></a></td>
+                <td><a href="/profile/email" type="button" class="btn btn-dark" th:text="'Change e-mail'"></a></td>
             </tr>
 
             <tr>
-                <th scope="row">Adres</th>
+                <th scope="row">Address</th>
                 <td th:text="${customer.getCountry().getCountryName()} + ', ' + ${customer.getCity()} + ' ' + ${customer.getAddress()}"></td>
-                <td><a href="/profile/address" type="button" class="btn btn-dark" th:text="'Zmiana danych adresowych'"></a></td>
+                <td><a href="/profile/address" type="button" class="btn btn-dark" th:text="'Change address'"></a></td>
             </tr>
             <tr>
                 <td>
-                    <a href="/profile/password" type="button" class="btn btn-dark" th:text="'Zmiana hasła'"></a>
-                    <a href="/profile/delete" type="button" class="btn btn-dark" th:text="'Skasuj konto'"></a>
+                    <a href="/profile/password" type="button" class="btn btn-dark" th:text="'Change password'"></a>
+                    <a href="/profile/delete" type="button" class="btn btn-dark" th:text="'Delete account'"></a>
                 </td>
             </tr>
             </tbody>
             </thead>
         </table>
         <div th:include="fragments/bottom::bottom-footer"></div>
+        <div th:insert="fragments/bottom::message-handler" style="width: inherit;"></div>
     </div>
 </div>
 <div th:include="fragments/bottom::common-scripts"></div>

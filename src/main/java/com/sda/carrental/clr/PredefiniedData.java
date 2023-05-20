@@ -72,7 +72,7 @@ public class PredefiniedData implements CommandLineRunner {
     }
 
     private void createCompany() {
-        companyRepository.save(new Company("Carental", "www.carental.com", "groupSIX", "Carental"));
+        companyRepository.save(new Company("Rent-a-Car", "www.rentcar.com", "groupSIX", "Rent-a-Car"));
     }
 
     private void createDepartments() {

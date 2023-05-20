@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/regulations")
 public class RegulationsController {
     @RequestMapping(method = RequestMethod.GET)
-    public String welcomePage() {
+    public String regulationsPage() {
         return "core/regulations";
     }
 }

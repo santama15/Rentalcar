@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
@@ -21,27 +21,27 @@
             <table class="table table-borderless">
                 <thead class="table-light">
                 <tr>
-                    <th scope="row">Kasacja konta</th>
+                    <th scope="row">Delete an account</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>
-                        <p th:text="'Czy na pewno chcesz skasować konto: ' + ${user} + '?'"></p>
-                        <p th:text="'Wszystkie dane zostaną nieodwracalnie skasowane.'"></p>
-                        <p th:utext="'Po dodatkowe informacje na temat kasacji zapraszamy do naszego <a href=&quot;/regulations&quot;>regulaminu</a>.'"></p>
+                        <p th:text="'Are you sure you want to delete account: ' + ${user} + '?'"></p>
+                        <p th:text="'All data will be permanently deleted.'"></p>
+                        <p th:utext="'For more information on account deletion, please see our <a href=&quot;/regulations&quot;>Terms and Conditions</a>.'"></p>
 
                     </td>
                 </tr>
                 <tr>
-                    <td><input id="confirmPassword" class="text-black bg-white" th:placeholder="'Potwierdź wpisując hasło'"
+                    <td><input id="confirmPassword" class="text-black bg-white" th:placeholder="'Confirm with password'"
                                th:type="password" th:field="*{currentPassword}"
                                required/></td>
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-dark" th:text="Potwierdź"></button>
-                        <a href="/profile" type="button" class="btn btn-dark" th:text="Cofnij"></a>
+                        <button type="submit" class="btn btn-dark" th:text="Confirm"></button>
+                        <a href="/profile" type="button" class="btn btn-dark" th:text="Back"></a>
                     </td>
                 </tr>
                 </tbody>

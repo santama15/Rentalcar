@@ -3,6 +3,7 @@ package com.sda.carrental.service;
 import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.users.Customer;
 import com.sda.carrental.repository.CustomerRepository;
+import com.sda.carrental.repository.ReservationRepository;
 import com.sda.carrental.repository.UserRepository;
 import com.sda.carrental.service.auth.CustomUserDetails;
 import com.sda.carrental.web.mvc.form.ChangeAddressForm;
@@ -19,6 +20,7 @@ import java.util.Random;
 public class CustomerService {
     private final CustomerRepository repository;
     private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
     private final VerificationService verificationService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -82,24 +84,31 @@ public class CustomerService {
         return sb.toString();
     }
 
-    public HttpStatus scrambleCustomer() {
+    private Customer scrambleCustomer(Customer user) {
+        user.setPassword(generateRandomString());
+        user.setName(generateRandomString());
+        user.setSurname(generateRandomString());
+        user.setAddress(generateRandomString());
+        user.setContactNumber(generateRandomString());
+        do {
+            user.setEmail(generateRandomString());
+        } while (repository.findByEmail(user.getEmail()).isPresent());
+
+        return user;
+    }
+
+    public HttpStatus deleteCustomer() {
         try {
             CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Customer user = findByUsername(cud.getUsername());
             HttpStatus status = verificationService.deleteByCustomerId(user);
 
             if (status.equals(HttpStatus.OK)) {
-                user.setPassword(generateRandomString());
-                user.setName(generateRandomString());
-                user.setSurname(generateRandomString());
-                user.setAddress(generateRandomString());
-                user.setContactNumber(generateRandomString());
-                user.setCity(generateRandomString());
-                do {
-                    user.setEmail(generateRandomString());
-                } while (repository.findByEmail(user.getEmail()).isPresent());
-
-                repository.save(user);
+                if (reservationRepository.findAllByUser(user).isEmpty()) {
+                    repository.delete(user);
+                } else {
+                    repository.save(scrambleCustomer(user));
+                }
                 return HttpStatus.ACCEPTED;
             } else {
                 return status;
