@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
                          class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
                     </svg>
-                    Filtruj
+                    Filter
                 </button>
                 <div><br></div>
                 <div class="accordion" id="accordionPanelsStayOpen">
@@ -45,7 +45,7 @@
                                     data-bs-toggle="collapse"
                                     data-bs-target="#priceAcc" aria-expanded="true"
                                     aria-controls="priceAcc">
-                                Cena za dobę
+                                Price per day
                             </button>
                         </h2>
                         <div id="priceAcc" class="collapse"
@@ -66,7 +66,7 @@
                                     data-bs-toggle="collapse"
                                     data-bs-target="#brandAcc" aria-expanded="true"
                                     aria-controls="brandAcc">
-                                Marka
+                                Brand
                             </button>
                         </h2>
                         <div id="brandAcc" class="collapse"
@@ -85,7 +85,7 @@
                                     data-bs-toggle="collapse"
                                     data-bs-target="#typeAcc" aria-expanded="false"
                                     aria-controls="typeAcc">
-                                Typ nadwozia
+                                Car type
                             </button>
                         </h2>
                         <div id="typeAcc" class="accordion-collapse collapse"
@@ -104,7 +104,7 @@
                                     data-bs-toggle="collapse"
                                     data-bs-target="#seatsAcc" aria-expanded="false"
                                     aria-controls="seatsAcc">
-                                Miejsca
+                                Seats
                             </button>
                         </h2>
                         <div id="seatsAcc" class="accordion-collapse collapse"
@@ -118,6 +118,7 @@
                         </div>
                     </div>
                 </div>
+                <div th:insert="fragments/bottom::form-error-handler"></div>
             </form>
         </div>
 
@@ -139,17 +140,17 @@
 
                     <div class="row">
                         <div class="col-md-4">
-                            <img th:src="${car.jpgLink}" alt="Zdjęcie" width="255" height="150"/>
+                            <img th:src="${car.jpgLink}" alt="Picture" width="255" height="150"/>
 
                         </div>
                         <div class="col-md-6">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" th:text="'Model: ' + ${car.model}">Model</li>
-                                <li class="list-group-item" th:text="'Nadwozie: ' + ${car.carType.getName()}">Nadwozie</li>
-                                <li class="list-group-item" th:text="'Rocznik: ' + ${car.year}">Rocznik</li>
-                                <li class="list-group-item" th:text="'Miejsca: ' + ${car.seats}"></li>
+                                <li class="list-group-item" th:text="'Model: ' + ${car.model}"></li>
+                                <li class="list-group-item" th:text="'Type: ' + ${car.carType.getName()}"></li>
+                                <li class="list-group-item" th:text="'Production date: ' + ${car.year}"></li>
+                                <li class="list-group-item" th:text="'Seats: ' + ${car.seats}"></li>
                                 <li class="list-group-item"
-                                    th:text="'Cena za dzień: ' + ${#numbers.formatDecimal((car.price_day), 1, 2, 'POINT')} + ' PLN'"></li>
+                                    th:text="'Price per day: ' + ${#numbers.formatDecimal((car.price_day), 1, 2, 'POINT')} + ' PLN'"></li>
                             </ul>
                             <br>
                         </div>
@@ -160,11 +161,12 @@
                                      th:text="${#numbers.formatDecimal((days*car.price_day), 1, 2, 'POINT')} + ' PLN'">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-dark" th:text="Wybierz" name="car_button"
+                            <button type="submit" class="btn btn-dark" th:text="Select" name="car_button"
                                     th:value="${car.getCarId()}"></button>
                         </div>
                     </div>
                 </div>
+                <div th:insert="fragments/bottom::form-error-handler"></div>
             </form>
         </div>
     </div>

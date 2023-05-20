@@ -19,13 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.DecimalFormat;
 import java.time.temporal.ChronoUnit;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/summary")
-public class SummaryController {
+@RequestMapping("/reservation")
+public class ReservationController {
 
     private final CarService carService;
     private final DepartmentService depService;
@@ -57,11 +56,13 @@ public class SummaryController {
             map.addAttribute("reservationData", reservationData);
             map.addAttribute("car", car);
             map.addAttribute("raw_price", days * car.getPrice_day());
+            map.addAttribute("deposit_percentage", gv.getDepositPercentage() * 100);
+            map.addAttribute("refund_fee_days", gv.getRefundSubtractDaysDuration());
 
-            return "core/reservationSummary";
+            return "core/reservation";
         } catch (ResourceNotFoundException err) {
             err.printStackTrace();
-            redAtt.addAttribute("message", "Błąd serwera! \nProsimy spróbować później lub skontaktować się telefonicznie.");
+            redAtt.addFlashAttribute("message", "Server error! \nPlease contact customer service or try again later.");
             return "redirect:/";
         }
     }
@@ -72,15 +73,14 @@ public class SummaryController {
         HttpStatus status = resService.createReservation(cud, form);
 
         if (status == HttpStatus.CREATED) {
-            redAtt.addAttribute("message", "Rezerwacja została pomyślnie zarejestrowana!");
+            redAtt.addFlashAttribute("message", "Reservation has been successfully registered!");
             return "redirect:/reservations";
         } else if (status == HttpStatus.NOT_FOUND) {
-            redAtt.addAttribute("message", "Rezerwacja napotkała błąd przy tworzeniu. \nRezerwowany samochód mógł zostać zajęty lub podane dane są nieprawidłowe. \nW razie dalszych kłopotów prosimy skontaktować się telefonicznie.");
+            redAtt.addFlashAttribute("message", "Reservation encountered an error while creating. \nIn case of further problems, please contact us by phone.");
             return "redirect:/";
         } else {
-            redAtt.addAttribute("message", "Błąd serwera! \nProsimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "Server error! \nPlease contact customer service or try again later.");
             return "redirect:/";
         }
     }
-    //TODO create "response" handling in index HTML + reservations HTML
 }

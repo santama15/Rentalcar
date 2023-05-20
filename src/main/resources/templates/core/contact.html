@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
@@ -20,7 +20,7 @@
         <img src="../images/img1.jpg"/>
 
         <div id="content">
-            <h1>Siedziba</h1>
+            <h1>Headquarters</h1>
 
             <div id="contact">
                 <div class="col1">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="flip-box-back">
                                 <h2 class="contact"
-                                    th:text="${hq.getCountryCode().getContactCode() + ' ' + hq.getContact()}"></h2>
+                                    th:text="${hq.getCountry().getContactCode() + ' ' + hq.getContact()}"></h2>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                 <div class="flip-box-wider">
                     <div class="flip-box-inner-wider">
                         <div class="flip-box-front-wider">
-                            <h2 class="address" th:text="'Adres korespondencyjny'"></h2>
+                            <h2 class="address" th:text="'Address for correspondence'"></h2>
                         </div>
                         <div class="flip-box-back-wider">
                             <h2 class="address" th:text="${hq.getAddress()}"></h2>
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <h1><br>Oddziały</h1>
+            <h1><br>Departments</h1>
             <div th:each="dealer: ${dealer}">
                 <div class="flip-box-wider">
                     <div class="flip-box-inner-wider">
@@ -73,7 +73,7 @@
                         </div>
                         <div class="flip-box-back-wider">
                             <h2 class="address"
-                                th:text="${dealer.getCountryCode().getContactCode() + ' ' + dealer.getContact()}"></h2>
+                                th:text="${dealer.getCountry().getContactCode() + ' ' + dealer.getContact()}"></h2>
                             <h2 class="address" th:text="${dealer.getEmail()}"></h2>
                         </div>
                     </div>

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class Car {
-    public Car(Department department, String jpgLink, String brand, String model, Integer year, Long mileage, Integer seats, Double price_day, CarType carType, CarStatus carStatus) {
+    public Car(Department department, String jpgLink, String brand, String model, Integer year, Long mileage, Integer seats, Double price_day, CarType carType, CarStatus carStatus, Double depositValue) {
         this.department = department;
         this.jpgLink = jpgLink;
         this.brand = brand;
@@ -20,6 +20,7 @@ public class Car {
         this.price_day = price_day;
         this.carType = carType;
         this.carStatus = carStatus;
+        this.depositValue = depositValue;
     }
 
     @Id
@@ -57,6 +58,9 @@ public class Car {
 
     @Column(name = "status")
     CarStatus carStatus;
+
+    @Column(name = "deposit")
+    Double depositValue;
 
 
 @Getter

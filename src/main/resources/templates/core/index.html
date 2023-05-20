@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
@@ -20,16 +20,15 @@
         <img src="../images/img1.jpg"/>
 
         <form th:object="${indexForm}" th:action="@{/}" th:method="POST">
-
             <div id="box_car" class="border border-dark">
-                <h4>Sprawdź dostępność</h4>
+                <h4>Check availability</h4>
 
                 <br/>
-                <label for="dpt1" class="text-lg">Miejsce odbioru pojazdu</label>
+                <label for="dpt1" class="text-lg">Pickup location</label>
                 <select name="lf" id="dpt1" class="form-select text-white bg-dark" th:field="*{departmentIdFrom}"
                         required>
                     <option selected disabled
-                            value="">Wybierz z listy...
+                            value="">Select...
                     </option>
                     <option th:each="departments: ${department}"
                             th:value="${departments.getDepartmentId()}"
@@ -43,17 +42,17 @@
                            id="checkSwitch"
                            th:checked="*{firstBranchChecked}"
                     />
-                    <label for="checkSwitch">Zwrot w innej lokalizacji</label><br>
+                    <label for="checkSwitch">Different location return</label><br>
                 </div>
 
                 <div class="collapse" id="checkReturn">
                     <div class="card card-body">
 
-                        <label for="dpt2" class="text-lg">Miejsce zwrotu pojazdu</label>
+                        <label for="dpt2" class="text-lg">Return location</label>
                         <select name="lt" id="dpt2" class="form-select text-white bg-dark" th:field="*{departmentIdTo}">
 
                             <option selected disabled
-                                    value="">Wybierz z listy...
+                                    value="">Select...
                             </option>
                             <option th:each="departments: ${department}"
                                     th:value="${departments.getDepartmentId()}"
@@ -64,9 +63,9 @@
                 <br/>
 
                 <div>
-                    <label for="dateFrom">od</label>
+                    <label for="dateFrom">from</label>
                     <input id="dateFrom" class="text-white bg-dark" th:type="date" th:field="*{dateFrom}" required/>
-                    <label for="dateTo">do</label>
+                    <label for="dateTo">to</label>
                     <input id="dateTo" class="text-white bg-dark" th:type="date" th:field="*{dateTo}" required/>
                 </div>
 
@@ -79,25 +78,15 @@
                              class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
                         </svg>
-                        Znajdź samochód
+                        Find car
                     </button>
                 </div>
             </div>
+            <div th:insert="fragments/bottom::form-error-handler"></div>
         </form>
 
-        <div th:if="${#fields.hasErrors('indexForm.*')}">
-            <div class="alert alert-danger d-flex align-items-center" role="alert"
-                 th:each="err: ${#fields.errors('indexForm.*')}">
-                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-                    <use xlink:href="#exclamation-triangle-fill"/>
-                </svg>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <div th:text="${err}"></div>
-            </div>
-        </div>
-
         <div id="content_index">
-            <h2>Witaj w wypożyczalni samochodów Rent-a-Car</h2>
+            <h2>Welcome to our car rental Rent-a-Car</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus dictum justo. Donec ac euismod ipsum.
                 Fusce eu neque mi. Etiam a
                 venenatis ex, ac viverra est. Maecenas libero arcu, mattis vel augue non, luctus rhoncus nibh. Sed risus
@@ -110,6 +99,7 @@
             </p>
         </div>
         <div th:include="fragments/bottom::bottom-footer"></div>
+        <div th:insert="fragments/bottom::message-handler"></div>
     </div>
 </div>
 <div th:include="fragments/bottom::common-scripts"></div>

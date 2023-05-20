@@ -26,7 +26,7 @@ public class ReservationService {
     private final CarService carService;
     private final DepartmentService departmentService;
 
-    private final ReservationPaymentService reservationPaymentService;
+    private final PaymentDetailsService paymentDetailsService;
 
     public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody ShowCarsForm form) {
         try {
@@ -42,8 +42,14 @@ public class ReservationService {
                     depRepFrom, depRepTo,
                     index.getDateFrom(), index.getDateTo(),
                     index.getDateCreated());
-
             reservationRepository.save(reservation);
+
+            //payment method here linked with methods below this comment vvv
+            reservation.setStatus(Reservation.ReservationStatus.STATUS_RESERVED);
+            reservationRepository.save(reservation);
+            // ^^^
+
+            paymentDetailsService.createReservationPayment(reservation);
 
             return HttpStatus.CREATED;
         } catch (ResourceNotFoundException err) {
@@ -71,33 +77,14 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public HttpStatus setUserReservationStatus(@RequestBody CustomUserDetails cud, Long reservation_id, Reservation.ReservationStatus statusReserved) {
+    public HttpStatus setUserReservationStatus(@RequestBody CustomUserDetails cud, Long reservation_id, Reservation.ReservationStatus status) {
         try {
             Reservation r = getUserReservation(cud, reservation_id);
 
-            switch (statusReserved) {
-                case STATUS_REFUNDED:
-                    if (r.getStatus().equals(Reservation.ReservationStatus.STATUS_RESERVED)) {
-                        //refund money logic here
-                        reservationPaymentService.retractReservationPayment(r);
-                        updateReservationStatus(r, Reservation.ReservationStatus.STATUS_REFUNDED);
-                        return HttpStatus.ACCEPTED;
-                    }
-                    break;
-                case STATUS_RESERVED:
-                    if (r.getStatus().equals(Reservation.ReservationStatus.STATUS_PENDING)) {
-                        //payment logic here
-                        updateReservationStatus(r, Reservation.ReservationStatus.STATUS_RESERVED);
-                        reservationPaymentService.createReservationPayment(r);
-                        return HttpStatus.ACCEPTED;
-                    }
-                    break;
-                case STATUS_CANCELED:
-                    if (r.getStatus().equals(Reservation.ReservationStatus.STATUS_PENDING)) {
-                        updateReservationStatus(r, Reservation.ReservationStatus.STATUS_CANCELED);
-                        return HttpStatus.ACCEPTED;
-                    }
-                    break;
+            if (status.equals(Reservation.ReservationStatus.STATUS_REFUNDED) && r.getStatus().equals(Reservation.ReservationStatus.STATUS_RESERVED)) {
+                paymentDetailsService.retractReservationPayment(r);
+                updateReservationStatus(r, Reservation.ReservationStatus.STATUS_REFUNDED);
+                return HttpStatus.ACCEPTED;
             }
             return HttpStatus.BAD_REQUEST;
         } catch (ResourceNotFoundException err) {

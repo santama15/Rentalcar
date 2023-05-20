@@ -1,11 +1,11 @@
 package com.sda.carrental.web.mvc;
 
+import com.sda.carrental.constants.enums.Country;
 import com.sda.carrental.service.CustomerService;
 import com.sda.carrental.service.UserService;
 import com.sda.carrental.service.VerificationService;
 import com.sda.carrental.service.auth.CustomUserDetails;
-import com.sda.carrental.web.mvc.form.ChangeEmailForm;
-import com.sda.carrental.web.mvc.form.ChangePasswordForm;
+import com.sda.carrental.web.mvc.form.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,23 +49,84 @@ public class ProfileController {
         return "user/emailCustomer";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/contact")
+    public String changeContactPage(final ModelMap map) {
+        CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("customer", customerService.findByUsername(cud.getUsername()));
+        map.addAttribute("contact_form", new ChangeContactForm());
+        return "user/contactCustomer";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/delete")
+    public String deleteAccountPage(final ModelMap map) {
+        CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        map.addAttribute("user", cud.getUsername());
+        map.addAttribute("delete_form", new DeleteAccountForm());
+        return "user/deleteCustomer";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/address")
+    public String changeAddressPage(final ModelMap map) {
+        map.addAttribute("countries", Country.values());
+        map.addAttribute("address_form", new ChangeAddressForm());
+        return "user/addressCustomer";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/contact")
+    public String changeContactAction(RedirectAttributes redAtt, @ModelAttribute("contact_form") @Valid ChangeContactForm form, Errors errors) {
+        if (errors.hasErrors()) {
+            return "user/contactCustomer";
+        }
+
+        HttpStatus response = customerService.changeContact(form.getContactNumber());
+        if (response.equals(HttpStatus.ACCEPTED)) {
+            redAtt.addFlashAttribute("message", "Contact number has been changed successfully.");
+            return "redirect:/profile";
+        } else if (response.equals(HttpStatus.NOT_FOUND)) {
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
+        } else {
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
+        }
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/address")
+    public String changeAddressAction(RedirectAttributes redAtt, @ModelAttribute("address_form") @Valid ChangeAddressForm form, Errors errors) {
+        if (errors.hasErrors()) {
+            return "user/addressCustomer";
+        }
+
+        HttpStatus response = customerService.changeAddress(form);
+        if (response.equals(HttpStatus.ACCEPTED)) {
+            redAtt.addFlashAttribute("message", "The mailing address has been successfully changed.");
+            return "redirect:/profile";
+        } else if (response.equals(HttpStatus.NOT_FOUND)) {
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
+        } else {
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
+        }
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/";
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/email")
-    public String changeEmailAction(RedirectAttributes redAtt, @ModelAttribute("email_form") @Valid ChangeEmailForm form, Errors errors, HttpServletRequest request) {
+    public String changeEmailAction(RedirectAttributes redAtt, @ModelAttribute("email_form") @Valid ChangeEmailForm form, Errors errors) {
         if (errors.hasErrors()) {
             return "user/emailCustomer";
         }
 
         HttpStatus response = userService.changeEmail(form.getNewEmail());
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "E-mail został pomyślnie zmieniony. Prosimy zalogować się ponownie.");
-            request.getSession().invalidate();
-            return "redirect:/";
+            redAtt.addFlashAttribute("message", "The email has been successfully changed. Please login again.");
         } else if (response.equals(HttpStatus.NOT_FOUND)) {
-            redAtt.addAttribute("message", "Użytkownik nie został rozpoznany. Prosimy zalogować się ponownie.");
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
         }
-        request.getSession().invalidate();
+        SecurityContextHolder.getContext().setAuthentication(null);
         return "redirect:/";
     }
 
@@ -77,14 +138,32 @@ public class ProfileController {
 
         HttpStatus response = userService.changePassword(form.getNewPassword());
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "Hasło zostało pomyślnie zmienione.");
+            redAtt.addFlashAttribute("message", "Password has been changed successfully.");
             return "redirect:/profile";
         } else if (response.equals(HttpStatus.NOT_FOUND)) {
-            redAtt.addAttribute("message", "Użytkownik nie został rozpoznany.");
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
         }
+        SecurityContextHolder.getContext().setAuthentication(null);
         return "redirect:/";
+    }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/delete")
+    public String deleteAccountAction(RedirectAttributes redAtt, @ModelAttribute("delete_form") @Valid DeleteAccountForm form, Errors errors) {
+        if (errors.hasErrors()) {
+            return "user/deleteCustomer";
+        }
+
+        HttpStatus response = customerService.deleteCustomer();
+        if (response.equals(HttpStatus.ACCEPTED)) {
+            redAtt.addFlashAttribute("message", "Account has been successfully deleted.");
+        } else if (response.equals(HttpStatus.NOT_FOUND)) {
+            redAtt.addFlashAttribute("message", "User not recognized. Please login again.");
+        } else {
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
+        }
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/";
     }
 }

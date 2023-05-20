@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Wypożyczalnia samochodów</title>
+    <title>Rent-a-Car</title>
 
     <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
@@ -17,10 +17,10 @@
 
     <div id="main">
 
-        <h3><strong>Podsumowanie:</strong></h3>
+        <h3><strong>Summary:</strong></h3>
         <br>
 
-        <form th:object="${reservationData}" th:action="@{/summary}" th:method="POST">
+        <form th:object="${reservationData}" th:action="@{/reservation}" th:method="POST">
             <input type="hidden" th:field="*{indexData.departmentIdFrom}" th:value="*{indexData.getDepartmentIdFrom()}">
             <input type="hidden" th:field="*{indexData.departmentIdTo}" th:value="*{indexData.getDepartmentIdTo()}">
             <input type="hidden" th:field="*{indexData.firstBranchChecked}" th:value="*{indexData.isFirstBranchChecked()}">
@@ -33,38 +33,38 @@
                 <div class="row">
                     <div class="col">
                         <dl style="text-align: left">
-                            <dt style="font-weight: bold">Odbiór pojazdu:</dt>
+                            <dt style="font-weight: bold">Vehicle pick-up:</dt>
                             <dt style="font-weight: normal" th:text="${branchFrom.getCity()} + ' ' + ${branchFrom.getPostcode()} + ', '"></dt>
                             <dt style="font-weight: normal" th:text="${branchFrom.getAddress()}"></dt>
                         </dl>
                         <ul style="text-align: left; list-style-type:none">
-                            <li><strong>Data:</strong></li>
+                            <li><strong>Date:</strong></li>
                             <li th:text="${reservationData.indexData.dateFrom}"></li>
                         </ul>
                         <br>
                         <dl style="text-align: left">
-                            <dt style="font-weight: bold">Zwrot Pojazdu:</dt>
+                            <dt style="font-weight: bold">Vehicle return:</dt>
                             <dt style="font-weight: normal" th:text="${branchTo.getCity()} + ' ' + ${branchTo.getPostcode()} + ', '"></dt>
                             <dt style="font-weight: normal" th:text="${branchTo.getAddress()}"></dt>
                         </dl>
                         <ul style="text-align: left; list-style-type:none">
-                            <li><strong>Data:</strong></li>
+                            <li><strong>Date:</strong></li>
                             <li th:text="${reservationData.indexData.dateTo}"></li>
                         </ul>
                         <br>
                     </div>
                     <div class="col-5">
-                        <h5><strong>Wybrany pojazd</strong></h5>
+                        <h5><strong>Vehicle</strong></h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" th:text="'Model: ' + ${car.model}"></li>
-                            <li class="list-group-item" th:text="'Nadwozie: ' + ${car.carType.getName()}"></li>
-                            <li class="list-group-item" th:text="'Rocznik: ' + ${car.year}"></li>
-                            <li class="list-group-item" th:text="'Miejsca: ' + ${car.seats}"></li>
+                            <li class="list-group-item" th:text="'Car type: ' + ${car.carType.getName()}"></li>
+                            <li class="list-group-item" th:text="'Production date: ' + ${car.year}"></li>
+                            <li class="list-group-item" th:text="'Seats: ' + ${car.seats}"></li>
                         </ul>
                         <br>
                     </div>
                     <div class="col">
-                        <img th:src="${car.jpgLink}" alt="Zdjęcie" width="255" height="150"/>
+                        <img th:src="${car.jpgLink}" alt="Picture" width="255" height="150"/>
                     </div>
                 </div>
                 <div class="row">
@@ -72,11 +72,13 @@
                     </div>
                     <div class="col-5">
                         <ul style="list-style-type:none">
-                            <li style="font-weight: bold">Wartość zamówienia:</li>
-                            <li th:text="'Wypożyczenie: ' + ${#numbers.formatDecimal(raw_price, 1, 2, 'POINT')} + ' PLN'"></li>
-                            <li th:text="'Zwrot w innej lokalizacji: ' + ${#numbers.formatDecimal(diff_return_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                            <li style="font-weight: bold">Order value:</li>
+                            <li th:text="'Rental: ' + ${#numbers.formatDecimal(raw_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                            <li th:text="'Different location return: ' + ${#numbers.formatDecimal(diff_return_price, 1, 2, 'POINT')} + ' PLN'"></li>
                             <li th:text="'————'"></li>
-                            <li th:text="'Suma całkowita: ' + ${#numbers.formatDecimal(total_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                            <li th:utext="'<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-exclamation-circle&quot; viewBox=&quot;0 0 16 16&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Cancellation policy: Free cancellation up to ' + ${refund_fee_days} + ' days before the rental date. Late cancellations may be subject to a ' + ${deposit_percentage} + '% cancellation fee. Details in the regulations.&quot;><path d=&quot;M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;/><path d=&quot;M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z&quot;/></svg> '
+                                    + 'Total price: ' + ${#numbers.formatDecimal(total_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                            <li th:text="'+ Deposit: ' + ${#numbers.formatDecimal(car.depositValue, 1, 2, 'POINT')} + ' PLN'"></li>
                         </ul>
                         <br>
                     </div>
@@ -88,7 +90,7 @@
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                 <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
                             </svg>
-                            Rezerwuj
+                            Reserve
                         </button>
                     </div>
                 </div>

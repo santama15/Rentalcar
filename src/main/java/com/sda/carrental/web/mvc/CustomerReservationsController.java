@@ -57,6 +57,7 @@ public class CustomerReservationsController {
             map.addAttribute("raw_price", days * reservation.getCar().getPrice_day());
             map.addAttribute("reservation", reservation);
             map.addAttribute("deposit_percentage", gv.getDepositPercentage() * 100);
+            map.addAttribute("refund_fee_days", gv.getRefundSubtractDaysDuration());
             return "user/reservationDetailsCustomer";
         } catch (ResourceNotFoundException err) {
             err.printStackTrace();
@@ -65,23 +66,19 @@ public class CustomerReservationsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/action")
-    public String reservationDetailsButton(RedirectAttributes redAtt, @RequestParam(value = "action") String action, @RequestParam(value = "id") Long reservation_id) {
+    public String reservationRefundButton(RedirectAttributes redAtt, @RequestParam(value = "action") String action, @RequestParam(value = "id") Long reservation_id) {
         CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpStatus response;
-        switch (action) {
-            case "payment" ->
-                    response = reservationService.setUserReservationStatus(cud, reservation_id, Reservation.ReservationStatus.STATUS_RESERVED);
-            case "cancel" ->
-                    response = reservationService.setUserReservationStatus(cud, reservation_id, Reservation.ReservationStatus.STATUS_CANCELED);
-            case "refund" ->
-                    response = reservationService.setUserReservationStatus(cud, reservation_id, Reservation.ReservationStatus.STATUS_REFUNDED);
-            default -> response = HttpStatus.INTERNAL_SERVER_ERROR;
+        if (action.equals("refund")) {
+            response = reservationService.setUserReservationStatus(cud, reservation_id, Reservation.ReservationStatus.STATUS_REFUNDED);
+        } else {
+            response = HttpStatus.BAD_REQUEST;
         }
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addAttribute("message", "Akcja zakończona pomyślnie!");
+            redAtt.addFlashAttribute("message", "Return completed successfully!");
             return "redirect:/reservations";
         } else {
-            redAtt.addAttribute("message", "Wystąpił nieoczekiwany błąd. Prosimy spróbować później lub skontaktować się z obsługą klienta.");
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
             return "redirect:/";
         }
     }

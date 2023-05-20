@@ -10,16 +10,16 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-@MatchingPassword(message = "Powtórzenie hasła nie jest zgodne!", targetFormClasses = {ChangePasswordForm.class})
+@MatchingPassword(message = "Provided new password fields does not match", targetFormClasses = {ChangePasswordForm.class})
 public class ChangePasswordForm {
 
-    @NotEmpty(message = "Pole nie może być puste!")
-    @CurrentPassword(message = "Podane hasło nie jest zgodne z obecnym")
+    @NotEmpty(message = "Field cannot be empty")
+    @CurrentPassword(message = "Provided current password is incorrect")
     private String currentPassword;
 
-    @Size(min = 8, message = "Minimalna ilość znaków: 8")
+    @Size(min = 8, message = "Minimum length: 8")
     private String newPassword;
 
-    @Size(min = 8, message = "Minimalna ilość znaków: 8")
+    @Size(min = 8, message = "Minimum length: 8")
     private String newPasswordRepeat;
 }

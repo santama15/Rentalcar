@@ -1,5 +1,6 @@
 package com.sda.carrental.model.users;
 
+import com.sda.carrental.constants.enums.Country;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,22 +15,24 @@ import javax.persistence.*;
 public class Customer extends User
 {
 
-    public Customer(String email, String password, String name, String surname, String country, String address/*, String personalId, String driverId*/)
+    public Customer(String email, String password, String name, String surname, Country country, String city, String address, String contactNumber)
     {
         super(email, password, Roles.ROLE_CUSTOMER, name, surname);
         this.country = country;
+        this.city = city;
         this.address = address;
+        this.contactNumber = contactNumber;
     }
 
-    @Column(name = "country") //everything below should be encrypted
-    private String country;
+    @Column(name = "country")
+    private Country country;
 
-    @Column(name = "address")
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "address") //TODO everything below should be encrypted
     private String address;
-/*
-    @Column(name = "personal_id")
-    private String personalId;
 
-    @Column(name = "driver_id")
-    private String driverId;*/ //TODO probably add another table for company invoices + move invoice creation to payment step (needs consideration) + change languages used to single one
+    @Column(name = "contact_number")
+    private String contactNumber;
 }

@@ -60,7 +60,6 @@ public class UserService {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
-
     public HttpStatus changeEmail(String inputEmail) {
         try {
             CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

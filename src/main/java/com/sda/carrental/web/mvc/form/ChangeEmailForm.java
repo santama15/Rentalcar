@@ -11,19 +11,19 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-@MatchingEmail(message = "Powtórzenie email'u nie jest zgodne")
+@MatchingEmail(message = "E-mail confirmation does not match.")
 public class ChangeEmailForm {
 
-    @NotEmpty(message = "Pole nie może być puste!")
+    @NotEmpty(message = "Field cannot be empty")
     @CurrentEmail
     private String currentEmail;
 
-    @NotEmpty(message = "Pole nie może być puste!")
-    @Email(message = "Login powinien być poprawnym formatem adresu e-mail")
-    @UniqueEmail(message = "Podany login jest zajęty.")
+    @NotEmpty(message = "Field cannot be empty")
+    @Email(message = "Login should be a valid email address format")
+    @UniqueEmail(message = "E-mail is already taken")
     private String newEmail;
 
-    @NotEmpty(message = "Pole nie może być puste!")
-    @Email(message = "Login powinien być poprawnym formatem adresu e-mail")
+    @NotEmpty(message = "Field cannot be empty")
+    @Email(message = "Login should be a valid email address format")
     private String newEmailRepeat;
 }

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div th:fragment="top-menu">
     <div sec:authorize="isAuthenticated()">
-        <span>Logged in as: </span> <a sec:authentication="name" href="#"></a>
+        <span>Logged in as: </span> <a sec:authentication="name" href="/profile" style="--bs-link-color: black; --bs-link-hover-color: gray;"></a>
     </div>
     <div id="header">
         <div id="logo">
-            <h1>Wypożyczalnia samochodów</h1>
+            <h1>Rent-a-Car</h1>
         </div>
         <div class="position-relative" id="login">
             <div sec:authorize="isAuthenticated()">
-                <a href="/logout" class="btn btn-outline-light" role="button">Wyloguj się</a>
+                <a href="/logout" class="btn btn-outline-light" role="button">Log out</a>
             </div>
             <div sec:authorize="!isAuthenticated()">
-                <a href="/login" class="btn btn-outline-light" role="button">Zaloguj się</a>
+                <a href="/login" class="btn btn-outline-light" role="button">Log in</a>
             </div>
         </div>
     </div>
@@ -23,19 +23,19 @@
 <div th:fragment="reg-options">
     <div id="menu">
             <ul>
-                <li><a href="/">Strona główna</a></li>
-                <li><a href="/aboutUs">O nas</a></li>
-                <li><a href="/regulations">Regulamin</a></li>
-                <li><a href="/contact">Kontakt</a></li>
+                <li><a href="/">Main page</a></li>
+                <li><a href="/aboutUs">About us</a></li>
+                <li><a href="/regulations">Regulations</a></li>
+                <li><a href="/contact">Contact</a></li>
                 <li sec:authorize="hasRole('ROLE_CUSTOMER')" class="dropdown">
-                    <a class="dropdown-toggle" href="#" id="customerZone" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Strefa klienta</a>
+                    <a class="dropdown-toggle" href="#" id="customerZone" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
                     <div class="dropdown-menu" aria-labelledby="customerZone">
-                        <a class="dropdown-item" href="/profile">Profil</a>
-                        <a class="dropdown-item" href="/reservations">Rezerwacje</a>
+                        <a class="dropdown-item" href="/profile">Profile</a>
+                        <a class="dropdown-item" href="/reservations">Reservations</a>
                     </div>
                 </li>
                 <li sec:authorize="hasRole('ROLE_EMPLOYEE')" class="dropdown">
-                    <a class="dropdown-toggle" href="#" id="employeeZone" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Strefa pracownika</a>
+                    <a class="dropdown-toggle" href="#" id="employeeZone" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Employee</a>
                     <div class="dropdown-menu" aria-labelledby="employeeZone">
                         <a class="dropdown-item" href="#">Item 1</a>
                         <a class="dropdown-item" href="#">Item 2</a>

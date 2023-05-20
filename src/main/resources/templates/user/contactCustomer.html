@@ -17,28 +17,18 @@
     <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
-        <form th:method="POST" th:object="${email_form}" th:action="@{/profile/email}">
+        <form th:method="POST" th:object="${contact_form}" th:action="@{/profile/contact}">
             <table class="table table-borderless">
                 <thead class="table-light">
                 <tr>
-                    <th scope="row">Change e-mail</th>
+                    <th scope="row">Change contact number</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input id="oldPassword" class="text-black bg-white" th:placeholder="'Current e-mail'"
-                               th:type="email" th:field="*{currentEmail}"
+                    <td><span th:text="${customer.getCountry().getContactCode()} + ' '"></span><input id="contact_number" class="text-black bg-white" th:placeholder="'Enter your phone number'"
+                               th:type="text" th:field="*{contactNumber}"
                                required/></td>
-                </tr>
-                <tr>
-                    <td><input id="newPassword" class="text-black bg-white" th:placeholder="'New e-mail'"
-                               th:type="email" th:field="*{newEmail}"
-                               required/></td>
-                </tr>
-                <tr>
-                    <td><input id="newPasswordRepeat" class="text-black bg-white" th:placeholder="'Repeat new e-mail'"
-                               th:type="email"
-                               th:field="*{newEmailRepeat}" required/></td>
                 </tr>
                 <tr>
                     <td>

@@ -17,38 +17,35 @@
     <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
-        <form th:method="POST" th:object="${email_form}" th:action="@{/profile/email}">
+        <form th:method="POST" th:object="${delete_form}" th:action="@{/profile/delete}">
             <table class="table table-borderless">
                 <thead class="table-light">
                 <tr>
-                    <th scope="row">Change e-mail</th>
+                    <th scope="row">Delete an account</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input id="oldPassword" class="text-black bg-white" th:placeholder="'Current e-mail'"
-                               th:type="email" th:field="*{currentEmail}"
-                               required/></td>
+                    <td>
+                        <p th:text="'Are you sure you want to delete account: ' + ${user} + '?'"></p>
+                        <p th:text="'All data will be permanently deleted.'"></p>
+                        <p th:utext="'For more information on account deletion, please see our <a href=&quot;/regulations&quot;>Terms and Conditions</a>.'"></p>
+
+                    </td>
                 </tr>
                 <tr>
-                    <td><input id="newPassword" class="text-black bg-white" th:placeholder="'New e-mail'"
-                               th:type="email" th:field="*{newEmail}"
+                    <td><input id="confirmPassword" class="text-black bg-white" th:placeholder="'Confirm with password'"
+                               th:type="password" th:field="*{currentPassword}"
                                required/></td>
-                </tr>
-                <tr>
-                    <td><input id="newPasswordRepeat" class="text-black bg-white" th:placeholder="'Repeat new e-mail'"
-                               th:type="email"
-                               th:field="*{newEmailRepeat}" required/></td>
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-dark" th:text="Change"></button>
+                        <button type="submit" class="btn btn-dark" th:text="Confirm"></button>
                         <a href="/profile" type="button" class="btn btn-dark" th:text="Back"></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div th:insert="fragments/bottom::form-error-handler"></div>
         </form>
         <div th:include="fragments/bottom::bottom-footer"></div>
     </div>
