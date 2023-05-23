@@ -62,12 +62,12 @@ public class Reservation {
 
     @Getter
     public enum ReservationStatus {
-        STATUS_COMPLETED("Zakończone"),
-        STATUS_PROGRESS("W trakcie"),
-        STATUS_PENDING("Oczekujące"),
-        STATUS_RESERVED("Rezerwacja"),
-        STATUS_CANCELED("Anulowane"),
-        STATUS_REFUNDED("Zwrócone");
+        STATUS_COMPLETED("Completed"),
+        STATUS_PROGRESS("In progress"),
+        STATUS_PENDING("Pending"),
+        STATUS_RESERVED("Reserved"),
+        STATUS_CANCELED("Cancelled"),
+        STATUS_REFUNDED("Refunded");
 
         final String text;
         ReservationStatus(String text) {
