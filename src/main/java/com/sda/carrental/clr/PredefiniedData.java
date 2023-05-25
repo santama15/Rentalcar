@@ -8,9 +8,7 @@ import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.Car;
 import com.sda.carrental.model.property.Department;
 import com.sda.carrental.model.property.PaymentDetails;
-import com.sda.carrental.model.users.Customer;
-import com.sda.carrental.model.users.Employee;
-import com.sda.carrental.model.users.Verification;
+import com.sda.carrental.model.users.*;
 import com.sda.carrental.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -60,15 +58,16 @@ public class PredefiniedData implements CommandLineRunner {
         userRepository.save(new Customer("user5@gmail.com", encoder.encode("password1"), "Katarzyna", "Kasztan", Country.COUNTRY_PL, "Warszawa", "ul. Ulica 133", "123312895"));
         userRepository.save(new Customer("user6@gmail.com", encoder.encode("password1"), "Igor", "Kasztan", Country.COUNTRY_PL, "Białystok", "ul. Ulica 137", "123312896"));
         userRepository.save(new Customer("user7@gmail.com", encoder.encode("password1"), "Anna", "Kowalska", Country.COUNTRY_PL, "Opole", "ul. Ulica 138", "123312897"));
-        userRepository.save(new Customer("a@a", encoder.encode("a"), "Andrzej", "Nowak", Country.COUNTRY_PL, "Poznań", "ul. Ulica 139", "123312898"));
 
 
-        userRepository.save(new Employee("manager1@gmail.com", encoder.encode("manager1"), "Maria", "Fajna", departmentRepository.findById(1L).orElse(null), Employee.Titles.RANK_MANAGER));
-        userRepository.save(new Employee("manager2@gmail.com", encoder.encode("manager2"), "Aleksandra", "Ładna", departmentRepository.findById(2L).orElse(null), Employee.Titles.RANK_MANAGER));
-        userRepository.save(new Employee("manager3@gmail.com", encoder.encode("manager3"), "Katarzyna", "Nieładna", departmentRepository.findById(3L).orElse(null), Employee.Titles.RANK_MANAGER));
-        userRepository.save(new Employee("pracownik@gmail.com", encoder.encode("pracownik"), "Anna", "Mniejfajna", departmentRepository.findById(1L).orElse(null), Employee.Titles.RANK_CLERK));
-        userRepository.save(new Employee("pracownik2@gmail.com", encoder.encode("pracownik2"), "Magda", "Piąta", departmentRepository.findById(2L).orElse(null), Employee.Titles.RANK_CLERK));
-        userRepository.save(new Employee("pracownik3@gmail.com", encoder.encode("pracownik3"), "Wioletta", "Fioletowa", departmentRepository.findById(3L).orElse(null), Employee.Titles.RANK_CLERK));
+        userRepository.save(new Manager("manager1@gmail.com", encoder.encode("manager1"), "Maria", "Fajna", departmentRepository.findById(1L).orElse(null), LocalDate.now(), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Manager("manager2@gmail.com", encoder.encode("manager1"), "Aleksandra", "Ładna", departmentRepository.findById(2L).orElse(null), LocalDate.now(), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Manager("manager3@gmail.com", encoder.encode("manager1"), "Katarzyna", "Nieładna", departmentRepository.findById(3L).orElse(null), LocalDate.now(), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Employee("employee1@gmail.com", encoder.encode("employee1"), "Anna", "Mniejfajna", departmentRepository.findById(1L).orElse(null), LocalDate.now(), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Employee("employee2@gmail.com", encoder.encode("employee1"), "Magda", "Piąta", departmentRepository.findById(2L).orElse(null), LocalDate.now(), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Employee("employee3@gmail.com", encoder.encode("employee1"), "Wioletta", "Fioletowa", departmentRepository.findById(3L).orElse(null), LocalDate.now(), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Coordinator("coordinator1@gmail.com", encoder.encode("coordinator1"), "Jacek", "Gruby", departmentRepository.findDepartmentsByCountry(Country.COUNTRY_PL), LocalDate.now(), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Admin("admin@gmail.com", encoder.encode("admin"), "admin", "admin"));
     }
 
     private void createCompany() {

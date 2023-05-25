@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity(name = "employee")
+@Entity(name = "manager")
 @Getter
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "employee_id"))
+@PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "manager_id"))
 
-public class Employee extends User {
-    public Employee(String email, String password, String name, String surname, Department department, LocalDate hireDate, LocalDate terminationDate) {
-        super(email, password, Roles.ROLE_EMPLOYEE, name, surname);
+public class Manager extends User {
+    public Manager(String email, String password, String name, String surname, Department department, LocalDate hireDate, LocalDate terminationDate) {
+        super(email, password, Roles.ROLE_MANAGER, name, surname);
         this.department = department;
         this.hireDate = hireDate;
         this.terminationDate = terminationDate;
