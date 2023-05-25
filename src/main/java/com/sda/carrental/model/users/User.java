@@ -11,8 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-    public User(String email, String password, Roles role, String name, String surname)
-    {
+    public User(String email, String password, Roles role, String name, String surname) {
         this.email = email;
         this.password = password;
         this.role = role;
@@ -45,7 +44,7 @@ public class User {
     private Roles role;
 
     public enum Roles {
-        ROLE_CUSTOMER(1), ROLE_EMPLOYEE(2);
+        ROLE_CUSTOMER(1), ROLE_EMPLOYEE(2), ROLE_MANAGER(3), ROLE_COORDINATOR(4), ROLE_ADMIN(5);
 
         Roles(int value) {
         }
