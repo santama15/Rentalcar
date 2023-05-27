@@ -13,10 +13,10 @@ import java.time.LocalDate;
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "employee_id"))
 
 public class Employee extends User {
-    public Employee(String email, String password, String name, String surname, Department department, LocalDate hireDate, LocalDate terminationDate) {
+    public Employee(String email, String password, String name, String surname, Department department, LocalDate terminationDate) {
         super(email, password, Roles.ROLE_EMPLOYEE, name, surname);
         this.department = department;
-        this.hireDate = hireDate;
+        this.creationDate = LocalDate.now();
         this.terminationDate = terminationDate;
     }
 
@@ -24,8 +24,8 @@ public class Employee extends User {
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private Department department;
 
-    @Column(name = "hire_date")
-    private LocalDate hireDate;
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
 
     @Column(name = "termination_date")
     private LocalDate terminationDate;
