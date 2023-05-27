@@ -14,10 +14,10 @@ import java.util.List;
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "coordinator_id"))
 
 public class Coordinator extends User {
-    public Coordinator(String email, String password, String name, String surname, List<Department> departments, LocalDate hireDate, LocalDate terminationDate) {
+    public Coordinator(String email, String password, String name, String surname, List<Department> departments, LocalDate terminationDate) {
         super(email, password, Roles.ROLE_COORDINATOR, name, surname);
         this.departments = departments;
-        this.hireDate = hireDate;
+        this.creationDate = LocalDate.now();
         this.terminationDate = terminationDate;
     }
 
@@ -25,8 +25,8 @@ public class Coordinator extends User {
     @Column(name = "departments")
     private List<Department> departments;
 
-    @Column(name = "hire_date")
-    private LocalDate hireDate;
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
 
     @Column(name = "termination_date")
     private LocalDate terminationDate;
