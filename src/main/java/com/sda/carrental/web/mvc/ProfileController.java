@@ -1,13 +1,14 @@
 package com.sda.carrental.web.mvc;
 
 import com.sda.carrental.constants.enums.Country;
+import com.sda.carrental.model.users.User;
 import com.sda.carrental.service.CustomerService;
 import com.sda.carrental.service.UserService;
-import com.sda.carrental.service.VerificationService;
 import com.sda.carrental.service.auth.CustomUserDetails;
 import com.sda.carrental.web.mvc.form.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -26,15 +26,17 @@ import javax.validation.Valid;
 public class ProfileController {
     private final CustomerService customerService;
     private final UserService userService;
-    private final VerificationService verificationService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String profilePage(ModelMap map) {
         CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        map.addAttribute("customer", customerService.findByUsername(cud.getUsername()));
-        map.addAttribute("verification", verificationService.isVerified(cud));
-        return "user/profileCustomer";
+        map.addAttribute("user", userService.findByUsername(cud.getUsername()));
+
+        if(cud.getAuthorities().contains(new SimpleGrantedAuthority(User.Roles.ROLE_CUSTOMER.name()))) {
+            return "user/profileCustomer";
+        }
+        return "management/profileEmployee";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/password")

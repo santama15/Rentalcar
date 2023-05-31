@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity(name = "user")
 @Getter
@@ -17,6 +18,7 @@ public class User {
         this.role = role;
         this.name = name;
         this.surname = surname;
+        this.creationDate = LocalDate.now();
     }
 
     @Id
@@ -39,14 +41,17 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Roles role;
 
     public enum Roles {
-        ROLE_CUSTOMER(1), ROLE_EMPLOYEE(2), ROLE_MANAGER(3), ROLE_COORDINATOR(4), ROLE_ADMIN(5);
+        ROLE_CUSTOMER, ROLE_EMPLOYEE, ROLE_MANAGER, ROLE_COORDINATOR, ROLE_ADMIN;
 
-        Roles(int value) {
+        Roles() {
         }
     }
 }
