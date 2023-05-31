@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Country {
-    COUNTRY_PL("Polska", "PL", "+48"), COUNTRY_GB("Wielka Brytania", "GB", "+44"), COUNTRY_NL("Holandia", "NL", "+31"), COUNTRY_DE("Niemcy", "DE", "+49");
+    COUNTRY_PL("Poland", "PL", "+48"), COUNTRY_GB("Great Britain", "GB", "+44"), COUNTRY_NL("Netherlands", "NL", "+31"), COUNTRY_DE("Germany", "DE", "+49");
 
     final String countryName;
     final String code;
