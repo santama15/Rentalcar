@@ -41,8 +41,13 @@ public class UserService {
         repository.save(user);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public boolean isCurrentPassword(CustomUserDetails cud, String inputPassword) {
+        try {
+            String storedPassword = repository.getPasswordByUsername(cud.getUsername()).orElseThrow(() -> new RuntimeException("User with username: " + cud.getUsername() + " not found"));
+            return bCryptPasswordEncoder.matches(inputPassword, storedPassword);
+        } catch (ResourceNotFoundException err) {
+            return false;
+        }
     }
 
     public HttpStatus changePassword(String inputPassword) {

@@ -77,12 +77,4 @@ public class Car {
     public enum CarStatus {
         STATUS_OPEN, STATUS_RENTED, STATUS_UNAVAILABLE
     }
-
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "seats=" + seats +
-                '}';
-    }
 }

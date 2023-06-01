@@ -3,7 +3,6 @@ package com.sda.carrental.web.mvc;
 import com.sda.carrental.constants.enums.Country;
 import com.sda.carrental.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
