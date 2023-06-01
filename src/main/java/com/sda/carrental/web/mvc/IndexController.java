@@ -5,7 +5,6 @@ import com.sda.carrental.service.DepartmentService;
 import com.sda.carrental.web.mvc.form.IndexForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
