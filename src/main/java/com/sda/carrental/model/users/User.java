@@ -12,13 +12,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-    public User(String email, String password, Roles role, String name, String surname) {
+    public User(String email, String password, Roles role, String name, String surname, LocalDate terminationDate) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.name = name;
         this.surname = surname;
         this.creationDate = LocalDate.now();
+        this.terminationDate = terminationDate;
     }
 
     @Id
@@ -43,6 +44,10 @@ public class User {
 
     @Column(name = "creation_date")
     private LocalDate creationDate;
+
+    @Setter
+    @Column(name = "termination_date")
+    private LocalDate terminationDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")

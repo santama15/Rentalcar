@@ -36,13 +36,13 @@ public class ProfileController {
         if(cud.getAuthorities().contains(new SimpleGrantedAuthority(User.Roles.ROLE_CUSTOMER.name()))) {
             return "user/profileCustomer";
         }
-        return "management/profileEmployee";
+        return "user/profileEmployee";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/password")
     public String changePasswordPage(final ModelMap map) {
         map.addAttribute("password_form", new ChangePasswordForm());
-        return "user/passwordCustomer";
+        return "user/passwordUser";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/email")

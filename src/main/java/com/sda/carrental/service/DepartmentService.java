@@ -25,8 +25,7 @@ public class DepartmentService {
     }
 
     public List<Department> findAllWhereCountry(Country country) {
-        return StreamSupport.stream(departmentRepository.findDepartmentsByCountry(country).spliterator(), false)
-                .collect(toList());
+        return departmentRepository.findDepartmentsByCountry(country);
     }
 
     public Department findAllWhereCountryAndHq(Country country) {

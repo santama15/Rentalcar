@@ -9,20 +9,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.StreamSupport;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
 public class CarService {
 
     private final CarRepository carRepository;
-
-    public List<Car> findAll() {
-        return StreamSupport.stream(carRepository.findAll().spliterator(), false)
-                .collect(toList());
-    }
 
     public Car findCarById(long id) {
         return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));

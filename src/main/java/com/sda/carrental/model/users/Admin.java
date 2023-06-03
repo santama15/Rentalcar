@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity(name = "admin")
 @Getter
@@ -12,6 +13,6 @@ import javax.persistence.*;
 
 public class Admin extends User {
     public Admin(String email, String password, String name, String surname) {
-        super(email, password, Roles.ROLE_ADMIN, name, surname);
+        super(email, password, Roles.ROLE_ADMIN, name, surname, LocalDate.ofYearDay(9999, 1));
     }
 }

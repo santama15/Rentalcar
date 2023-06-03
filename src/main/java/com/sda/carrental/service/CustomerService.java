@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 @Service
@@ -77,6 +78,7 @@ public class CustomerService {
         user.setSurname(generateRandomString());
         user.setAddress(generateRandomString());
         user.setContactNumber(generateRandomString());
+        user.setTerminationDate(LocalDate.now());
         do {
             user.setEmail(generateRandomString());
         } while (repository.findByEmail(user.getEmail()).isPresent());
