@@ -14,16 +14,11 @@ import java.time.LocalDate;
 
 public class Employee extends User {
     public Employee(String email, String password, String name, String surname, Department department, LocalDate terminationDate) {
-        super(email, password, Roles.ROLE_EMPLOYEE, name, surname);
+        super(email, password, Roles.ROLE_EMPLOYEE, name, surname, terminationDate);
         this.department = department;
-        this.terminationDate = terminationDate;
     }
 
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private Department department;
-
-    @Column(name = "termination_date")
-    private LocalDate terminationDate;
-
 }

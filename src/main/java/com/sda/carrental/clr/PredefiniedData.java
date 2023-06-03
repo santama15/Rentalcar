@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.LinkedList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -61,7 +63,7 @@ public class PredefiniedData implements CommandLineRunner {
 
 
         userRepository.save(new Manager("manager1@gmail.com", encoder.encode("manager1"), "Maria", "Fajna", departmentRepository.findById(1L).orElse(null), LocalDate.ofYearDay(9999, 1)));
-        userRepository.save(new Manager("manager2@gmail.com", encoder.encode("manager1"), "Aleksandra", "Ładna", departmentRepository.findById(2L).orElse(null), LocalDate.ofYearDay(9999, 1)));
+        userRepository.save(new Manager("manager2@gmail.com", encoder.encode("manager1"), "Aleksandra", "Ładna", departmentRepository.findById(2L).orElse(null), LocalDate.ofYearDay(2023, 1)));
         userRepository.save(new Manager("manager3@gmail.com", encoder.encode("manager1"), "Katarzyna", "Nieładna", departmentRepository.findById(3L).orElse(null), LocalDate.ofYearDay(9999, 1)));
 
         userRepository.save(new Employee("employee1@gmail.com", encoder.encode("employee1"), "Anna", "Mniejfajna", departmentRepository.findById(1L).orElse(null), LocalDate.ofYearDay(9999, 1)));
@@ -125,11 +127,17 @@ public class PredefiniedData implements CommandLineRunner {
     }
 
     private void createReservation() {
-        reservationRepository.save(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(7L).orElse(null), departmentRepository.findById(2L).orElse(null), departmentRepository.findById(3L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(3), LocalDate.of(2022, 10, 7)));
-        reservationRepository.save(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(10L).orElse(null), departmentRepository.findById(3L).orElse(null), departmentRepository.findById(2L).orElse(null), LocalDate.now().minusDays(3), LocalDate.now().plusDays(1), LocalDate.of(2022, 11, 4)));
-        reservationRepository.save(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(19L).orElse(null), departmentRepository.findById(5L).orElse(null), departmentRepository.findById(7L).orElse(null), LocalDate.now().minusDays(5), LocalDate.now().plusDays(5), LocalDate.of(2022, 11, 8)));
-        reservationRepository.save(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(23L).orElse(null), departmentRepository.findById(6L).orElse(null), departmentRepository.findById(5L).orElse(null), LocalDate.now().plusDays(0), LocalDate.now().plusDays(4), LocalDate.of(2022, 12, 5)));
-        reservationRepository.save(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(28L).orElse(null), departmentRepository.findById(7L).orElse(null), departmentRepository.findById(6L).orElse(null), LocalDate.now().minusDays(2), LocalDate.now().plusDays(8), LocalDate.of(2022, 12, 9)));
+        List<Reservation> reservationList = new LinkedList<>();
+        reservationList.add(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(7L).orElse(null), departmentRepository.findById(2L).orElse(null), departmentRepository.findById(3L).orElse(null), LocalDate.now().minusDays(1), LocalDate.now().plusDays(3), LocalDate.of(2022, 10, 7)));
+        reservationList.add(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(10L).orElse(null), departmentRepository.findById(3L).orElse(null), departmentRepository.findById(2L).orElse(null), LocalDate.now().minusDays(3), LocalDate.now().plusDays(1), LocalDate.of(2022, 11, 4)));
+        reservationList.add(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(19L).orElse(null), departmentRepository.findById(5L).orElse(null), departmentRepository.findById(7L).orElse(null), LocalDate.now().minusDays(5), LocalDate.now().plusDays(5), LocalDate.of(2022, 11, 8)));
+        reservationList.add(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(23L).orElse(null), departmentRepository.findById(6L).orElse(null), departmentRepository.findById(5L).orElse(null), LocalDate.now().plusDays(0), LocalDate.now().plusDays(4), LocalDate.of(2022, 12, 5)));
+        reservationList.add(new Reservation((Customer) userRepository.findById(1L).orElse(null), carRepository.findById(28L).orElse(null), departmentRepository.findById(7L).orElse(null), departmentRepository.findById(6L).orElse(null), LocalDate.now().minusDays(2), LocalDate.now().plusDays(8), LocalDate.of(2022, 12, 9)));
+
+        for (Reservation r:reservationList) {
+            r.setStatus(Reservation.ReservationStatus.STATUS_RESERVED);
+            reservationRepository.save(r);
+        }
     }
 
     private void createRent() {
@@ -141,11 +149,11 @@ public class PredefiniedData implements CommandLineRunner {
     }
 
     private void createPayments() {
-        paymentDetailsRepository.save(new PaymentDetails( carRepository.findById(7L).get().getPrice_day() * (reservationRepository.findById(1L).get().getDateFrom().until(reservationRepository.findById(1L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(7L).get().getDepositValue(), reservationRepository.findById(1L).orElse(null)));
-        paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(10L).get().getPrice_day() * (reservationRepository.findById(2L).get().getDateFrom().until(reservationRepository.findById(2L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(10L).get().getDepositValue(), reservationRepository.findById(2L).orElse(null)));
-        paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(19L).get().getPrice_day() * (reservationRepository.findById(3L).get().getDateFrom().until(reservationRepository.findById(3L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(19L).get().getDepositValue(), reservationRepository.findById(3L).orElse(null)));
-        paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(23L).get().getPrice_day() * (reservationRepository.findById(4L).get().getDateFrom().until(reservationRepository.findById(4L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(23L).get().getDepositValue(), reservationRepository.findById(4L).orElse(null)));
-        paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(28L).get().getPrice_day() * (reservationRepository.findById(5L).get().getDateFrom().until(reservationRepository.findById(5L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(28L).get().getDepositValue(), reservationRepository.findById(5L).orElse(null)));
+        //paymentDetailsRepository.save(new PaymentDetails( carRepository.findById(7L).get().getPrice_day() * (reservationRepository.findById(1L).get().getDateFrom().until(reservationRepository.findById(1L).get().getDateTo(), ChronoUnit.DAYS)), gv.getDeptReturnPriceDiff(), carRepository.findById(7L).get().getDepositValue(), carRepository.findById(7L).get().getPrice_day() * (reservationRepository.findById(1L).get().getDateFrom().until(reservationRepository.findById(1L).get().getDateTo(), ChronoUnit.DAYS)),  carRepository.findById(7L).get().getDepositValue(), reservationRepository.findById(1L).orElse(null)));
+        //paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(10L).get().getPrice_day() * (reservationRepository.findById(2L).get().getDateFrom().until(reservationRepository.findById(2L).get().getDateTo(), ChronoUnit.DAYS)), gv.getDeptReturnPriceDiff(), carRepository.findById(10L).get().getDepositValue(), carRepository.findById(10L).get().getPrice_day() * (reservationRepository.findById(2L).get().getDateFrom().until(reservationRepository.findById(2L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(10L).get().getDepositValue(), reservationRepository.findById(2L).orElse(null)));
+        //paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(19L).get().getPrice_day() * (reservationRepository.findById(3L).get().getDateFrom().until(reservationRepository.findById(3L).get().getDateTo(), ChronoUnit.DAYS)), gv.getDeptReturnPriceDiff(), carRepository.findById(19L).get().getDepositValue(), carRepository.findById(19L).get().getPrice_day() * (reservationRepository.findById(3L).get().getDateFrom().until(reservationRepository.findById(3L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(19L).get().getDepositValue(), reservationRepository.findById(3L).orElse(null)));
+        //paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(23L).get().getPrice_day() * (reservationRepository.findById(4L).get().getDateFrom().until(reservationRepository.findById(4L).get().getDateTo(), ChronoUnit.DAYS)), gv.getDeptReturnPriceDiff(), carRepository.findById(23L).get().getDepositValue(), carRepository.findById(23L).get().getPrice_day() * (reservationRepository.findById(4L).get().getDateFrom().until(reservationRepository.findById(4L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(23L).get().getDepositValue(), reservationRepository.findById(4L).orElse(null)));
+        //paymentDetailsRepository.save(new PaymentDetails(carRepository.findById(28L).get().getPrice_day() * (reservationRepository.findById(5L).get().getDateFrom().until(reservationRepository.findById(5L).get().getDateTo(), ChronoUnit.DAYS)), gv.getDeptReturnPriceDiff(), carRepository.findById(28L).get().getDepositValue(), carRepository.findById(28L).get().getPrice_day() * (reservationRepository.findById(5L).get().getDateFrom().until(reservationRepository.findById(5L).get().getDateTo(), ChronoUnit.DAYS)), carRepository.findById(28L).get().getDepositValue(), reservationRepository.findById(5L).orElse(null)));
     }
 
     private void createVerification() {

@@ -11,7 +11,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class PaymentDetails {
-    public PaymentDetails(Double mainValue, Double deposit, Reservation reservation) {
+    public PaymentDetails(Double reqRaw, Double reqReturn, Double reqDeposit, Double mainValue, Double deposit, Reservation reservation) {
+        this.requiredRawValue = reqRaw;
+        this.requiredReturnValue = reqReturn;
+        this.requiredDeposit = reqDeposit;
         this.mainValue = mainValue;
         this.deposit = deposit;
         this.securedValue = 0.0;
@@ -26,6 +29,15 @@ public class PaymentDetails {
     @OneToOne
     @JoinColumn(name = "reservation_id", referencedColumnName = "reservation_id")
     private Reservation reservation;
+
+    @Column(name = "archival_raw_value", nullable = false)
+    private double requiredRawValue;
+
+    @Column(name = "archival_return_value", nullable = false)
+    private double requiredReturnValue;
+
+    @Column(name = "archival_deposit", nullable = false)
+    private double requiredDeposit;
 
     @Setter
     @Column(name = "main_value", nullable = false)

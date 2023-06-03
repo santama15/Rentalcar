@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity(name = "customer")
 @Getter
@@ -17,7 +18,7 @@ public class Customer extends User
 
     public Customer(String email, String password, String name, String surname, Country country, String city, String address, String contactNumber)
     {
-        super(email, password, Roles.ROLE_CUSTOMER, name, surname);
+        super(email, password, Roles.ROLE_CUSTOMER, name, surname, LocalDate.ofYearDay(9999, 1));
         this.country = country;
         this.city = city;
         this.address = address;

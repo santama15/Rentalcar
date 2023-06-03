@@ -15,16 +15,11 @@ import java.util.List;
 
 public class Coordinator extends User {
     public Coordinator(String email, String password, String name, String surname, List<Department> departments, LocalDate terminationDate) {
-        super(email, password, Roles.ROLE_COORDINATOR, name, surname);
+        super(email, password, Roles.ROLE_COORDINATOR, name, surname, terminationDate);
         this.departments = departments;
-        this.terminationDate = terminationDate;
     }
 
     @OneToMany
     @Column(name = "departments")
     private List<Department> departments;
-
-    @Column(name = "termination_date")
-    private LocalDate terminationDate;
-
 }

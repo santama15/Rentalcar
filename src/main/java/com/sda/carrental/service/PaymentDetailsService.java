@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 
 @Service
@@ -19,9 +18,6 @@ public class PaymentDetailsService {
     private final PaymentDetailsRepository paymentDetailsRepository;
     private final GlobalValues gv;
 
-    public List<PaymentDetails> findAll() {
-        return paymentDetailsRepository.findAll();
-    }
 
     public PaymentDetails findByReservation(Reservation reservation) {
         return paymentDetailsRepository
@@ -32,14 +28,15 @@ public class PaymentDetailsService {
     public void createReservationPayment(Reservation reservation) {
         long days = reservation.getDateFrom().until(reservation.getDateTo(), ChronoUnit.DAYS) + 1;
 
-        double value = days * reservation.getCar().getPrice_day();
+        double rawValue = days * reservation.getCar().getPrice_day();
+        double payment = rawValue;
+        double depositValue = reservation.getCar().getDepositValue();
         if (!reservation.getDepartmentBack().equals(reservation.getDepartmentTake())) {
-            value += gv.getDeptReturnPriceDiff();
+            payment += gv.getDeptReturnPriceDiff();
+            paymentDetailsRepository.save(new PaymentDetails(rawValue, gv.getDeptReturnPriceDiff(), depositValue, payment, depositValue, reservation));
+        } else {
+            paymentDetailsRepository.save(new PaymentDetails(rawValue, 0.0, depositValue, payment, depositValue, reservation));
         }
-
-        paymentDetailsRepository.save(
-                new PaymentDetails(value, reservation.getCar().getDepositValue(), reservation)
-        );
     }
 
     public void retractReservationPayment(Reservation reservation) {
@@ -53,5 +50,9 @@ public class PaymentDetailsService {
         paymentDetails.setMainValue(0);
         paymentDetails.setDeposit(0);
         paymentDetailsRepository.save(paymentDetails);
+    }
+
+    public boolean isReservationFined(Reservation reservation) {
+        return paymentDetailsRepository.findByReservation(reservation).isPresent();
     }
 }

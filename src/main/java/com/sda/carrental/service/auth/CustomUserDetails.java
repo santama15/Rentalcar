@@ -1,5 +1,6 @@
 package com.sda.carrental.service.auth;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -34,7 +35,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return user.getTerminationDate().isAfter(LocalDate.now());
     }
 
     @Override
