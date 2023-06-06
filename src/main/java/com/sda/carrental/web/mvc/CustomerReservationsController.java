@@ -32,21 +32,21 @@ public class CustomerReservationsController {
     public String reservationsPage(ModelMap map) {
         CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        map.addAttribute("reservations", reservationService.getUserReservations(cud));
+        map.addAttribute("reservations", reservationService.getUserReservations(cud.getUsername()));
         return "user/reservationsCustomer";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String reservationsDetailButton(RedirectAttributes redAtt, @RequestParam("details_button") Long reservation_id) {
-        redAtt.addAttribute("details_button", reservation_id);
+    public String reservationsDetailButton(RedirectAttributes redAtt, @RequestParam("details_button") Long reservationId) {
+        redAtt.addAttribute("details_button", reservationId);
         return "redirect:/reservations/{details_button}";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{details_button}")
-    public String reservationDetailsPage(final ModelMap map, RedirectAttributes redAtt, @PathVariable Long details_button) {
+    public String reservationDetailsPage(final ModelMap map, RedirectAttributes redAtt, @PathVariable(value = "details_button") Long detailsButton) {
         try {
             CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Reservation reservation = reservationService.getUserReservation(cud, details_button);
+            Reservation reservation = reservationService.getUserReservation(cud.getUsername(), detailsButton);
 
             if(paymentDetailsService.isReservationFined(reservation)) {
                 PaymentDetails receipt = paymentDetailsService.findByReservation(reservation);
@@ -78,16 +78,16 @@ public class CustomerReservationsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/action")
-    public String reservationRefundButton(RedirectAttributes redAtt, @RequestParam(value = "action") String action, @RequestParam(value = "id") Long reservation_id) {
+    public String reservationRefundButton(RedirectAttributes redAtt, @RequestParam(value = "action") String action, @RequestParam(value = "id") Long reservationId) {
         CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpStatus response;
         if (action.equals("refund")) {
-            response = reservationService.setUserReservationStatus(cud, reservation_id, Reservation.ReservationStatus.STATUS_REFUNDED);
+            response = reservationService.setUserReservationStatus(cud, reservationId, Reservation.ReservationStatus.STATUS_REFUNDED);
         } else {
             response = HttpStatus.BAD_REQUEST;
         }
         if (response.equals(HttpStatus.ACCEPTED)) {
-            redAtt.addFlashAttribute("message", "Return completed successfully!");
+            redAtt.addFlashAttribute("message", "Refund completed successfully!");
             return "redirect:/reservations";
         } else {
             redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");

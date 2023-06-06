@@ -38,8 +38,8 @@
                     <a class="dropdown-toggle" href="#" id="employeeZone" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Workspace</a>
                     <div class="dropdown-menu" aria-labelledby="employeeZone">
                         <a class="dropdown-item" href="/profile">Profile</a>
-                        <a class="dropdown-item" href="#">Reservations</a>
-                        <a class="dropdown-item" href="#">Rentals</a>
+                        <a class="dropdown-item" href="/mg-res">Reservations</a>
+                        <a class="dropdown-item" href="/mg-ren">Rentals</a>
 
                         <!-- Manager, Coordinator and Admin -->
                         <th:block sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_COORDINATOR', 'ROLE_ADMIN')">

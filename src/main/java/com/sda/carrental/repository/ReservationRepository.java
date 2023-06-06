@@ -15,4 +15,7 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
 
     @Query(value = "from reservation where customer = :user and reservationId = :id")
     Optional<Reservation> findByUserAndId(@Param("user") User user, @Param("id") Long id);
+
+    @Query(value = "FROM reservation r WHERE r.departmentTake.departmentId = :departmentId AND r.customer.email = :username")
+    List<Reservation> findAllByUsernameAndDepartmentId(String username, Long departmentId);
 }

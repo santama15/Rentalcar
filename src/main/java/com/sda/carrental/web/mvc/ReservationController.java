@@ -38,8 +38,8 @@ public class ReservationController {
 
         try {
             Car car = carService.findCarById(reservationData.getCarId());
-            Department depFrom = depService.findBranchWhereId(reservationData.getIndexData().getDepartmentIdFrom());
-            Department depTo = depService.findBranchWhereId(reservationData.getIndexData().getDepartmentIdTo());
+            Department depFrom = depService.findDepartmentWhereId(reservationData.getIndexData().getDepartmentIdFrom());
+            Department depTo = depService.findDepartmentWhereId(reservationData.getIndexData().getDepartmentIdTo());
             long days = reservationData.getIndexData().getDateFrom().until(reservationData.getIndexData().getDateTo(), ChronoUnit.DAYS) + 1;
 
             if (reservationData.getIndexData().isFirstBranchChecked()) {

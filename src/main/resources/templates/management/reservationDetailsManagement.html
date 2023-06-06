@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Rent-a-Car</title>
+
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+</head>
+
+<body>
+<div id="container" class="container-md">
+    <div th:include="fragments/top::top-menu"></div>
+    <div th:include="fragments/top::reg-options"></div>
+
+    <div id="main">
+        <h3><strong>Summary:</strong></h3>
+        <br>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <dl style="text-align: left">
+                        <dt style="font-weight: bold">Vehicle pick-up:</dt>
+                        <dt style="font-weight: normal"
+                            th:text="${reservation.getDepartmentTake().getCity()} + ' ' + ${reservation.getDepartmentTake().getPostcode()} + ', '"></dt>
+                        <dt style="font-weight: normal" th:text="${reservation.getDepartmentTake().getAddress()}"></dt>
+                    </dl>
+                    <ul style="text-align: left; list-style-type:none">
+                        <li><strong>Date:</strong></li>
+                        <li th:text="${reservation.getDateFrom()}"></li>
+                    </ul>
+                    <br>
+                    <dl style="text-align: left">
+                        <dt style="font-weight: bold">Vehicle return:</dt>
+                        <dt style="font-weight: normal"
+                            th:text="${reservation.getDepartmentBack().getCity()} + ' ' + ${reservation.getDepartmentBack().getPostcode()} + ', '"></dt>
+                        <dt style="font-weight: normal" th:text="${reservation.getDepartmentBack().getAddress()}"></dt>
+                    </dl>
+                    <ul style="text-align: left; list-style-type:none">
+                        <li><strong>Data:</strong></li>
+                        <li th:text="${reservation.dateTo}"></li>
+                    </ul>
+                    <br>
+                </div>
+                <div class="col-5">
+                    <h5><strong>Vehicle</strong></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:text="'Model: ' + ${reservation.getCar().model}"></li>
+                        <li class="list-group-item"
+                            th:text="'Car type: ' + ${reservation.getCar().carType.getName()}"></li>
+                        <li class="list-group-item" th:text="'Production date: ' + ${reservation.getCar().year}"></li>
+                        <li class="list-group-item" th:text="'Seats: ' + ${reservation.getCar().seats}"></li>
+                    </ul>
+                    <br>
+                </div>
+                <div class="col">
+                    <img th:src="${reservation.getCar().jpgLink}" alt="Picture" width="255" height="150"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-5">
+                    <ul style="list-style-type:none">
+                        <li style="font-weight: bold">Order value:</li>
+                        <li th:text="'Rental: ' + ${#numbers.formatDecimal(raw_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                        <li th:text="'Different location return: ' + ${#numbers.formatDecimal(diff_return_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                        <li th:text="'————'"></li>
+                        <li th:utext="'<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-exclamation-circle&quot; viewBox=&quot;0 0 16 16&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Cancellation policy: Free cancellation up to ' + ${refund_fee_days} + ' days before the rental date. Late cancellations may be subject to a ' + ${deposit_percentage} + '% cancellation fee. Details in the regulations.&quot;><path d=&quot;M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z&quot;/><path d=&quot;M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z&quot;/></svg> '
+                                    + 'Total price: ' + ${#numbers.formatDecimal(total_price, 1, 2, 'POINT')} + ' PLN'"></li>
+                        <li th:text="'+ Deposit: ' + ${#numbers.formatDecimal(deposit_value, 1, 2, 'POINT')} + ' PLN'"></li>
+
+                    </ul>
+                    <br>
+                </div>
+                <div class="col">
+                    <form th:action="@{/reservations/action}" th:method="POST">
+                        <input type="hidden" th:name="id" th:value="${reservation.getReservationId}">
+                        <div class="d-flex flex-column">
+                            <th:block th:if="${reservation.status.name() == 'STATUS_RESERVED'}">
+                                <button class="btn btn-dark text-info bg-dark bi bi-search mt-2"
+                                        type="submit" name="action" value="refund">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                    </svg>
+                                    Refund
+                                </button>
+                            </th:block>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div th:include="fragments/bottom::bottom-footer"></div>
+    </div>
+</div>
+<div th:include="fragments/bottom::common-scripts"></div>
+</body>
+</html>

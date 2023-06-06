@@ -23,6 +23,7 @@ import java.util.List;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserService userService;
+    private final CustomerService customerService;
     private final CarService carService;
     private final DepartmentService departmentService;
 
@@ -34,8 +35,8 @@ public class ReservationService {
 
             User user = userService.findByUsername(cud.getUsername());
             Car car = carService.findAvailableCar(index.getDateFrom(), index.getDateTo(), index.getDepartmentIdFrom(), form.getCarId());
-            Department depRepFrom = departmentService.findBranchWhereId(index.getDepartmentIdFrom());
-            Department depRepTo = departmentService.findBranchWhereId(index.getDepartmentIdTo());
+            Department depRepFrom = departmentService.findDepartmentWhereId(index.getDepartmentIdFrom());
+            Department depRepTo = departmentService.findDepartmentWhereId(index.getDepartmentIdTo());
 
             Reservation reservation = new Reservation(
                     (Customer) user, car,
@@ -61,14 +62,14 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> getUserReservations(@RequestBody CustomUserDetails cud) {
+    public List<Reservation> getUserReservations(@RequestBody String username) {
         return reservationRepository
-                .findAllByUser(userService.findByUsername(cud.getUsername()));
+                .findAllByUser(userService.findByUsername(username));
     }
 
-    public Reservation getUserReservation(@RequestBody CustomUserDetails cud, Long reservation_id) {
+    public Reservation getUserReservation(@RequestBody String username, Long reservation_id) {
         return reservationRepository
-                .findByUserAndId(userService.findByUsername(cud.getUsername()), reservation_id)
+                .findByUserAndId(userService.findByUsername(username), reservation_id)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
@@ -77,9 +78,9 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public HttpStatus setUserReservationStatus(@RequestBody CustomUserDetails cud, Long reservation_id, Reservation.ReservationStatus status) {
+    public HttpStatus setUserReservationStatus(@RequestBody CustomUserDetails cud, Long reservationId, Reservation.ReservationStatus status) {
         try {
-            Reservation r = getUserReservation(cud, reservation_id);
+            Reservation r = getUserReservation(cud.getUsername(), reservationId);
 
             if (status.equals(Reservation.ReservationStatus.STATUS_REFUNDED) && r.getStatus().equals(Reservation.ReservationStatus.STATUS_RESERVED)) {
                 paymentDetailsService.retractReservationPayment(r);
@@ -91,5 +92,10 @@ public class ReservationService {
             err.printStackTrace();
             return HttpStatus.NOT_FOUND;
         }
+    }
+
+    public List<Reservation> getUserReservationsByDepartmentTake(String username, Long departmentId) {
+        return reservationRepository
+                .findAllByUsernameAndDepartmentId(username, departmentId);
     }
 }
