@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Rent-a-Car</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+</head>
+
+<body>
+<div id="container">
+    <div th:include="fragments/top::top-menu"></div>
+    <div th:include="fragments/top::reg-options"></div>
+
+    <div class="row">
+        <th:block th:if="${customer} != null">
+            <div class="col-sm-3">
+                <table class="table table-borderless">
+                    <thead class="table-dark">
+                    <tr class="table-dark">
+                        <th scope="row">Customer data:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-dark">
+                        <td>Name:</td>
+                    </tr>
+                    <tr>
+                        <td th:text="${customer.getName()} + ' ' + ${customer.getSurname()}"></td>
+                    </tr>
+
+                    <tr class="table-dark">
+                        <td>Contact:</td>
+                    </tr>
+                    <tr>
+                        <td th:text="${customer.getContactNumber()}"></td>
+                    </tr>
+
+                    <tr class="table-dark">
+                        <td>Address:</td>
+                    </tr>
+                    <tr>
+                        <td th:utext="${customer.getCountry().getCountryName()} + ' <br>' + ${customer.getCity()} + ', <br>' + ${customer.getAddress()}"></td>
+                    </tr>
+
+                    <tr class="table-dark">
+                        <td>Verification:</td>
+                    </tr>
+                    <tr>
+                        <td>BOOLEAN HERE</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </th:block>
+
+        <th:block th:if="${reservations} != null">
+            <div class="col-sm-9">
+                <table class="table table-borderless table-hover"
+                       style="text-align: center; vertical-align: middle;">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="row">From</th>
+                        <th scope="row">To</th>
+                        <th scope="row">Period</th>
+                        <th scope="row">Status</th>
+                        <th scope="row"></th>
+                    </tr>
+                    </thead>
+                    <form th:action="@{/mg-res/reservation}" th:method="POST">
+                        <input type="hidden" th:if="${customer != null}" th:name="customer" th:value="${customer.getId()}">
+                        <tbody>
+                        <th:block th:if="${#lists.isEmpty(reservations)}">
+                            <td th:text="'—'"></td>
+                            <td th:text="'—'"></td>
+                            <td th:text="'—'"></td>
+                            <td th:text="'—'"></td>
+                        </th:block>
+                        <tr th:each="reservation: ${reservations}">
+                            <td th:utext="${reservation.getDepartmentTake().getCity()} + ', <br>' + ${reservation.getDepartmentTake().getAddress()}"></td>
+                            <td th:utext="${reservation.getDepartmentBack().getCity()} + ', <br>' + ${reservation.getDepartmentTake().getAddress()}"></td>
+                            <td th:utext="${reservation.getDateFrom()} + '<br> ⟶ ' + ${reservation.getDateTo()}"></td>
+                            <td th:utext="${reservation.status.getText()}"></td>
+                            <td>
+                                <button type="submit" class="btn btn-dark" th:text="Details" th:name="details_button"
+                                        th:value="${reservation.reservationId}"></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </form>
+                </table>
+            </div>
+        </th:block>
+    </div>
+    <div th:include="fragments/bottom::bottom-footer"></div>
+</div>
+<div th:include="fragments/bottom::common-scripts"></div>
+</body>
+</html>

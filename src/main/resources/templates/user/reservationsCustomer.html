@@ -17,7 +17,7 @@
     <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
-        <table class="table table-borderless">
+        <table class="table table-borderless table-hover">
             <thead class="table-light">
             <tr>
                 <th scope="row">Created</th>
@@ -44,7 +44,8 @@
                     <td th:text="${reservation.getDateFrom()} + ' ⟶ ' + ${reservation.getDateTo()}"></td>
                     <td th:text="${reservation.status.getText()}"></td>
                     <td><button type="submit" class="btn btn-dark" th:text="Details" th:name="details_button"
-                                th:value="${reservation.reservationId}"></button></td>
+                                th:value="${reservation.reservationId}"></button>
+                    </td>
                 </tr>
             </tbody>
             </form>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Rent-a-Car</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+</head>
+
+<body>
+<div id="container">
+
+    <div th:include="fragments/top::top-menu"></div>
+    <div th:include="fragments/top::reg-options"></div>
+
+    <div class="row">
+        <form th:action="@{/mg-res/search}" th:object="${searchCustomerForm}" th:method="POST"
+              class="form-inline">
+            <div class="row mb-2" style="margin-top: 5%">
+                <div class="col-sm-3">
+                    <select type="text" id="department" th:field="*{departmentId}" class="form-control">
+                        <div th:each="department:${departments}">
+                            <option th:text="${department.getCity()} + ', ' + ${department.getAddress()}"
+                                    th:value="${department.getDepartmentId()}"></option>
+                        </div>
+                    </select>
+                </div>
+
+                <div class="col-sm-3">
+                    <input type="text" name="name" class="form-control" placeholder="Name" th:field="*{name}">
+                </div>
+
+                <div class="col-sm-3">
+                    <input type="text" name="surname" class="form-control" placeholder="Surname"
+                           th:field="*{surname}">
+                </div>
+
+                <div class="col-sm-3" style="display: flex; justify-content: end;">
+                    <button class="btn btn-dark bg-dark bi bi-search"
+                            type="submit">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                        </svg>
+                        Search
+                    </button>
+                </div>
+            </div>
+
+            <div th:insert="fragments/bottom::form-error-handler"></div>
+        </form>
+        <br>
+    </div>
+
+    <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-borderless table-hover" style="margin-top: 1%; text-align: center; vertical-align: middle;">
+                    <thead class="table-light">
+                    <tr>
+                        <th scope="row">Name</th>
+                        <th scope="row">Country</th>
+                        <th scope="row">Number</th>
+                        <th scope="row">Address</th>
+                        <th scope="row">Account type</th>
+                        <th scope="row"></th>
+                    </tr>
+                    </thead>
+                    <form th:action="@{/mg-res/reservations}" th:method="POST">
+                        <input type="hidden" th:if="${searchCustomerForm.departmentId != null}" th:name="department_id" th:value="${searchCustomerForm.departmentId}">
+                        <tbody>
+                        <th:block th:if="${customers == null || #lists.isEmpty(customers)}">
+                            <td th:text="'—'"></td>
+                            <td th:text="'—'"></td>
+                            <td th:text="'—'"></td>
+                            <td th:text="'—'"></td>
+                            <td th:text="'—'"></td>
+                        </th:block>
+                        <tr th:each="customer: ${customers}">
+                            <td th:text="${customer.getName()} + ' ' + ${customer.getSurname()}"></td>
+                            <td th:text="${customer.getCountry().getCountryName()}"></td>
+                            <td th:text="${customer.getCity()} + ', ' + ${customer.getAddress()}"></td>
+                            <td th:text="${customer.getCountry().getContactCode()} + ' ' + ${customer.getContactNumber()}"></td>
+                            <td th:text="${customer.getRole().name().substring(5)}"></td>
+                            <td style="display: flex; justify-content: end; padding: 0;">
+                                <button type="submit" class="btn btn-dark" th:text="Select" th:name="select_button"
+                                        th:value="${customer.getId()}"></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </form>
+                </table>
+            </div>
+    </div>
+    <div th:include="fragments/bottom::bottom-footer"></div>
+    <div th:insert="fragments/bottom::message-handler"></div>
+</div>
+<div th:include="fragments/bottom::common-scripts"></div>
+</body>
+</html>

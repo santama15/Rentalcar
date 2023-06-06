@@ -6,12 +6,14 @@ import com.sda.carrental.repository.CustomerRepository;
 import com.sda.carrental.repository.ReservationRepository;
 import com.sda.carrental.service.auth.CustomUserDetails;
 import com.sda.carrental.web.mvc.form.ChangeAddressForm;
+import com.sda.carrental.web.mvc.form.SearchCustomerForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -109,5 +111,15 @@ public class CustomerService {
             err.printStackTrace();
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
+    }
+
+    public List<Customer> findCustomersByDepartmentAndName(SearchCustomerForm customersData) {
+        if(customersData.getName().isEmpty()) customersData.setName(null);
+        if(customersData.getSurname().isEmpty()) customersData.setSurname(null);
+        return repository.findCustomersByDepartmentAndName(customersData.getDepartmentId(), customersData.getName(), customersData.getSurname());
+    }
+
+    public Customer findById(Long customerId) {
+        return repository.findById(customerId).orElseThrow(ResourceNotFoundException::new);
     }
 }
