@@ -7,7 +7,7 @@
 
     <title>Rent-a-Car</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
 </head>
 
@@ -60,7 +60,7 @@
     <div class="row">
             <div class="col-sm-12">
                 <table class="table table-borderless table-hover" style="margin-top: 1%; text-align: center; vertical-align: middle;">
-                    <thead class="table-light">
+                    <thead class="table-dark">
                     <tr>
                         <th scope="row">Name</th>
                         <th scope="row">Country</th>
@@ -86,7 +86,7 @@
                             <td th:text="${customer.getCity()} + ', ' + ${customer.getAddress()}"></td>
                             <td th:text="${customer.getCountry().getContactCode()} + ' ' + ${customer.getContactNumber()}"></td>
                             <td th:text="${customer.getRole().name().substring(5)}"></td>
-                            <td style="display: flex; justify-content: end; padding: 0;">
+                            <td style="display: flex; justify-content: end; padding-right: 0;">
                                 <button type="submit" class="btn btn-dark" th:text="Select" th:name="select_button"
                                         th:value="${customer.getId()}"></button>
                             </td>

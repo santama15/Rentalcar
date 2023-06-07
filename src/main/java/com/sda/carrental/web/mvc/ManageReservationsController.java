@@ -5,10 +5,8 @@ import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.PaymentDetails;
 import com.sda.carrental.model.users.Customer;
-import com.sda.carrental.service.CustomerService;
-import com.sda.carrental.service.DepartmentService;
-import com.sda.carrental.service.PaymentDetailsService;
-import com.sda.carrental.service.ReservationService;
+import com.sda.carrental.model.users.Verification;
+import com.sda.carrental.service.*;
 import com.sda.carrental.service.auth.CustomUserDetails;
 import com.sda.carrental.web.mvc.form.SearchCustomerForm;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,8 +28,8 @@ public class ManageReservationsController {
     private final CustomerService customerService;
     private final DepartmentService departmentService;
     private final ReservationService reservationService;
-
     private final PaymentDetailsService paymentDetailsService;
+    private final VerificationService verificationService;
 
     private final GlobalValues gv;
 
@@ -79,7 +78,7 @@ public class ManageReservationsController {
     public String customerReservationsPage(final ModelMap map, RedirectAttributes redAtt, @PathVariable(value = "customer_id") Long customerId, @ModelAttribute("department_id") Long departmentId) {
         try {
             CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if(HttpStatus.FORBIDDEN.equals(departmentService.departmentAccess(cud, departmentId))) {
+            if (HttpStatus.FORBIDDEN.equals(departmentService.departmentAccess(cud, departmentId))) {
                 redAtt.addFlashAttribute("message", "Incorrect data. Access not allowed.");
                 return "redirect:/mg-res";
             }
@@ -87,6 +86,14 @@ public class ManageReservationsController {
             Customer customer = customerService.findById(customerId);
             map.addAttribute("customer", customer);
             map.addAttribute("reservations", reservationService.getUserReservationsByDepartmentTake(customer.getEmail(), departmentId));
+
+            Optional<Verification> verification = verificationService.getOptionalVerificationByCustomer(customer);
+            map.addAttribute("is_verified", verification.isPresent());
+            if (verification.isPresent()) {
+                map.addAttribute("verification", verificationService.maskVerification(verification.get()));
+            } else {
+                map.addAttribute("verification", new Verification(customer, "N/D", "N/D"));
+            }
             return "management/reservationsManagement";
         } catch (ResourceNotFoundException err) {
             redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again.");
@@ -107,11 +114,11 @@ public class ManageReservationsController {
             Customer customer = customerService.findById(customerId);
             Reservation reservation = reservationService.getUserReservation(customer.getEmail(), reservationId);
 
-            if(paymentDetailsService.isReservationFined(reservation)) {
+            if (paymentDetailsService.isReservationFined(reservation)) {
                 PaymentDetails receipt = paymentDetailsService.findByReservation(reservation);
                 map.addAttribute("diff_return_price", receipt.getRequiredReturnValue());
                 map.addAttribute("raw_price", receipt.getRequiredRawValue());
-                map.addAttribute("total_price", receipt.getRequiredRawValue()+receipt.getRequiredReturnValue());
+                map.addAttribute("total_price", receipt.getRequiredRawValue() + receipt.getRequiredReturnValue());
                 map.addAttribute("deposit_value", receipt.getRequiredDeposit());
             } else {
                 long days = reservation.getDateFrom().until(reservation.getDateTo(), ChronoUnit.DAYS) + 1;
