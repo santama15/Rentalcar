@@ -4,6 +4,7 @@ import com.sda.carrental.constants.enums.Country;
 import com.sda.carrental.model.users.User;
 import com.sda.carrental.service.CustomerService;
 import com.sda.carrental.service.UserService;
+import com.sda.carrental.service.VerificationService;
 import com.sda.carrental.service.auth.CustomUserDetails;
 import com.sda.carrental.web.mvc.form.*;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import javax.validation.Valid;
 @RequestMapping("/profile")
 public class ProfileController {
     private final CustomerService customerService;
+    private final VerificationService verificationService;
     private final UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -157,7 +159,9 @@ public class ProfileController {
             return "user/deleteCustomer";
         }
 
-        HttpStatus response = customerService.deleteCustomer();
+        CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        HttpStatus response = customerService.selfDeleteCustomer(verificationService.deleteByCustomerId(cud.getId()), cud);
         if (response.equals(HttpStatus.ACCEPTED)) {
             redAtt.addFlashAttribute("message", "Account has been successfully deleted.");
         } else if (response.equals(HttpStatus.NOT_FOUND)) {

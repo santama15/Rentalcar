@@ -21,7 +21,6 @@ import java.util.Random;
 public class CustomerService {
     private final CustomerRepository repository;
     private final ReservationRepository reservationRepository;
-    private final VerificationService verificationService;
 
     public Customer findByUsername(String username) {
         return repository.findByEmail(username).orElseThrow(() -> new RuntimeException("User with username: " + username + " not found"));
@@ -88,21 +87,19 @@ public class CustomerService {
         return user;
     }
 
-    public HttpStatus deleteCustomer() {
+    public HttpStatus selfDeleteCustomer(HttpStatus verificationStatus, CustomUserDetails cud) {
         try {
-            CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Customer user = findByUsername(cud.getUsername());
-            HttpStatus status = verificationService.deleteByCustomerId(user);
+            Customer customer = findByUsername(cud.getUsername());
 
-            if (status.equals(HttpStatus.OK)) {
-                if (reservationRepository.findAllByUser(user).isEmpty()) {
-                    repository.delete(user);
+            if (verificationStatus.equals(HttpStatus.OK)) {
+                if (reservationRepository.findAllByUser(customer).isEmpty()) {
+                    repository.delete(customer);
                 } else {
-                    repository.save(scrambleCustomer(user));
+                    repository.save(scrambleCustomer(customer));
                 }
                 return HttpStatus.ACCEPTED;
             } else {
-                return status;
+                return verificationStatus;
             }
         } catch (ResourceNotFoundException err) {
             err.printStackTrace();

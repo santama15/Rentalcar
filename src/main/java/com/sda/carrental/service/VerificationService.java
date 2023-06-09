@@ -4,6 +4,7 @@ import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.users.Customer;
 import com.sda.carrental.model.users.Verification;
 import com.sda.carrental.repository.VerificationRepository;
+import com.sda.carrental.web.mvc.form.VerificationForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class VerificationService {
     private final VerificationRepository repository;
+    private final CustomerService customerService;
 
-    public HttpStatus deleteByCustomerId(Customer customer) {
+    public HttpStatus deleteByCustomerId(Long customerId) {
         try {
-            repository.delete(repository.findByCustomer(customer).orElseThrow(ResourceNotFoundException::new));
+            repository.delete(repository.findByCustomer(customerService.findById(customerId)).orElseThrow(ResourceNotFoundException::new));
             return HttpStatus.OK;
         } catch (ResourceNotFoundException err) {
             return HttpStatus.OK;
@@ -33,5 +35,19 @@ public class VerificationService {
 
     public Verification maskVerification(Verification verification) {
         return new Verification(verification.getCustomer(), verification.getPersonalId().replaceAll("^...", "XXX"), verification.getDriverId().replaceAll("...$", "XXX"));
+    }
+
+    public HttpStatus createVerification(VerificationForm form) {
+        try {
+            Customer customer = customerService.findById(form.getCustomerId());
+
+            if (getOptionalVerificationByCustomer(customer).isEmpty()) {
+                repository.save(new Verification(customer, form.getPersonalId(), form.getDriverId()));
+                return HttpStatus.CREATED;
+            }
+            return HttpStatus.EXPECTATION_FAILED;
+        } catch (ResourceNotFoundException err) {
+            return HttpStatus.NOT_FOUND;
+        }
     }
 }
