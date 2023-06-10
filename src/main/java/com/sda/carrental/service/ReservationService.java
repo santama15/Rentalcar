@@ -5,6 +5,7 @@ import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.Car;
 import com.sda.carrental.model.property.Department;
+import com.sda.carrental.model.property.PaymentDetails;
 import com.sda.carrental.model.users.Customer;
 import com.sda.carrental.model.users.User;
 import com.sda.carrental.repository.ReservationRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +28,8 @@ public class ReservationService {
     private final CustomerService customerService;
     private final CarService carService;
     private final DepartmentService departmentService;
-
     private final PaymentDetailsService paymentDetailsService;
+    private final VerificationService verificationService;
 
     public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody ShowCarsForm form) {
         try {
@@ -67,9 +69,9 @@ public class ReservationService {
                 .findAllByUser(userService.findByUsername(username));
     }
 
-    public Reservation getUserReservation(@RequestBody String username, Long reservation_id) {
+    public Reservation getCustomerReservation(@RequestBody Long customerId, Long reservationId) {
         return reservationRepository
-                .findByUserAndId(userService.findByUsername(username), reservation_id)
+                .findByUserAndId(customerService.findById(customerId), reservationId)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
@@ -78,13 +80,29 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public HttpStatus setUserReservationStatus(@RequestBody CustomUserDetails cud, Long reservationId, Reservation.ReservationStatus status) {
+    public HttpStatus handleReservationStatus(Long customerId, Long reservationId, Reservation.ReservationStatus status) {
         try {
-            Reservation r = getUserReservation(cud.getUsername(), reservationId);
+            Reservation r = getCustomerReservation(customerId, reservationId);
 
             if (status.equals(Reservation.ReservationStatus.STATUS_REFUNDED) && r.getStatus().equals(Reservation.ReservationStatus.STATUS_RESERVED)) {
-                paymentDetailsService.retractReservationPayment(r);
-                updateReservationStatus(r, Reservation.ReservationStatus.STATUS_REFUNDED);
+                paymentDetailsService.retractReservationPayment(r, status);
+                updateReservationStatus(r, status);
+                return HttpStatus.ACCEPTED;
+            } else if (status.equals(Reservation.ReservationStatus.STATUS_CANCELED) && (r.getStatus().equals(Reservation.ReservationStatus.STATUS_PENDING) || r.getStatus().equals(Reservation.ReservationStatus.STATUS_RESERVED))) {
+                paymentDetailsService.retractReservationPayment(r, status);
+                updateReservationStatus(r, status);
+                return HttpStatus.ACCEPTED;
+            } else if (status.equals(Reservation.ReservationStatus.STATUS_PROGRESS) && r.getStatus().equals(Reservation.ReservationStatus.STATUS_RESERVED)) {
+                Optional<PaymentDetails> payment = paymentDetailsService.getOptionalPaymentDetails(r);
+                if (verificationService.getOptionalVerificationByCustomer(r.getCustomer()).isEmpty()) {
+                    return HttpStatus.PRECONDITION_REQUIRED;
+                }
+                if (payment.isEmpty()) {
+                    return HttpStatus.PAYMENT_REQUIRED;
+                }
+                paymentDetailsService.securePayment(payment.get());
+                updateReservationStatus(r, status);
+                carService.updateCarStatus(r.getCar(), Car.CarStatus.STATUS_RENTED);
                 return HttpStatus.ACCEPTED;
             }
             return HttpStatus.BAD_REQUEST;

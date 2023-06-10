@@ -14,22 +14,22 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CarService {
 
-    private final CarRepository carRepository;
+    private final CarRepository repository;
 
     public Car findCarById(long id) {
-        return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
     }
 
     public List<Car> findAvailableCarsInDepartment(LocalDate dateFrom, LocalDate dateTo, Long department) {
-        return carRepository.findAvailableCarsInDepartment(dateFrom, dateTo, department);
+        return repository.findAvailableCarsInDepartment(dateFrom, dateTo, department);
     }
 
     public Car findAvailableCar(LocalDate dateFrom, LocalDate dateTo, Long department, long carId) {
-        return carRepository.findCarByCarIdAndAvailability(dateFrom, dateTo, department, carId).orElseThrow(ResourceNotFoundException::new);
+        return repository.findCarByCarIdAndAvailability(dateFrom, dateTo, department, carId).orElseThrow(ResourceNotFoundException::new);
     }
 
     public List<Car> filterCars(CarFilterForm filterForm) {
-        ArrayList<Car> filteredCars = (ArrayList<Car>) carRepository.findAvailableCarsInDepartment(
+        ArrayList<Car> filteredCars = (ArrayList<Car>) repository.findAvailableCarsInDepartment(
                 filterForm.getIndexData().getDateFrom(),
                 filterForm.getIndexData().getDateTo(),
                 filterForm.getIndexData().getDepartmentIdFrom());
@@ -80,5 +80,10 @@ public class CarService {
         carProperties.put("type", sortedTypes);
         carProperties.put("seats", sortedSeats);
         return carProperties;
+    }
+
+    public void updateCarStatus(Car car, Car.CarStatus status) {
+        car.setCarStatus(status);
+        repository.save(car);
     }
 }

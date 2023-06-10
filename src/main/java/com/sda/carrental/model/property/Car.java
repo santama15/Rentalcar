@@ -2,6 +2,7 @@ package com.sda.carrental.model.property;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -32,6 +33,7 @@ public class Car {
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     Department department;
 
+    @Setter
     @Column(name = "jpg_link")
     String jpgLink;
 
@@ -44,6 +46,7 @@ public class Car {
     @Column(name = "year")
     Integer year;
 
+    @Setter
     @Column(name = "mileage")
     Long mileage;
 
@@ -56,9 +59,11 @@ public class Car {
     @Column(name = "type")
     CarType carType;
 
+    @Setter
     @Column(name = "status")
     CarStatus carStatus;
 
+    @Setter
     @Column(name = "deposit")
     Double depositValue;
 

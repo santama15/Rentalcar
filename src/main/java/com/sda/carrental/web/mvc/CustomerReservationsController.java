@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,14 +47,14 @@ public class CustomerReservationsController {
     public String reservationDetailsPage(final ModelMap map, RedirectAttributes redAtt, @PathVariable(value = "details_button") Long detailsButton) {
         try {
             CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Reservation reservation = reservationService.getUserReservation(cud.getUsername(), detailsButton);
+            Reservation reservation = reservationService.getCustomerReservation(cud.getId(), detailsButton);
+            Optional<PaymentDetails> receipt = paymentDetailsService.getOptionalPaymentDetails(reservation);
 
-            if(paymentDetailsService.isReservationFined(reservation)) {
-                PaymentDetails receipt = paymentDetailsService.findByReservation(reservation);
-                map.addAttribute("diff_return_price", receipt.getRequiredReturnValue());
-                map.addAttribute("raw_price", receipt.getRequiredRawValue());
-                map.addAttribute("total_price", receipt.getRequiredRawValue()+receipt.getRequiredReturnValue());
-                map.addAttribute("deposit_value", receipt.getRequiredDeposit());
+            if (receipt.isPresent()) {
+                map.addAttribute("diff_return_price", receipt.get().getRequiredReturnValue());
+                map.addAttribute("raw_price", receipt.get().getRequiredRawValue());
+                map.addAttribute("total_price", receipt.get().getRequiredRawValue() + receipt.get().getRequiredReturnValue());
+                map.addAttribute("deposit_value", receipt.get().getRequiredDeposit());
             } else {
                 long days = reservation.getDateFrom().until(reservation.getDateTo(), ChronoUnit.DAYS) + 1;
                 if (!reservation.getDepartmentTake().equals(reservation.getDepartmentBack())) {
@@ -77,21 +78,16 @@ public class CustomerReservationsController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/action")
-    public String reservationRefundButton(RedirectAttributes redAtt, @RequestParam(value = "action") String action, @RequestParam(value = "id") Long reservationId) {
+    @RequestMapping(method = RequestMethod.POST, value = "/refund")
+    public String reservationRefundButton(RedirectAttributes redAtt, @RequestParam(value = "id") Long reservationId) {
         CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        HttpStatus response;
-        if (action.equals("refund")) {
-            response = reservationService.setUserReservationStatus(cud, reservationId, Reservation.ReservationStatus.STATUS_REFUNDED);
-        } else {
-            response = HttpStatus.BAD_REQUEST;
-        }
+        HttpStatus response = reservationService.handleReservationStatus(cud.getId(), reservationId, Reservation.ReservationStatus.STATUS_REFUNDED);
+
         if (response.equals(HttpStatus.ACCEPTED)) {
             redAtt.addFlashAttribute("message", "Refund completed successfully!");
             return "redirect:/reservations";
-        } else {
-            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
-            return "redirect:/";
         }
+        redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later.");
+        return "redirect:/";
     }
 }

@@ -17,7 +17,7 @@
     <div th:include="fragments/top::reg-options"></div>
 
     <div id="main">
-        <form id="change_action_form" th:method="POST" th:object="${verification_form}" th:action="@{submit}">
+        <form class="change_action_form" th:method="POST" th:object="${verification_form}" th:action="@{submit}">
             <input type="hidden" name="department" th:value="${department}">
             <input type="hidden" th:field="*{customerId}" th:value="${verification_form.getCustomerId()}">
             <table class="table table-borderless">
@@ -43,8 +43,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-dark" th:text="Confirm" onclick="setFormAction('/mg-res/verify/create')"></button>
-                        <button type="submit" class="btn btn-dark" th:text="Back" onclick="setFormAction('/mg-res/verify/back')"></button>
+                        <button type="submit" class="btn btn-dark" th:text="Confirm" onclick="setFormAction('/mg-res/verify/create', 0)"></button>
+                        <button type="submit" class="btn btn-dark" th:text="Back" onclick="setFormAction('/mg-res/verify/back', 0)"></button>
                     </td>
                 </tr>
                 </tbody>

@@ -71,7 +71,7 @@
                     </tr>
                     </thead>
                     <form th:action="@{/mg-res/reservations}" th:method="POST">
-                        <input type="hidden" th:if="${searchCustomerForm.departmentId != null}" th:name="department_id" th:value="${searchCustomerForm.departmentId}">
+                        <input type="hidden" th:if="${searchCustomerForm.departmentId != null}" th:name="department" th:value="${searchCustomerForm.getDepartmentId()}">
                         <tbody>
                         <th:block th:if="${customers == null || #lists.isEmpty(customers)}">
                             <td th:text="'—'"></td>

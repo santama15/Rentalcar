@@ -26,8 +26,9 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
-    function setFormAction(action) {
-        var form = document.getElementById('change_action_form');
+    function setFormAction(action, index) {
+        var forms = document.getElementsByClassName('change_action_form');
+        var form = forms[index];
         form.action = action;
     };
     </script>

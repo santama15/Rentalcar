@@ -36,7 +36,7 @@ public class ManageReservationsController {
 
     private final GlobalValues gv;
 
-
+    //Pages
     @RequestMapping(method = RequestMethod.GET)
     public String searchCustomersPage(ModelMap map, RedirectAttributes redAtt) {
         try {
@@ -55,28 +55,6 @@ public class ManageReservationsController {
         }
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String customerSearchResults(@ModelAttribute("searchCustomerForm") SearchCustomerForm customersData, RedirectAttributes redAtt) {
-        try {
-            CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            redAtt.addFlashAttribute("searchCustomerForm", customersData);
-            redAtt.addFlashAttribute("departments", departmentService.getDepartmentsByRole(cud));
-
-            redAtt.addFlashAttribute("customers", customerService.findCustomersByDepartmentAndName(customersData));
-            return "redirect:/mg-res";
-        } catch (ResourceNotFoundException err) {
-            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again.");
-            return "redirect:/";
-        }
-    }
-
-    @RequestMapping(value = "/reservations", method = RequestMethod.POST)
-    public String customerReservationsButton(RedirectAttributes redAtt, @RequestParam("select_button") Long customerId, @RequestParam("department_id") Long departmentId) {
-        redAtt.addAttribute("customer", customerId);
-        redAtt.addFlashAttribute("department", departmentId);
-        return "redirect:/mg-res/{customer}";
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/{customer}")
     public String customerReservationsPage(final ModelMap map, RedirectAttributes redAtt, @PathVariable(value = "customer") Long customerId, @ModelAttribute("department") Long departmentId) {
         try {
@@ -87,6 +65,7 @@ public class ManageReservationsController {
             }
 
             Customer customer = customerService.findById(customerId);
+            map.addAttribute("department", departmentId);
             map.addAttribute("customer", customer);
             map.addAttribute("reservations", reservationService.getUserReservationsByDepartmentTake(customer.getEmail(), departmentId));
 
@@ -98,31 +77,28 @@ public class ManageReservationsController {
                 map.addAttribute("verification", new Verification(customer, "N/D", "N/D"));
             }
             return "management/viewCustomerReservations";
-        } catch (ResourceNotFoundException | IllegalStateException err) {
+        } catch (ResourceNotFoundException err) {
             redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again.");
             return "redirect:/mg-res";
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/reservation")
-    public String reservationsDetailButton(RedirectAttributes redAtt, @RequestParam("details_button") Long reservationId, @RequestParam("customer") Long customerId) {
-        redAtt.addAttribute("reservation_id", reservationId);
-        redAtt.addFlashAttribute("customer_id", customerId);
-        return "redirect:/mg-res/reservation/{reservation_id}";
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/reservation/{reservation_id}")
-    public String reservationDetailsPage(final ModelMap map, RedirectAttributes redAtt, @PathVariable(value = "reservation_id") Long reservationId, @ModelAttribute("customer_id") Long customerId) {
+    @RequestMapping(method = RequestMethod.GET, value = "/reservation/{reservation}")
+    public String reservationDetailsPage(final ModelMap map, RedirectAttributes redAtt, @PathVariable(value = "reservation") Long reservationId, @ModelAttribute("customer") Long customerId) {
         try {
-            Customer customer = customerService.findById(customerId);
-            Reservation reservation = reservationService.getUserReservation(customer.getEmail(), reservationId);
+            CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Reservation reservation = reservationService.getCustomerReservation(customerId, reservationId);
+            if (departmentService.departmentAccess(cud, reservation.getDepartmentTake().getDepartmentId()).equals(HttpStatus.FORBIDDEN)) {
+                redAtt.addFlashAttribute("message", "Incorrect data. Access not allowed.");
+                return "redirect:/mg-res";
+            }
+            Optional<PaymentDetails> receipt = paymentDetailsService.getOptionalPaymentDetails(reservation);
 
-            if (paymentDetailsService.isReservationFined(reservation)) {
-                PaymentDetails receipt = paymentDetailsService.findByReservation(reservation);
-                map.addAttribute("diff_return_price", receipt.getRequiredReturnValue());
-                map.addAttribute("raw_price", receipt.getRequiredRawValue());
-                map.addAttribute("total_price", receipt.getRequiredRawValue() + receipt.getRequiredReturnValue());
-                map.addAttribute("deposit_value", receipt.getRequiredDeposit());
+            if (receipt.isPresent()) {
+                map.addAttribute("diff_return_price", receipt.get().getRequiredReturnValue());
+                map.addAttribute("raw_price", receipt.get().getRequiredRawValue());
+                map.addAttribute("total_price", receipt.get().getRequiredRawValue() + receipt.get().getRequiredReturnValue());
+                map.addAttribute("deposit_value", receipt.get().getRequiredDeposit());
             } else {
                 long days = reservation.getDateFrom().until(reservation.getDateTo(), ChronoUnit.DAYS) + 1;
                 if (!reservation.getDepartmentTake().equals(reservation.getDepartmentBack())) {
@@ -146,6 +122,45 @@ public class ManageReservationsController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/verify")
+    public String verifyPage(ModelMap map, @ModelAttribute("customer") Long customerId, @ModelAttribute("department") Long departmentId) {
+        map.addAttribute("verification_form", new VerificationForm(customerId));
+/*        map.addAttribute("department", departmentId);
+        map.addAttribute("customer", customerId);*/
+        return "management/verifyCustomer";
+    }
+
+    //Search customers page buttons
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String customerSearchButton(@ModelAttribute("searchCustomerForm") SearchCustomerForm customersData, RedirectAttributes redAtt) {
+        try {
+            CustomUserDetails cud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            redAtt.addFlashAttribute("searchCustomerForm", customersData);
+            redAtt.addFlashAttribute("departments", departmentService.getDepartmentsByRole(cud));
+
+            redAtt.addFlashAttribute("customers", customerService.findCustomersByDepartmentAndName(customersData));
+            return "redirect:/mg-res";
+        } catch (ResourceNotFoundException err) {
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again.");
+            return "redirect:/";
+        }
+    }
+
+    @RequestMapping(value = "/reservations", method = RequestMethod.POST)
+    public String customerViewButton(RedirectAttributes redAtt, @RequestParam("select_button") Long customerId, @RequestParam("department") Long departmentId) {
+        redAtt.addAttribute("customer", customerId);
+        redAtt.addFlashAttribute("department", departmentId);
+        return "redirect:/mg-res/{customer}";
+    }
+
+    //Customer reservations page buttons
+    @RequestMapping(method = RequestMethod.POST, value = "/reservation")
+    public String reservationsDetailButton(RedirectAttributes redAtt, @RequestParam("details_button") Long reservationId, @RequestParam("customer") Long customerId) {
+        redAtt.addAttribute("reservation", reservationId);
+        redAtt.addFlashAttribute("customer", customerId);
+        return "redirect:/mg-res/reservation/{reservation}";
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/verify")
     public String verifyButton(RedirectAttributes redAtt, @RequestParam("customer") Long customerId, @RequestParam("department") Long departmentId) {
         redAtt.addFlashAttribute("customer", customerId);
@@ -156,7 +171,7 @@ public class ManageReservationsController {
     @RequestMapping(method = RequestMethod.POST, value = "/unverify")
     public String unverifyButton(RedirectAttributes redAtt, @RequestParam("customer") Long customerId, @RequestParam("department") Long departmentId) {
         HttpStatus status = verificationService.deleteByCustomerId(customerId);
-        if(status.equals(HttpStatus.OK)) {
+        if (status.equals(HttpStatus.OK)) {
             redAtt.addAttribute("customer", customerId);
             redAtt.addFlashAttribute("department", departmentId);
             redAtt.addFlashAttribute("message", "Verification successfully removed");
@@ -167,15 +182,10 @@ public class ManageReservationsController {
         return "redirect:/mg-res/{customer}";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/verify")
-    public String verifyPage(ModelMap map, @ModelAttribute("customer") Long customerId, @ModelAttribute("department") Long departmentId) {
-        map.addAttribute("verification_form", new VerificationForm(customerId));
-        map.addAttribute("department", departmentId);
-        return "management/verifyCustomer";
-    }
 
+    //Verification page buttons
     @RequestMapping(method = RequestMethod.POST, value = "/verify/create")
-    public String verifyConfirm(RedirectAttributes redAtt, @ModelAttribute("verification_form") @Valid VerificationForm form, Errors errors, @RequestParam("department") Long departmentId) {
+    public String verifyConfirmButton(RedirectAttributes redAtt, @ModelAttribute("verification_form") @Valid VerificationForm form, Errors errors, @RequestParam("department") Long departmentId) {
         if (errors.hasErrors()) {
             redAtt.addFlashAttribute("department", departmentId);
             redAtt.addFlashAttribute("customer", form.getCustomerId());
@@ -202,9 +212,92 @@ public class ManageReservationsController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/verify/back")
-    public String verifyBack(RedirectAttributes redAtt, @ModelAttribute("verification_form") VerificationForm form, @RequestParam("department") Long departmentId) {
+    public String verifyBackButton(RedirectAttributes redAtt, @ModelAttribute("verification_form") VerificationForm form, @RequestParam("department") Long departmentId) {
         redAtt.addAttribute("customer", form.getCustomerId());
         redAtt.addFlashAttribute("department", departmentId);
         return "redirect:/mg-res/{customer}";
+    }
+
+
+    //Reservation page buttons
+    @RequestMapping(method = RequestMethod.POST, value = "/reservation/back")
+    public String reservationBackButton(RedirectAttributes redAtt, @RequestParam("reservation") Long reservationId, @RequestParam("customer") Long customerId) {
+        reservationService.getCustomerReservation(customerId, reservationId);
+        redAtt.addAttribute("customer", customerId);
+        redAtt.addFlashAttribute("department", reservationService.getCustomerReservation(customerId, reservationId).getDepartmentTake().getDepartmentId());
+        return "redirect:/mg-res/{customer}";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/reservation/refund")
+    public String reservationRefundButton(RedirectAttributes redAtt, @RequestParam("reservation") Long reservationId, @RequestParam("customer") Long customerId) {
+        HttpStatus response = reservationService.handleReservationStatus(customerId, reservationId, Reservation.ReservationStatus.STATUS_REFUNDED);
+
+        if (response.equals(HttpStatus.ACCEPTED)) {
+            redAtt.addAttribute("reservation", reservationId);
+            redAtt.addFlashAttribute("customer", customerId);
+            redAtt.addFlashAttribute("message", "Refund completed successfully!");
+            return "redirect:/mg-res/reservation/{reservation}";
+        }
+        redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
+        return "redirect:/mg-res";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/reservation/cancel")
+    public String reservationCancelButton(RedirectAttributes redAtt, @RequestParam("reservation") Long reservationId, @RequestParam("customer") Long customerId) {
+        HttpStatus response = reservationService.handleReservationStatus(customerId, reservationId, Reservation.ReservationStatus.STATUS_CANCELED);
+
+        if (response.equals(HttpStatus.ACCEPTED)) {
+            redAtt.addAttribute("reservation", reservationId);
+            redAtt.addFlashAttribute("customer", customerId);
+            redAtt.addFlashAttribute("message", "Cancel completed successfully!");
+            return "redirect:/mg-res/reservation/{reservation}";
+        }
+        redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
+        return "redirect:/mg-res";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/reservation/rent")
+    public String reservationRentButton(RedirectAttributes redAtt, @RequestParam("reservation") Long reservationId, @RequestParam("customer") Long customerId) {
+        HttpStatus response = reservationService.handleReservationStatus(customerId, reservationId, Reservation.ReservationStatus.STATUS_PROGRESS);
+
+        redAtt.addAttribute("reservation", reservationId);
+        redAtt.addFlashAttribute("customer", customerId);
+
+        if (response.equals(HttpStatus.ACCEPTED)) {
+            redAtt.addFlashAttribute("message", "Rent completed successfully!");
+        } else if (response.equals(HttpStatus.PAYMENT_REQUIRED)) {
+            redAtt.addFlashAttribute("message", "Payment not registered. Please try again later.");
+        } else if (response.equals(HttpStatus.PRECONDITION_REQUIRED)) {
+            redAtt.addFlashAttribute("message", "Verification not registered. Please try again later.");
+        } else {
+            redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later.");
+        }
+        return "redirect:/mg-res/reservation/{reservation}";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/reservation/car")
+    public String reservationCarButton(RedirectAttributes redAtt, @RequestParam("reservation") Long reservationId, @RequestParam("customer") Long customerId) {
+
+        //TODO page
+
+        redAtt.addAttribute("reservation", reservationId);
+        redAtt.addFlashAttribute("customer", customerId);
+        return "redirect:/mg-res/reservation/{reservation}";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/reservation/reserve")
+    public String reservationReserveButton(RedirectAttributes redAtt, @RequestParam("reservation") Long reservationId, @RequestParam("customer") Long customerId) {
+        HttpStatus response = reservationService.handleReservationStatus(customerId, reservationId, Reservation.ReservationStatus.STATUS_RESERVED);
+
+        //TODO requires guest/dummy account
+
+        if (response.equals(HttpStatus.ACCEPTED)) {
+            redAtt.addAttribute("reservation", reservationId);
+            redAtt.addFlashAttribute("customer", customerId);
+            redAtt.addFlashAttribute("message", "Reservation completed successfully!");
+            return "redirect:/mg-res/reservation/{reservation}";
+        }
+        redAtt.addFlashAttribute("message", "An unexpected error occurred. Please try again later or contact customer service.");
+        return "redirect:/mg-res";
     }
 }
