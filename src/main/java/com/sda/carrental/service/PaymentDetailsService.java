@@ -1,7 +1,6 @@
 package com.sda.carrental.service;
 
 import com.sda.carrental.constants.GlobalValues;
-import com.sda.carrental.exceptions.ResourceNotFoundException;
 import com.sda.carrental.model.operational.Reservation;
 import com.sda.carrental.model.property.PaymentDetails;
 import com.sda.carrental.repository.PaymentDetailsRepository;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 
 @Service
@@ -17,13 +17,6 @@ import java.time.temporal.ChronoUnit;
 public class PaymentDetailsService {
     private final PaymentDetailsRepository paymentDetailsRepository;
     private final GlobalValues gv;
-
-
-    public PaymentDetails findByReservation(Reservation reservation) {
-        return paymentDetailsRepository
-                .findByReservation(reservation)
-                .orElseThrow(ResourceNotFoundException::new);
-    }
 
     public void createReservationPayment(Reservation reservation) {
         long days = reservation.getDateFrom().until(reservation.getDateTo(), ChronoUnit.DAYS) + 1;
@@ -39,9 +32,13 @@ public class PaymentDetailsService {
         }
     }
 
-    public void retractReservationPayment(Reservation reservation) {
-        PaymentDetails paymentDetails = findByReservation(reservation);
-        if (LocalDate.now().isAfter(reservation.getDateFrom().minusDays(gv.getRefundSubtractDaysDuration()))) {
+    public void retractReservationPayment(Reservation reservation, Reservation.ReservationStatus requestType) {
+        Optional<PaymentDetails> paymentDetailsOptional = getOptionalPaymentDetails(reservation);
+        if(paymentDetailsOptional.isEmpty()) {
+            return;
+        }
+        PaymentDetails paymentDetails = paymentDetailsOptional.get();
+        if (LocalDate.now().isAfter(reservation.getDateFrom().minusDays(gv.getRefundSubtractDaysDuration())) && requestType.equals(Reservation.ReservationStatus.STATUS_REFUNDED)) {
             paymentDetails.setSecuredValue(paymentDetails.getMainValue() * gv.getDepositPercentage());
         }
 
@@ -52,7 +49,13 @@ public class PaymentDetailsService {
         paymentDetailsRepository.save(paymentDetails);
     }
 
-    public boolean isReservationFined(Reservation reservation) {
-        return paymentDetailsRepository.findByReservation(reservation).isPresent();
+    public Optional<PaymentDetails> getOptionalPaymentDetails(Reservation reservation) {
+        return paymentDetailsRepository.findByReservation(reservation);
+    }
+
+    public void securePayment(PaymentDetails paymentDetails) {
+        paymentDetails.setSecuredValue(paymentDetails.getMainValue());
+        paymentDetails.setMainValue(0);
+        paymentDetailsRepository.save(paymentDetails);
     }
 }
