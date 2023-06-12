@@ -12,11 +12,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class Renting {
-    public Renting(User employee_id, Reservation reservation, LocalDate actualDateFrom, String remarks) {
+    public Renting(User employee_id, Reservation reservation) {
         this.employee_id = employee_id;
         this.reservation = reservation;
-        this.actualDateFrom = actualDateFrom;
-        this.remarks = remarks;
+        this.actualDateFrom = LocalDate.now();
+        this.remarks = "";
     }
 
     @Id

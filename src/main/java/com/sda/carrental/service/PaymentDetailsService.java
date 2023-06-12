@@ -6,6 +6,7 @@ import com.sda.carrental.model.property.PaymentDetails;
 import com.sda.carrental.repository.PaymentDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -32,6 +33,7 @@ public class PaymentDetailsService {
         }
     }
 
+    @Transactional
     public void retractReservationPayment(Reservation reservation, Reservation.ReservationStatus requestType) {
         Optional<PaymentDetails> paymentDetailsOptional = getOptionalPaymentDetails(reservation);
         if(paymentDetailsOptional.isEmpty()) {
@@ -53,6 +55,7 @@ public class PaymentDetailsService {
         return paymentDetailsRepository.findByReservation(reservation);
     }
 
+    @Transactional
     public void securePayment(PaymentDetails paymentDetails) {
         paymentDetails.setSecuredValue(paymentDetails.getMainValue());
         paymentDetails.setMainValue(0);

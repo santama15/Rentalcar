@@ -6,6 +6,7 @@ import com.sda.carrental.repository.CarRepository;
 import com.sda.carrental.web.mvc.form.CarFilterForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -82,6 +83,7 @@ public class CarService {
         return carProperties;
     }
 
+    @Transactional
     public void updateCarStatus(Car car, Car.CarStatus status) {
         car.setCarStatus(status);
         repository.save(car);
