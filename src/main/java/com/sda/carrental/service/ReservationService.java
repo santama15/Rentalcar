@@ -15,6 +15,7 @@ import com.sda.carrental.web.mvc.form.ShowCarsForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -30,7 +31,9 @@ public class ReservationService {
     private final DepartmentService departmentService;
     private final PaymentDetailsService paymentDetailsService;
     private final VerificationService verificationService;
+    private final RentingService rentingService;
 
+    @Transactional
     public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody ShowCarsForm form) {
         try {
             IndexForm index = form.getIndexData();
@@ -75,11 +78,13 @@ public class ReservationService {
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
+    @Transactional
     private void updateReservationStatus(Reservation reservation, Reservation.ReservationStatus newStatus) {
         reservation.setStatus(newStatus);
         reservationRepository.save(reservation);
     }
 
+    @Transactional
     public HttpStatus handleReservationStatus(Long customerId, Long reservationId, Reservation.ReservationStatus status) {
         try {
             Reservation r = getCustomerReservation(customerId, reservationId);
@@ -103,6 +108,7 @@ public class ReservationService {
                 paymentDetailsService.securePayment(payment.get());
                 updateReservationStatus(r, status);
                 carService.updateCarStatus(r.getCar(), Car.CarStatus.STATUS_RENTED);
+                rentingService.createRent(r);
                 return HttpStatus.ACCEPTED;
             }
             return HttpStatus.BAD_REQUEST;
