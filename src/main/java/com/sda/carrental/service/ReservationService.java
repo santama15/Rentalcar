@@ -34,7 +34,7 @@ public class ReservationService {
     private final RentingService rentingService;
 
     @Transactional
-    public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody SelectCarForm form) {
+    public HttpStatus createReservation(@RequestBody CustomUserDetails cud, @RequestBody ShowCarsForm form) {
         try {
             IndexForm index = form.getIndexData();
 
